@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>技术 - 标签 - 泡面zz的小屋</title><link>https://pmzzzt.eu.org/tags/%E6%8A%80%E6%9C%AF/</link><description>技术 - 标签 - 泡面zz的小屋</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>zt_blog@outlook.com (泡面zz)</managingEditor><webMaster>zt_blog@outlook.com (泡面zz)</webMaster><lastBuildDate>Sun, 30 Jul 2023 11:00:00 +0800</lastBuildDate><atom:link href="https://pmzzzt.eu.org/tags/%E6%8A%80%E6%9C%AF/" rel="self" type="application/rss+xml"/><item><title>搭建自己的GPT服务，提高访问速度</title><link>https://pmzzzt.eu.org/posts/gptserver/</link><pubDate>Sun, 30 Jul 2023 11:00:00 +0800</pubDate><author>泡面zz</author><guid>https://pmzzzt.eu.org/posts/gptserver/</guid><description>&lt;div class="featured-image">
+&lt;img src="/1.jpeg" referrerpolicy="no-referrer">
+&lt;/div>问题 chatGPT就不介绍了，所有人都明白它的厉害之处，但是对于国人来说，访问它是十分困难的，就算你历经千辛万苦终于注册到了账号，使用了科学上网，也还是很有可能遇到以下问题
+you have been blocked 被屏蔽，这是最令人头疼的事情，需要你的飞机场提供可用的服务器，而且他的服务器还有随时被封ip的风险 blockedblocked
+" blocked vpnvpn
+" vpn something wrong 基本只能通过刷新和等待解决，这样会影响你上下文，可能需要重新提问 wrongwrong
+" wrong
+材料 感谢pengzhile大佬提供的方案：pandora-潘多拉，一个让你呼吸顺畅的ChatGPT
+你也可以直接访问大佬的网站，免费提供服务【需要自己有账号】
+免费服务 免费服务 如果你想搭建自己的服务不给大佬占用带宽，可以准备以下材料自己搭建一个服务
+chatGPT账号 github账号 是的你需要先自行解决账号问题
+步骤 点击这个按钮就可以了 它会导航到vercel网站并从大佬的仓库中copy将代码copy到你的仓库并启动服务
+点击github按钮并输入你的仓库名称 例如我的是： pmzzgpt githubgithub
+" github
+效果 效果效果
+" 效果</description></item></channel></rss>

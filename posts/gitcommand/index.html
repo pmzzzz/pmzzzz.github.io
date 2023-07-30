@@ -1,0 +1,148 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title>git常用命令 - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="git常用命令">
+<meta property="og:description" content="创建版本库  git init
+初始化仓库 git add 添加到仓库 git commit -m &ldquo;message&rdquo;
+提交到仓库  版本相关 版本退回  git log &ndash;pretty=oneline
+查看版本历史记录 git reset &ndash;hard HEAD^
+退回上个版本，HEAD表示当前版本，文件也退回 git reset &ndash;hard commit id 可以在git log中找到 git reflog
+所有命令的记录  工作区和暂存区  git status
+查看状态  管理修改  git diff HEAD &ndash; 查看工作区和版本库里面最新版本的区别  撤销修改  git checkout &ndash; file
+丢弃工作区的修改，返回到上一次add或者commit状态 git reset HEAD 撤销掉暂存区的修改，即把暂存区放回工作区  删除文件  git rm
+从版本库删除文件
+先手动删除工作目录的文件，再使用git rm 和gt add的效果是一样的 如果删错了，可以用 git checkout &ndash; filename 退回版找回来  远程仓库 ssh链接  cd ~ 去到主目录 ssh-keygen -t rsa -C &ldquo;email&rdquo; 生成密钥，将.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pmzzzt.eu.org/posts/gitcommand/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2023-07-06T23:40:00+08:00">
+<meta property="article:modified_time" content="2023-07-06T23:40:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="git常用命令">
+<meta name=twitter:description content="创建版本库  git init
+初始化仓库 git add 添加到仓库 git commit -m &ldquo;message&rdquo;
+提交到仓库  版本相关 版本退回  git log &ndash;pretty=oneline
+查看版本历史记录 git reset &ndash;hard HEAD^
+退回上个版本，HEAD表示当前版本，文件也退回 git reset &ndash;hard commit id 可以在git log中找到 git reflog
+所有命令的记录  工作区和暂存区  git status
+查看状态  管理修改  git diff HEAD &ndash; 查看工作区和版本库里面最新版本的区别  撤销修改  git checkout &ndash; file
+丢弃工作区的修改，返回到上一次add或者commit状态 git reset HEAD 撤销掉暂存区的修改，即把暂存区放回工作区  删除文件  git rm
+从版本库删除文件
+先手动删除工作目录的文件，再使用git rm 和gt add的效果是一样的 如果删错了，可以用 git checkout &ndash; filename 退回版找回来  远程仓库 ssh链接  cd ~ 去到主目录 ssh-keygen -t rsa -C &ldquo;email&rdquo; 生成密钥，将.">
+<meta name=application-name content="泡面zz">
+<meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/gitcommand/><link rel=prev href=https://pmzzzt.eu.org/posts/buildmysite1/><link rel=next href=https://pmzzzt.eu.org/posts/matalabshare/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"git常用命令","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/gitcommand\/"},"genre":"posts","keywords":"git","wordcount":134,"url":"https:\/\/pmzzzt.eu.org\/posts\/gitcommand\/","datePublished":"2023-07-06T23:40:00+08:00","dateModified":"2023-07-06T23:40:00+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"light"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"light"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span><span id=id-1 class=typeit></span><span class=header-title-post><i class="fas fa-hand-point-left" aria-hidden=true></i></span></a>
+</div><div class=menu>
+<div class=menu-inner><a class=menu-item href=/posts/><i class="fas fa-book"></i> 文章 </a><a class=menu-item href=/tags/><i class="fas fa-tags"></i> 标签 </a><a class=menu-item href=/categories/><i class="fas fa-table"></i> 分类 </a><a class=menu-item href=/search/><i class="fas fa-fw fa-search"></i> 搜索 </a><span class="menu-item delimiter"></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a></div></div></div></header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span><span id=id-2 class=typeit></span><span class=header-title-post><i class="fas fa-hand-point-left" aria-hidden=true></i></span></a>
+</div><div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div></div><div class=menu id=menu-mobile><a class=menu-item href=/posts/ title><i class="fas fa-book"></i>文章</a><a class=menu-item href=/tags/ title><i class="fas fa-tags"></i>标签</a><a class=menu-item href=/categories/ title><i class="fas fa-table"></i>分类</a><a class=menu-item href=/search/ title><i class="fas fa-fw fa-search"></i>搜索</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a></div></div></header><main class=main>
+<div class=container>
+<div class=toc id=toc-auto>
+<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">git常用命令</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/coding/><i class="far fa-folder fa-fw" aria-hidden=true></i>coding</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2023-07-06>2023-07-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 134 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 1 分钟&nbsp;</div></div><div class="details toc" id=toc-static data-kept>
+<div class="details-summary toc-title">
+<span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#创建版本库>创建版本库</a></li><li><a href=#版本相关>版本相关</a>
+<ul>
+<li><a href=#版本退回>版本退回</a></li><li><a href=#工作区和暂存区>工作区和暂存区</a></li><li><a href=#管理修改>管理修改</a></li><li><a href=#撤销修改>撤销修改</a></li><li><a href=#删除文件>删除文件</a></li></ul></li><li><a href=#远程仓库>远程仓库</a>
+<ul>
+<li><a href=#ssh链接>ssh链接</a></li><li><a href=#添加远程仓库>添加远程仓库</a></li><li><a href=#从远程库克隆>从远程库克隆</a></li></ul></li><li><a href=#分支管理>分支管理</a>
+<ul>
+<li><a href=#创建与合并分支>创建与合并分支</a></li></ul></li></ul></nav></div></div><div class=content id=content><h2 id=创建版本库>创建版本库</h2><ol>
+<li>git init<br>
+初始化仓库</li><li>git add <br>
+添加到仓库</li><li>git commit -m &ldquo;message&rdquo;<br>
+提交到仓库</li></ol><h2 id=版本相关>版本相关</h2><h3 id=版本退回>版本退回</h3><ol>
+<li>git log &ndash;pretty=oneline<br>
+查看版本历史记录</li><li>git reset &ndash;hard HEAD^<br>
+退回上个版本，HEAD表示当前版本，文件也退回</li><li>git reset &ndash;hard <br>
+commit id 可以在git log中找到</li><li>git reflog<br>
+所有命令的记录</li></ol><h3 id=工作区和暂存区>工作区和暂存区</h3><ol>
+<li>git status<br>
+查看状态</li></ol><h3 id=管理修改>管理修改</h3><ol>
+<li>git diff HEAD &ndash;
+查看工作区和版本库里面最新版本的区别</li></ol><h3 id=撤销修改>撤销修改</h3><ol>
+<li>git checkout &ndash; file<br>
+丢弃工作区的修改，返回到上一次add或者commit状态</li><li>git reset HEAD <br>
+撤销掉暂存区的修改，即把暂存区放回工作区</li></ol><h3 id=删除文件>删除文件</h3><ol>
+<li>git rm<br>
+从版本库删除文件<br>
+先手动删除<strong>工作目录</strong>的文件，再使用git rm 和gt add的效果是一样的
+如果删错了，可以用 git checkout &ndash; filename 退回版找回来</li></ol><h2 id=远程仓库>远程仓库</h2><h3 id=ssh链接>ssh链接</h3><ol>
+<li>cd ~
+去到主目录</li><li>ssh-keygen -t rsa -C &ldquo;email&rdquo;
+生成密钥，将.pub的内容分享给别人</li></ol><h3 id=添加远程仓库>添加远程仓库</h3><ol>
+<li>git remote add origin <a href=mailto:git@github.com rel>git@github.com</a>:pmzzzz/xxxx.git
+添加远程库名叫origin，origin是远程库默认名字</li><li>git branch -M <br>
+命名主节点</li><li>git push -u origin master
+第一次加 -u，master是本地的节点</li></ol><h3 id=从远程库克隆>从远程库克隆</h3><ol>
+<li>git clone <a href=mailto:git@github.com rel>git@github.com</a>:pmzzzz/xxxx.git
+xxxx是自己的仓库名，会在当前目录下载整个仓库<br>
+还可以用https://github.com/michaelliao/gitskills.git这样的地址</li></ol><h2 id=分支管理>分支管理</h2><h3 id=创建与合并分支>创建与合并分支</h3><ol>
+<li>git branch<br>
+查看分支</li><li>git branch name
+创建分支</li><li>git checkout name /switch name
+切换分支</li><li>git checkout -b name /switch -c name
+创建后切换到分支</li><li>git merge name
+合并分支</li><li>git branch -d name<br>
+删除分支</li></ol><div class=post-reward>
+<input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label>
+<div class=qr-code>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/wechat.png>
+<span>微信打赏</span>
+</label>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/alipay.png>
+<span>支付宝打赏</span>
+</label>
+</div></div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>更新于 2023-07-06</span>
+</div></div><div class=post-info-line>
+<div class=post-info-md></div><div class=post-info-share>
+<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/gitcommand/ data-hashtag=git><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/gitcommand/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/gitcommand/ data-title=git常用命令><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
+</div></div></div><div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/git/>git</a></section><section>
+<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
+</section></div><div class=post-nav><a href=/posts/buildmysite1/ class=prev rel=prev title="【博客搭建1】- 新建网站"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>【博客搭建1】- 新建网站</a>
+<a href=/posts/matalabshare/ class=next rel=next title="软件分享 - matlab2022">软件分享 - matlab2022<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+<script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:"force",placeholder:"为防恶意灌水攻击，评论前需注册并登录，望见谅~",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+<span id=run-time></span>
+</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a href=https://creativecommons.org/licenses/by-nc/4.0>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+<i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论>
+<i class="fas fa-comment fa-fw" aria-hidden=true></i>
+</a>
+</div><div class=sidebar_wo>
+<div id=leimu>
+<img src=https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/leimuA.png alt=雷姆 onmouseover='this.src="https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/leimuB.png"' onmouseout='this.src="https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/leimuA.png"' title=回到顶部>
+</div><div class=sidebar_wo id=lamu>
+<img src=https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/lamuA.png alt=雷姆 onmouseover='this.src="https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/lamuB.png"' onmouseout='this.src="https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/lamuA.png"' title=回到底部>
+</div></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{},data:{"id-1":"小屋客厅","id-2":"小屋客厅"},lightgallery:!0,typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"id-1":["id-1"],"id-2":["id-2"]},duration:-1,speed:100}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js></script>
+<script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js></script><script type=text/javascript src=/js/custom.js></script></body></html>

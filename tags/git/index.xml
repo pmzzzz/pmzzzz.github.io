@@ -1,0 +1,10 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>git - 标签 - 泡面zz的小屋</title><link>https://pmzzzt.eu.org/tags/git/</link><description>git - 标签 - 泡面zz的小屋</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>zt_blog@outlook.com (泡面zz)</managingEditor><webMaster>zt_blog@outlook.com (泡面zz)</webMaster><lastBuildDate>Thu, 06 Jul 2023 23:40:00 +0800</lastBuildDate><atom:link href="https://pmzzzt.eu.org/tags/git/" rel="self" type="application/rss+xml"/><item><title>git常用命令</title><link>https://pmzzzt.eu.org/posts/gitcommand/</link><pubDate>Thu, 06 Jul 2023 23:40:00 +0800</pubDate><author>泡面zz</author><guid>https://pmzzzt.eu.org/posts/gitcommand/</guid><description><![CDATA[创建版本库  git init
+初始化仓库 git add 添加到仓库 git commit -m &ldquo;message&rdquo;
+提交到仓库  版本相关 版本退回  git log &ndash;pretty=oneline
+查看版本历史记录 git reset &ndash;hard HEAD^
+退回上个版本，HEAD表示当前版本，文件也退回 git reset &ndash;hard commit id 可以在git log中找到 git reflog
+所有命令的记录  工作区和暂存区  git status
+查看状态  管理修改  git diff HEAD &ndash; 查看工作区和版本库里面最新版本的区别  撤销修改  git checkout &ndash; file
+丢弃工作区的修改，返回到上一次add或者commit状态 git reset HEAD 撤销掉暂存区的修改，即把暂存区放回工作区  删除文件  git rm
+从版本库删除文件
+先手动删除工作目录的文件，再使用git rm 和gt add的效果是一样的 如果删错了，可以用 git checkout &ndash; filename 退回版找回来  远程仓库 ssh链接  cd ~ 去到主目录 ssh-keygen -t rsa -C &ldquo;email&rdquo; 生成密钥，将.]]></description></item></channel></rss>

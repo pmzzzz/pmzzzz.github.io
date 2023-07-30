@@ -1,0 +1,139 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title>搭建自己的GPT服务，提高访问速度 - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="搭建自己的GPT服务，提高访问速度">
+<meta property="og:description" content="问题 chatGPT就不介绍了，所有人都明白它的厉害之处，但是对于国人来说，访问它是十分困难的，就算你历经千辛万苦终于注册到了账号，使用了科学上网，也还是很有可能遇到以下问题
+you have been blocked  被屏蔽，这是最令人头疼的事情，需要你的飞机场提供可用的服务器，而且他的服务器还有随时被封ip的风险   blockedblocked
+&#34; blocked  vpnvpn
+&#34; vpn  something wrong  基本只能通过刷新和等待解决，这样会影响你上下文，可能需要重新提问   wrongwrong
+&#34; wrong 
+材料 感谢pengzhile大佬提供的方案：pandora-潘多拉，一个让你呼吸顺畅的ChatGPT
+你也可以直接访问大佬的网站，免费提供服务【需要自己有账号】
+免费服务  免费服务   如果你想搭建自己的服务不给大佬占用带宽，可以准备以下材料自己搭建一个服务
+ chatGPT账号 github账号  是的你需要先自行解决账号问题
+步骤  点击这个按钮就可以了  它会导航到vercel网站并从大佬的仓库中copy将代码copy到你的仓库并启动服务
+点击github按钮并输入你的仓库名称 例如我的是： pmzzgpt  githubgithub
+&#34; github 
+效果 效果效果
+&#34; 效果">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pmzzzt.eu.org/posts/gptserver/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2023-07-30T11:00:00+08:00">
+<meta property="article:modified_time" content="2023-07-30T11:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="搭建自己的GPT服务，提高访问速度">
+<meta name=twitter:description content="问题 chatGPT就不介绍了，所有人都明白它的厉害之处，但是对于国人来说，访问它是十分困难的，就算你历经千辛万苦终于注册到了账号，使用了科学上网，也还是很有可能遇到以下问题
+you have been blocked  被屏蔽，这是最令人头疼的事情，需要你的飞机场提供可用的服务器，而且他的服务器还有随时被封ip的风险   blockedblocked
+&#34; blocked  vpnvpn
+&#34; vpn  something wrong  基本只能通过刷新和等待解决，这样会影响你上下文，可能需要重新提问   wrongwrong
+&#34; wrong 
+材料 感谢pengzhile大佬提供的方案：pandora-潘多拉，一个让你呼吸顺畅的ChatGPT
+你也可以直接访问大佬的网站，免费提供服务【需要自己有账号】
+免费服务  免费服务   如果你想搭建自己的服务不给大佬占用带宽，可以准备以下材料自己搭建一个服务
+ chatGPT账号 github账号  是的你需要先自行解决账号问题
+步骤  点击这个按钮就可以了  它会导航到vercel网站并从大佬的仓库中copy将代码copy到你的仓库并启动服务
+点击github按钮并输入你的仓库名称 例如我的是： pmzzgpt  githubgithub
+&#34; github 
+效果 效果效果
+&#34; 效果">
+<meta name=application-name content="泡面zz">
+<meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/gptserver/><link rel=prev href=https://pmzzzt.eu.org/posts/deepthinking/><link rel=next href=https://pmzzzt.eu.org/posts/vpn/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"搭建自己的GPT服务，提高访问速度","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/gptserver\/"},"genre":"posts","keywords":"技术, GPT, AI","wordcount":41,"url":"https:\/\/pmzzzt.eu.org\/posts\/gptserver\/","datePublished":"2023-07-30T11:00:00+08:00","dateModified":"2023-07-30T11:00:00+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"light"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"light"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span><span id=id-1 class=typeit></span><span class=header-title-post><i class="fas fa-hand-point-left" aria-hidden=true></i></span></a>
+</div><div class=menu>
+<div class=menu-inner><a class=menu-item href=/posts/><i class="fas fa-book"></i> 文章 </a><a class=menu-item href=/tags/><i class="fas fa-tags"></i> 标签 </a><a class=menu-item href=/categories/><i class="fas fa-table"></i> 分类 </a><a class=menu-item href=/search/><i class="fas fa-fw fa-search"></i> 搜索 </a><span class="menu-item delimiter"></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a></div></div></div></header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span><span id=id-2 class=typeit></span><span class=header-title-post><i class="fas fa-hand-point-left" aria-hidden=true></i></span></a>
+</div><div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div></div><div class=menu id=menu-mobile><a class=menu-item href=/posts/ title><i class="fas fa-book"></i>文章</a><a class=menu-item href=/tags/ title><i class="fas fa-tags"></i>标签</a><a class=menu-item href=/categories/ title><i class="fas fa-table"></i>分类</a><a class=menu-item href=/search/ title><i class="fas fa-fw fa-search"></i>搜索</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a></div></div></header><main class=main>
+<div class=container>
+<div class=toc id=toc-auto>
+<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">搭建自己的GPT服务，提高访问速度</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/coding/><i class="far fa-folder fa-fw" aria-hidden=true></i>coding</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2023-07-30>2023-07-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 41 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 1 分钟&nbsp;</div></div><div class=featured-image><img class=lazyload src=/svg/loading.min.svg data-src=/posts/gptserver/1.jpeg data-srcset="/posts/gptserver/1.jpeg, /posts/gptserver/1.jpeg 1.5x, /posts/gptserver/1.jpeg 2x" data-sizes=auto alt=/posts/gptserver/1.jpeg title=/posts/gptserver/1.jpeg width=1200 height=730></div><div class="details toc" id=toc-static data-kept>
+<div class="details-summary toc-title">
+<span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#问题>问题</a></li><li><a href=#材料>材料</a></li><li><a href=#步骤>步骤</a></li><li><a href=#效果>效果</a></li></ul></nav></div></div><div class=content id=content><h2 id=问题>问题</h2><p>chatGPT就不介绍了，所有人都明白它的厉害之处，但是对于国人来说，访问它是十分困难的，就算你历经千辛万苦终于注册到了账号，使用了科学上网，也还是很有可能遇到以下问题</p><p><div class="details admonition warning open">
+<div class="details-summary admonition-title">
+<i class="icon fas fa-exclamation-triangle fa-fw" aria-hidden=true></i>you have been blocked<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i>
+</div><div class=details-content>
+<div class=admonition-content>被屏蔽，这是最令人头疼的事情，需要你的飞机场提供可用的服务器，而且他的服务器还有随时被封ip的风险</div></div></div><figure><a class=lightgallery href=/posts/gptserver/2.png title=blocked data-thumbnail=/posts/gptserver/2.png data-sub-html="<h2>blocked</h2><p>blocked</p>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/gptserver/2.png data-srcset="/posts/gptserver/2.png, /posts/gptserver/2.png 1.5x, /posts/gptserver/2.png 2x" data-sizes=auto alt=/posts/gptserver/2.png width=582 height=314>
+</a><figcaption class=image-caption>blocked</figcaption></figure><figure><a class=lightgallery href=/posts/gptserver/4.png title=vpn data-thumbnail=/posts/gptserver/4.png data-sub-html="<h2>vpn</h2><p>vpn</p>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/gptserver/4.png data-srcset="/posts/gptserver/4.png, /posts/gptserver/4.png 1.5x, /posts/gptserver/4.png 2x" data-sizes=auto alt=/posts/gptserver/4.png width=588 height=328>
+</a><figcaption class=image-caption>vpn</figcaption></figure><div class="details admonition warning open">
+<div class="details-summary admonition-title">
+<i class="icon fas fa-exclamation-triangle fa-fw" aria-hidden=true></i>something wrong<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i>
+</div><div class=details-content>
+<div class=admonition-content>基本只能通过刷新和等待解决，这样会影响你上下文，可能需要重新提问</div></div></div><figure><a class=lightgallery href=/posts/gptserver/3.png title=wrong data-thumbnail=/posts/gptserver/3.png data-sub-html="<h2>wrong</h2><p>wrong</p>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/gptserver/3.png data-srcset="/posts/gptserver/3.png, /posts/gptserver/3.png 1.5x, /posts/gptserver/3.png 2x" data-sizes=auto alt=/posts/gptserver/3.png width=845 height=341>
+</a><figcaption class=image-caption>wrong</figcaption></figure></p><h2 id=材料>材料</h2><p>感谢<a href=https://github.com/pengzhile target=_blank rel="noopener noreffer">pengzhile</a>大佬提供的方案：<a href=https://github.com/pengzhile/pandora target=_blank rel="noopener noreffer">pandora-潘多拉，一个让你呼吸顺畅的ChatGPT</a></p><p>你也可以直接访问大佬的网站，免费提供服务【需要自己有账号】</p><div class="details admonition tip open">
+<div class="details-summary admonition-title">
+<i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>免费服务<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i>
+</div><div class=details-content>
+<div class=admonition-content><a href=https://chat.zhile.io/ target=_blank rel="noopener noreffer">免费服务</a></div></div></div><p>如果你想搭建自己的服务不给大佬占用带宽，可以准备以下材料自己搭建一个服务</p><ol>
+<li>chatGPT账号</li><li>github账号</li></ol><p>是的你需要先自行解决账号问题</p><h2 id=步骤>步骤</h2><ol>
+<li>点击这个按钮就可以了<a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fpengzhile%2Fpandora-cloud-serverless" target=_blank rel="noopener noreffer"><img class=lazyload src=/svg/loading.min.svg data-src=https://camo.githubusercontent.com/5e471e99e8e022cf454693e38ec843036ec6301e27ee1e1fa10325b1cb720584/68747470733a2f2f76657263656c2e636f6d2f627574746f6e data-srcset="https://camo.githubusercontent.com/5e471e99e8e022cf454693e38ec843036ec6301e27ee1e1fa10325b1cb720584/68747470733a2f2f76657263656c2e636f6d2f627574746f6e, https://camo.githubusercontent.com/5e471e99e8e022cf454693e38ec843036ec6301e27ee1e1fa10325b1cb720584/68747470733a2f2f76657263656c2e636f6d2f627574746f6e 1.5x, https://camo.githubusercontent.com/5e471e99e8e022cf454693e38ec843036ec6301e27ee1e1fa10325b1cb720584/68747470733a2f2f76657263656c2e636f6d2f627574746f6e 2x" data-sizes=auto alt=https://camo.githubusercontent.com/5e471e99e8e022cf454693e38ec843036ec6301e27ee1e1fa10325b1cb720584/68747470733a2f2f76657263656c2e636f6d2f627574746f6e title=deploy></a></li></ol><p>它会导航到vercel网站并从大佬的仓库中copy将代码copy到你的仓库并启动服务</p><ol start=2>
+<li>点击github按钮并输入你的仓库名称
+例如我的是： pmzzgpt</li></ol><p><figure><a class=lightgallery href=/posts/gptserver/6.png title=github data-thumbnail=/posts/gptserver/6.png data-sub-html="<h2>github</h2><p>github</p>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/gptserver/6.png data-srcset="/posts/gptserver/6.png, /posts/gptserver/6.png 1.5x, /posts/gptserver/6.png 2x" data-sizes=auto alt=/posts/gptserver/6.png width=2158 height=892>
+</a><figcaption class=image-caption>github</figcaption></figure></p><h2 id=效果>效果</h2><p><figure><a class=lightgallery href=/posts/gptserver/5.png title=效果 data-thumbnail=/posts/gptserver/5.png data-sub-html="<h2>效果</h2><p>效果</p>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/gptserver/5.png data-srcset="/posts/gptserver/5.png, /posts/gptserver/5.png 1.5x, /posts/gptserver/5.png 2x" data-sizes=auto alt=/posts/gptserver/5.png width=1976 height=874>
+</a><figcaption class=image-caption>效果</figcaption></figure></p><div class=post-reward>
+<input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label>
+<div class=qr-code>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/wechat.png>
+<span>微信打赏</span>
+</label>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/alipay.png>
+<span>支付宝打赏</span>
+</label>
+</div></div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>更新于 2023-07-30</span>
+</div></div><div class=post-info-line>
+<div class=post-info-md></div><div class=post-info-share>
+<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/gptserver/ data-hashtag=技术><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/gptserver/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/gptserver/ data-title=搭建自己的GPT服务，提高访问速度 data-image=1.jpeg><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
+</div></div></div><div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E6%8A%80%E6%9C%AF/>技术</a>,&nbsp;<a href=/tags/gpt/>GPT</a>,&nbsp;<a href=/tags/ai/>AI</a></section><section>
+<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
+</section></div><div class=post-nav><a href=/posts/deepthinking/ class=prev rel=prev title=不要失去思考能力><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>不要失去思考能力</a>
+<a href=/posts/vpn/ class=next rel=next title=如何科学上网>如何科学上网<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+<script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:"force",placeholder:"为防恶意灌水攻击，评论前需注册并登录，望见谅~",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+<span id=run-time></span>
+</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a href=https://creativecommons.org/licenses/by-nc/4.0>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+<i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论>
+<i class="fas fa-comment fa-fw" aria-hidden=true></i>
+</a>
+</div><div class=sidebar_wo>
+<div id=leimu>
+<img src=https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/leimuA.png alt=雷姆 onmouseover='this.src="https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/leimuB.png"' onmouseout='this.src="https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/leimuA.png"' title=回到顶部>
+</div><div class=sidebar_wo id=lamu>
+<img src=https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/lamuA.png alt=雷姆 onmouseover='this.src="https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/lamuB.png"' onmouseout='this.src="https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/lamuA.png"' title=回到底部>
+</div></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{},data:{"id-1":"小屋客厅","id-2":"小屋客厅"},lightgallery:!0,typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"id-1":["id-1"],"id-2":["id-2"]},duration:-1,speed:100}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js></script>
+<script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js></script><script type=text/javascript src=/js/custom.js></script></body></html>
