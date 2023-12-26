@@ -1,0 +1,23 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>学习 - 分类 - 泡面zz的小屋</title><link>https://pmzzzt.eu.org/categories/%E5%AD%A6%E4%B9%A0/</link><description>学习 - 分类 - 泡面zz的小屋</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>zt_blog@outlook.com (泡面zz)</managingEditor><webMaster>zt_blog@outlook.com (泡面zz)</webMaster><lastBuildDate>Fri, 17 Mar 2023 06:50:00 +0800</lastBuildDate><atom:link href="https://pmzzzt.eu.org/categories/%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml"/><item><title>一些乐理基础</title><link>https://pmzzzt.eu.org/posts/learning/musictheory1/</link><pubDate>Fri, 17 Mar 2023 06:50:00 +0800</pubDate><author>泡面zz</author><guid>https://pmzzzt.eu.org/posts/learning/musictheory1/</guid><description><![CDATA[背景 我是一个纯纯的工科生，艺术细胞基本为零，像所有九零后一样，听周杰伦长大的，初中听到音乐频道推荐了一首Maroon5&ndash;Daylight，从此开始听欧美音乐
+ 网易云链接-dayligh
+ 高中又不小心听到了一首改变我音乐审美的歌：Skrillex-First Of The Year
+ 网易云链接-First Of The Year
+ 我的天啊，原来音乐可以这么做，用这么奇怪的音色，让人情绪十分高涨，后来才知道，这是一首brostep，是电子音乐的一个类别.
+yeah，从此我就对电子音乐产生了浓厚的兴趣，不仅仅是喜欢听，也想自己做。不过我太浮躁了，没有打磨出自己喜欢的作品。
+理由 我对音乐的感觉其实很少，没什么天赋，唱歌也不好听，甚至有五音不全的可能，所以，做不出好音乐很正常，但是！没有天赋也能学音乐吧，应该，我觉得从零开始学音乐，经过一番搜索，一般音乐学院的培养方案如下： 乐理&ndash;&gt;和声&ndash;&gt;曲式&mdash;&gt;等等等等（目前就了解到这些，够学一阵子了）
+足够了，知道方向了，开始学习吧！
+写这些文章主要是为了记录自己的过程，记录自己的理解，也希望能给别人一点帮助。
+Preview 今天主要学习了 音 这个概念，包括：
+ 音的产生 乐音和噪音 复合音和泛音 音的性质  这里面最难也是最重要的部分就是复合音和泛音，我会重点介绍。
+音的产生 没什么好讲的，初中物理告诉我们：声音就是物体振动产生的，我们说话就是声带在振动，弹奏钢琴就是琴弦在振动
+ 声音是振动产生的声波，通过介质（气体、固体、液体）传播并能被人或动物听觉器官所感知的波动现象。
+声音的频率一般会以赫兹表示，记为Hz，指每秒钟周期性震动的次数。而分贝是用来表示声音强度的单位，记为dB。
+wiki
+ 乐音和噪音 通俗的来说，乐音就是“好听的”声音，噪音就是“不好听”的声音，钢琴的声音就好听，粉笔刮黑板的声音就不好听。那他们的本质区别是什么呢？
+规律。没错，就是规律，上面我们说到声音是有频率的，钢琴的声音是“有规律”的 指的就是，钢琴发出来的声音的频率是有规律的
+怎么理解呢？又得从物理角度出发了 当我们拨动一根弦的时候，它会来回振动是吧，其实如果你观察得够仔细会发现：除了整根弦在振动，它的1/2，1/3&hellip;各个小部分也在振动。
+我们拍拍脑袋也许就能想到，这一个个小部分的振动和整根弦的振动的频率是不同的，而这些频率又遵循着1/2，1/3&hellip;这个关系，这就是“有规律” ，这就让钢琴的声音好听了起来。
+那这个规律具体是什么呢，就讲到了接下来的内容
+所谓复合音，就是基音和泛音组合起来的音【不权威】，没什么好说的，所以理解基音和泛音是什么就很重要了。
+我们来看看泛音(overtone)的解释:
+ An overtoneis any resonant frequency above the fundamental frequencyof a sound. (An overtone may or may not be a harmonic)[1]In other words, overtones are all pitches higher than the lowest pitch within an individual sound; the fundamental is the lowest pitch.]]></description></item></channel></rss>
