@@ -1,0 +1,184 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title>MissingSemester day1 - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="MissingSemester day1">
+<meta property="og:description" content="课程概览  本节课主要对整个课程进行了大致的描述，包括设置这门课的意义，以及内容安排。 讲解了SHELL的基本概念和特性，以及一些程序和符号的使用（man、ls、mkdir、｜、<>、etc..）  重点 什么是SHELL SHELL是文本交互界面，区别于图形化交互界面，SHELL通过文本与系统交互，比图形界面更能掌控我们的电脑
+shell如何知道你要运行的程序在哪里 shell会通过一个特定的顺序（不同的文件夹目录）来搜寻程序，如果找到了就会运行找到的第一个程序
+通过 $PATH 能观察shell的搜索路径，下面的例子通过echo将它打印了出来
+另外，可以使用which 命令，来告诉你如果运行某个程序，它具体来自哪个目录,例如echo就来自于/bin/echo
+missing:~$ echo $PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin missing:~$ which echo /bin/echo missing:~$ /bin/echo $PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin 文件和文件夹的访问权限 使用ls -l ，显示文件夹下文件的详细信息，其中第一列代表了文件/文件夹的权限
+missing:~$ ls -l /home drwxr-xr-x 1 missing users 4096 Jun 15 2019 missing  d代表这是一个文件夹 后续一共九个字符分为三组，每一组都是按照rwx(读、写、执行)的顺序排列，如果有权限则限制字母，反正则显示- 三组字母分别代表用户、组、其他人对该文件\文件夹的权限  tips  文件夹的执行，代表是否能够打开文件夹，文件夹的读，代表能否查看内容，文件夹的写，代表能否删除内部的文件   连接程序,重定向与管道 通过 < ，> ，| 可以将程序的输入输出流连接起来
+首先要知道的是：对于一个程序来说，一般有输入流和输出流，例如从键盘输出，然后打印到屏幕上
+(base) ➜ TheMissingSemester echo hello hello 使用><符号将输入输出流重定向： missing:~$ echo hello > hello.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pmzzzt.eu.org/posts/learning/missingsemester/day1/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2023-12-27T21:00:00+08:00">
+<meta property="article:modified_time" content="2023-12-27T21:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="MissingSemester day1">
+<meta name=twitter:description content="课程概览  本节课主要对整个课程进行了大致的描述，包括设置这门课的意义，以及内容安排。 讲解了SHELL的基本概念和特性，以及一些程序和符号的使用（man、ls、mkdir、｜、<>、etc..）  重点 什么是SHELL SHELL是文本交互界面，区别于图形化交互界面，SHELL通过文本与系统交互，比图形界面更能掌控我们的电脑
+shell如何知道你要运行的程序在哪里 shell会通过一个特定的顺序（不同的文件夹目录）来搜寻程序，如果找到了就会运行找到的第一个程序
+通过 $PATH 能观察shell的搜索路径，下面的例子通过echo将它打印了出来
+另外，可以使用which 命令，来告诉你如果运行某个程序，它具体来自哪个目录,例如echo就来自于/bin/echo
+missing:~$ echo $PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin missing:~$ which echo /bin/echo missing:~$ /bin/echo $PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin 文件和文件夹的访问权限 使用ls -l ，显示文件夹下文件的详细信息，其中第一列代表了文件/文件夹的权限
+missing:~$ ls -l /home drwxr-xr-x 1 missing users 4096 Jun 15 2019 missing  d代表这是一个文件夹 后续一共九个字符分为三组，每一组都是按照rwx(读、写、执行)的顺序排列，如果有权限则限制字母，反正则显示- 三组字母分别代表用户、组、其他人对该文件\文件夹的权限  tips  文件夹的执行，代表是否能够打开文件夹，文件夹的读，代表能否查看内容，文件夹的写，代表能否删除内部的文件   连接程序,重定向与管道 通过 < ，> ，| 可以将程序的输入输出流连接起来
+首先要知道的是：对于一个程序来说，一般有输入流和输出流，例如从键盘输出，然后打印到屏幕上
+(base) ➜ TheMissingSemester echo hello hello 使用><符号将输入输出流重定向： missing:~$ echo hello > hello.">
+<meta name=application-name content="泡面zz">
+<meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/missingsemester/day1/><link rel=prev href=https://pmzzzt.eu.org/posts/diaries/2023-12-21/><link rel=next href=https://pmzzzt.eu.org/posts/tutorials/vpn/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"MissingSemester day1","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/missingsemester\/day1\/"},"genre":"posts","keywords":"MissingSemester, CS","wordcount":624,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/missingsemester\/day1\/","datePublished":"2023-12-27T21:00:00+08:00","dateModified":"2023-12-27T21:00:00+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"light"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"light"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span><span id=id-1 class=typeit></span><span class=header-title-post><i class="fas fa-hand-point-left" aria-hidden=true></i></span></a>
+</div><div class=menu>
+<div class=menu-inner><a class=menu-item href=/posts/><i class="fas fa-book"></i> 文章 </a><a class=menu-item href=/tags/><i class="fas fa-tags"></i> 标签 </a><a class=menu-item href=/categories/><i class="fas fa-table"></i> 分类 </a><a class=menu-item href=/search/><i class="fas fa-fw fa-search"></i> 搜索 </a><span class="menu-item delimiter"></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a></div></div></div></header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span><span id=id-2 class=typeit></span><span class=header-title-post><i class="fas fa-hand-point-left" aria-hidden=true></i></span></a>
+</div><div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div></div><div class=menu id=menu-mobile><a class=menu-item href=/posts/ title><i class="fas fa-book"></i>文章</a><a class=menu-item href=/tags/ title><i class="fas fa-tags"></i>标签</a><a class=menu-item href=/categories/ title><i class="fas fa-table"></i>分类</a><a class=menu-item href=/search/ title><i class="fas fa-fw fa-search"></i>搜索</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a></div></div></header><main class=main>
+<div class=container>
+<div class=toc id=toc-auto>
+<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">MissingSemester day1</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a>&nbsp;<a href=/categories/missingsemester/><i class="far fa-folder fa-fw" aria-hidden=true></i>MissingSemester</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2023-12-27>2023-12-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 624 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 3 分钟&nbsp;</div></div><div class=featured-image><img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/missingsemester/day1/1.png data-srcset="/posts/learning/missingsemester/day1/1.png, /posts/learning/missingsemester/day1/1.png 1.5x, /posts/learning/missingsemester/day1/1.png 2x" data-sizes=auto alt=/posts/learning/missingsemester/day1/1.png title=/posts/learning/missingsemester/day1/1.png width=1280 height=640></div><div class="details toc" id=toc-static data-kept>
+<div class="details-summary toc-title">
+<span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#课程概览>课程概览</a></li><li><a href=#重点>重点</a>
+<ul>
+<li><a href=#什么是shell>什么是SHELL</a></li><li><a href=#shell如何知道你要运行的程序在哪里>shell如何知道你要运行的程序在哪里</a></li><li><a href=#文件和文件夹的访问权限>文件和文件夹的访问权限</a></li><li><a href=#连接程序重定向与管道>连接程序,重定向与管道</a></li><li><a href=#重定向与管道的区别>重定向与管道的区别</a></li></ul></li><li><a href=#练习与答案>练习与答案</a>
+<ul>
+<li><a href=#题目>题目</a></li></ul></li></ul></nav></div></div><div class=content id=content><h2 id=课程概览>课程概览</h2><ol>
+<li>本节课主要对整个课程进行了大致的描述，包括设置这门课的意义，以及内容安排。</li><li>讲解了SHELL的基本概念和特性，以及一些程序和符号的使用（man、ls、mkdir、｜、&lt;>、etc..）</li></ol><h2 id=重点>重点</h2><h3 id=什么是shell>什么是SHELL</h3><p>SHELL是文本交互界面，区别于图形化交互界面，SHELL通过文本与系统交互，比图形界面更能掌控我们的电脑</p><h3 id=shell如何知道你要运行的程序在哪里>shell如何知道你要运行的程序在哪里</h3><p>shell会通过一个特定的顺序（不同的文件夹目录）来搜寻程序，如果找到了就会运行找到的第一个程序</p><p>通过 <code>$PATH</code> 能观察shell的搜索路径，下面的例子通过<code>echo</code>将它打印了出来</p><p>另外，可以使用<code>which</code> 命令，来告诉你如果运行某个程序，它具体来自哪个目录,例如<code>echo</code>就来自于<code>/bin/echo</code></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>missing:~$ <span class=nb>echo</span> <span class=nv>$PATH</span>
+</span></span><span class=line><span class=cl>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+</span></span><span class=line><span class=cl>missing:~$ which <span class=nb>echo</span>
+</span></span><span class=line><span class=cl>/bin/echo
+</span></span><span class=line><span class=cl>missing:~$ /bin/echo <span class=nv>$PATH</span>
+</span></span><span class=line><span class=cl>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+</span></span></code></pre></div><h3 id=文件和文件夹的访问权限>文件和文件夹的访问权限</h3><p>使用ls -l ，显示文件夹下文件的详细信息，其中第一列代表了文件/文件夹的权限</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>missing:~$ ls -l /home
+</span></span><span class=line><span class=cl>drwxr-xr-x <span class=m>1</span> missing  users  <span class=m>4096</span> Jun <span class=m>15</span>  <span class=m>2019</span> missing
+</span></span></code></pre></div><ul>
+<li>d代表这是一个文件夹</li><li>后续一共九个字符分为三组，每一组都是按照rwx(读、写、执行)的顺序排列，如果有权限则限制字母，反正则显示<code>-</code></li><li>三组字母分别代表用户、组、其他人对该文件\文件夹的权限</li></ul><div class="details admonition tip open">
+<div class="details-summary admonition-title">
+<i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>tips<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i>
+</div><div class=details-content>
+<div class=admonition-content>文件夹的执行，代表是否能够打开文件夹，文件夹的读，代表能否查看内容，文件夹的写，代表能否删除内部的文件</div></div></div><h3 id=连接程序重定向与管道>连接程序,重定向与管道</h3><p>通过 <code>&lt;</code> ，<code>></code> ，<code>|</code> 可以将程序的输入输出流连接起来</p><p>首先要知道的是：对于一个程序来说，一般有输入流和输出流，例如从键盘输出，然后打印到屏幕上</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=o>(</span>base<span class=o>)</span> ➜  TheMissingSemester <span class=nb>echo</span> hello
+</span></span><span class=line><span class=cl>hello
+</span></span></code></pre></div><h4 id=使用符号将输入输出流重定向>使用<code>>&lt;</code>符号将输入输出流重定向：</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>missing:~$ <span class=nb>echo</span> hello &gt; hello.txt
+</span></span><span class=line><span class=cl>missing:~$ cat hello.txt
+</span></span><span class=line><span class=cl>hello
+</span></span><span class=line><span class=cl>missing:~$ cat &lt; hello.txt
+</span></span><span class=line><span class=cl>hello
+</span></span><span class=line><span class=cl>missing:~$ cat &lt; hello.txt &gt; hello2.txt
+</span></span><span class=line><span class=cl>missing:~$ cat hello2.txt
+</span></span><span class=line><span class=cl>hello
+</span></span></code></pre></div><p>最后一个例子中，使用<code>cat &lt; hello.txt</code>读取文件的内容，它会有一个输出流，然后使用<code>> hello2.txt</code> 将输出流定向到了<code>hello2.txt</code>中</p><p>可以发现，重定向是将文件输入到程序，或者将程序的结果输出到文件中。</p><h4 id=使用管道连接程序>使用管道连接程序</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>missing:~$ ls -l / <span class=p>|</span> tail -n1
+</span></span></code></pre></div><p>以上程序会将ls的结果作为tail的输入，效果为只显示当前文件夹最后一个文件。</p><h3 id=重定向与管道的区别>重定向与管道的区别</h3><p>1、管道命令只处理前一个命令正确输出，不处理错误输出</p><p>2、管道命令右边命令，必须能够接收标准输入流命令才行。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=o>[</span>chengmo@centos5 shell<span class=o>]</span>$ cat test.sh <span class=p>|</span> grep -n <span class=s1>&#39;echo&#39;</span>
+</span></span><span class=line><span class=cl>5:    <span class=nb>echo</span> <span class=s2>&#34;very good!&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>7:    <span class=nb>echo</span> <span class=s2>&#34;good!&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>9:    <span class=nb>echo</span> <span class=s2>&#34;pass!&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>11:    <span class=nb>echo</span> <span class=s2>&#34;no pass!&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=c1>#读出test.sh文件内容，通过管道转发给grep 作为输入内容</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=o>[</span>chengmo@centos5 shell<span class=o>]</span>$ cat test.sh test1.sh <span class=p>|</span> grep -n <span class=s1>&#39;echo&#39;</span>
+</span></span><span class=line><span class=cl>cat: test1.sh: 没有那个文件或目录
+</span></span><span class=line><span class=cl>5:    <span class=nb>echo</span> <span class=s2>&#34;very good!&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>7:    <span class=nb>echo</span> <span class=s2>&#34;good!&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>9:    <span class=nb>echo</span> <span class=s2>&#34;pass!&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>11:    <span class=nb>echo</span> <span class=s2>&#34;no pass!&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=c1>#cat test1.sh不存在，错误输出打印到屏幕，正确输出通过管道发送给grep </span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=o>[</span>chengmo@centos5 shell<span class=o>]</span>$ cat test.sh test1.sh 2&gt;/dev/null <span class=p>|</span> grep -n <span class=s1>&#39;echo&#39;</span> 
+</span></span><span class=line><span class=cl>5:    <span class=nb>echo</span> <span class=s2>&#34;very good!&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>7:    <span class=nb>echo</span> <span class=s2>&#34;good!&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>9:    <span class=nb>echo</span> <span class=s2>&#34;pass!&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>11:    <span class=nb>echo</span> <span class=s2>&#34;no pass!&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=c1>#将test1.sh 没有找到错误输出重定向输出给/dev/null 文件，正确输出通过管道发送给grep</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=o>[</span>chengmo@centos5 shell<span class=o>]</span>$ cat test.sh <span class=p>|</span> ls
+</span></span><span class=line><span class=cl>catfile      httprequest.txt  secure  <span class=nb>test</span>            testfdread.sh  testpipe.sh    testsh.sh      testwhile2.sh
+</span></span><span class=line><span class=cl>envcron.txt  python           sh      testcase.sh     testfor2.sh    testselect.sh  test.txt       text.txt
+</span></span><span class=line><span class=cl>env.txt      release          sms     testcronenv.sh  testfor.sh     test.sh        testwhile1.sh
+</span></span></code></pre></div><blockquote>
+<p><strong>区别是：</strong></p><p>1、左边的命令应该有标准输出 | 右边的命令应该接受标准输入
+左边的命令应该有标准输出 > 右边只能是文件
+左边的命令应该需要标准输入 &lt; 右边只能是文件</p><p>2、<strong>管道</strong>触发两个子进程执行"|&ldquo;两边的程序；而<strong>重定向</strong>是在一个进程内执行</p></blockquote><h2 id=练习与答案>练习与答案</h2><h3 id=题目>题目</h3><ol>
+<li>
+<p>For this course, you need to be using a Unix shell like Bash or ZSH. If you are on Linux or macOS, you don’t have to do anything special. If you are on Windows, you need to make sure you are not running cmd.exe or PowerShell; you can use <a href=https://docs.microsoft.com/en-us/windows/wsl/ target=_blank rel="noopener noreffer">Windows Subsystem for Linux</a> or a Linux virtual machine to use Unix-style command-line tools. To make sure you’re running an appropriate shell, you can try the command <code>echo $SHELL</code>. If it says something like <code>/bin/bash</code> or <code>/usr/bin/zsh</code>, that means you’re running the right program.</p></li><li>
+<p>Create a new directory called <code>missing</code> under <code>/tmp</code>.</p></li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl> mkdir /tmp/missing
+</span></span></code></pre></div><ol start=3>
+<li>
+<p>Look up the <code>touch</code> program. The <code>man</code> program is your friend.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>man touch
+</span></span></code></pre></div><p>``</p></li><li>
+<p>Use <code>touch</code> to create a new file called <code>semester</code> in <code>missing</code>.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>touch /tmp/missing/semester
+</span></span></code></pre></div><p>``</p></li><li>
+<p>Write the following into that file, one line at a time:</p><pre tabindex=0><code>#!/bin/sh
+curl --head --silent https://missing.csail.mit.edu
+</code></pre><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=nb>echo</span> <span class=s1>&#39;#!/bin/sh&#39;</span> &gt; semester
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;curl --head --silent https://missing.csail.mit.edu&#34;</span> &gt;&gt; semester
+</span></span><span class=line><span class=cl><span class=c1># 注意使用单引号来包括#</span>
+</span></span></code></pre></div><p>The first line might be tricky to get working. It’s helpful to know that <code>#</code> starts a comment in Bash, and <code>!</code> has a special meaning even within double-quoted (<code>"</code>) strings. Bash treats single-quoted strings (<code>'</code>) differently: they will do the trick in this case. See the Bash <a href=https://www.gnu.org/software/bash/manual/html_node/Quoting.html target=_blank rel="noopener noreffer">quoting</a> manual page for more information.</p></li><li>
+<p>Try to execute the file, i.e. type the path to the script (<code>./semester</code>) into your shell and press enter. Understand why it doesn’t work by consulting the output of <code>ls</code> (hint: look at the permission bits of the file).</p></li><li>
+<p>Run the command by explicitly starting the <code>sh</code> interpreter, and giving it the file <code>semester</code> as the first argument, i.e. <code>sh semester</code>. Why does this work, while <code>./semester</code> didn’t?</p></li><li>
+<p>Look up the <code>chmod</code> program (e.g. use <code>man chmod</code>).</p></li><li>
+<p>Use <code>chmod</code> to make it possible to run the command <code>./semester</code> rather than having to type <code>sh semester</code>. How does your shell know that the file is supposed to be interpreted using <code>sh</code>? See this page on the <a href=https://en.wikipedia.org/wiki/Shebang_%28Unix%29 target=_blank rel="noopener noreffer">shebang</a> line for more information.</p></li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>chmod <span class=m>755</span> smester
+</span></span></code></pre></div><ol start=10>
+<li>Use <code>|</code> and <code>></code> to write the “last modified” date output by <code>semester</code> into a file called <code>last-modified.txt</code> in your home directory.</li></ol><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>date <span class=p>|</span> tee &gt; ~/last-modified.txt
+</span></span></code></pre></div><ol start=11>
+<li>Write a command that reads out your laptop battery’s power level or your desktop machine’s CPU temperature from <code>/sys</code>. Note: if you’re a macOS user, your OS doesn’t have sysfs, so you can skip this exercise.</li></ol><div class=post-reward>
+<input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label>
+<div class=qr-code>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/wechat.png>
+<span>微信打赏</span>
+</label>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/alipay.png>
+<span>支付宝打赏</span>
+</label>
+</div></div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>更新于 2023-12-27</span>
+</div></div><div class=post-info-line>
+<div class=post-info-md></div><div class=post-info-share>
+<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/learning/missingsemester/day1/ data-hashtag=MissingSemester><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/learning/missingsemester/day1/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/learning/missingsemester/day1/ data-title="MissingSemester day1" data-image=1.png><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
+</div></div></div><div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/missingsemester/>MissingSemester</a>,&nbsp;<a href=/tags/cs/>CS</a></section><section>
+<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
+</section></div><div class=post-nav><a href=/posts/diaries/2023-12-21/ class=prev rel=prev title=2023-12-21><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>2023-12-21</a>
+<a href=/posts/tutorials/vpn/ class=next rel=next title=如何科学上网>如何科学上网<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+<script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:"force",placeholder:"为防恶意灌水攻击，评论前需注册并登录，望见谅~",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+<span id=run-time></span>
+</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a href=https://creativecommons.org/licenses/by-nc/4.0>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+<i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论>
+<i class="fas fa-comment fa-fw" aria-hidden=true></i>
+</a>
+</div><div class=sidebar_wo>
+<div id=leimu>
+<img src=https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/leimuA.png alt=雷姆 onmouseover='this.src="https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/leimuB.png"' onmouseout='this.src="https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/leimuA.png"' title=回到顶部>
+</div><div class=sidebar_wo id=lamu>
+<img src=https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/lamuA.png alt=雷姆 onmouseover='this.src="https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/lamuB.png"' onmouseout='this.src="https://cdn.jsdelivr.net/gh/lewky/lewky.github.io@master/images/b2t/lamuA.png"' title=回到底部>
+</div></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{},data:{"id-1":"小屋客厅","id-2":"小屋客厅"},lightgallery:!0,typeit:{cursorChar:"|",cursorSpeed:1e3,data:{"id-1":["id-1"],"id-2":["id-2"]},duration:-1,speed:100}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js></script>
+<script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js></script><script type=text/javascript src=/js/custom.js></script></body></html>

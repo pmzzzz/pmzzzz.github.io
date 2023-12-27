@@ -43,6 +43,19 @@
 </h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2023-07-11>2023-07-11</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E6%95%99%E7%A8%8B/><i class="far fa-folder fa-fw" aria-hidden=true></i>教程</a></span></div><div class=content><p><strong>打开</strong>互联网世界的大门</p></div><div class=post-footer>
 <a href=/posts/tutorials/vpn/>阅读全文</a><div class=post-tags>
 <i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E7%BF%BB%E5%A2%99/>翻墙</a>,&nbsp;<a href=/tags/vpn/>vpn</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
+<a href=/posts/learning/missingsemester/day1/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/missingsemester/day1/1.png data-srcset="/posts/learning/missingsemester/day1/1.png, /posts/learning/missingsemester/day1/1.png 1.5x, /posts/learning/missingsemester/day1/1.png 2x" data-sizes=auto alt=/posts/learning/missingsemester/day1/1.png title=/posts/learning/missingsemester/day1/1.png width=1280 height=640></a>
+</div><h1 class=single-title itemprop="name headline">
+<a href=/posts/learning/missingsemester/day1/>MissingSemester day1</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2023-12-27>2023-12-27</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a>&nbsp;<a href=/categories/missingsemester/><i class="far fa-folder fa-fw" aria-hidden=true></i>MissingSemester</a></span></div><div class=content>课程概览 本节课主要对整个课程进行了大致的描述，包括设置这门课的意义，以及内容安排。 讲解了SHELL的基本概念和特性，以及一些程序和符号的使用（man、ls、mkdir、｜、&lt;>、etc..） 重点 什么是SHELL SHELL是文本交互界面，区别于图形化交互界面，SHELL通过文本与系统交互，比图形界面更能掌控我们的电脑
+shell如何知道你要运行的程序在哪里 shell会通过一个特定的顺序（不同的文件夹目录）来搜寻程序，如果找到了就会运行找到的第一个程序
+通过 $PATH 能观察shell的搜索路径，下面的例子通过echo将它打印了出来
+另外，可以使用which 命令，来告诉你如果运行某个程序，它具体来自哪个目录,例如echo就来自于/bin/echo
+missing:~$ echo $PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin missing:~$ which echo /bin/echo missing:~$ /bin/echo $PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin 文件和文件夹的访问权限 使用ls -l ，显示文件夹下文件的详细信息，其中第一列代表了文件/文件夹的权限
+missing:~$ ls -l /home drwxr-xr-x 1 missing users 4096 Jun 15 2019 missing d代表这是一个文件夹 后续一共九个字符分为三组，每一组都是按照rwx(读、写、执行)的顺序排列，如果有权限则限制字母，反正则显示- 三组字母分别代表用户、组、其他人对该文件\文件夹的权限 tips 文件夹的执行，代表是否能够打开文件夹，文件夹的读，代表能否查看内容，文件夹的写，代表能否删除内部的文件 连接程序,重定向与管道 通过 &lt; ，> ，| 可以将程序的输入输出流连接起来
+首先要知道的是：对于一个程序来说，一般有输入流和输出流，例如从键盘输出，然后打印到屏幕上
+(base) ➜ TheMissingSemester echo hello hello 使用>&lt;符号将输入输出流重定向： missing:~$ echo hello > hello.</div><div class=post-footer>
+<a href=/posts/learning/missingsemester/day1/>阅读全文</a><div class=post-tags>
+<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/missingsemester/>MissingSemester</a>,&nbsp;<a href=/tags/cs/>CS</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
 <a href=/posts/diaries/2023-12-21/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/diaries/2023-12-21/1.png data-srcset="/posts/diaries/2023-12-21/1.png, /posts/diaries/2023-12-21/1.png 1.5x, /posts/diaries/2023-12-21/1.png 2x" data-sizes=auto alt=/posts/diaries/2023-12-21/1.png title=/posts/diaries/2023-12-21/1.png width=512 height=512></a>
 </div><h1 class=single-title itemprop="name headline">
 <a href=/posts/diaries/2023-12-21/>2023-12-21</a>
@@ -79,13 +92,7 @@ chatGPT账号 github账号 是的你需要先自行解决账号问题
 效果 效果效果
 " 效果</div><div class=post-footer>
 <a href=/posts/techs/gptserver/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E6%8A%80%E6%9C%AF/>技术</a>,&nbsp;<a href=/tags/gpt/>GPT</a>,&nbsp;<a href=/tags/ai/>AI</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
-<a href=/posts/resources/matalabshare/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/resources/matalabshare/1.jpeg data-srcset="/posts/resources/matalabshare/1.jpeg, /posts/resources/matalabshare/1.jpeg 1.5x, /posts/resources/matalabshare/1.jpeg 2x" data-sizes=auto alt=/posts/resources/matalabshare/1.jpeg title=/posts/resources/matalabshare/1.jpeg width=870 height=500></a>
-</div><h1 class=single-title itemprop="name headline">
-<a href=/posts/resources/matalabshare/>软件分享 - matlab2022</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2023-07-07>2023-07-07</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E8%B5%84%E6%BA%90/><i class="far fa-folder fa-fw" aria-hidden=true></i>资源</a></span></div><div class=content><p>辛苦工科人<strong>必备</strong>科研软件。</p></div><div class=post-footer>
-<a href=/posts/resources/matalabshare/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/matlab/>matlab</a>,&nbsp;<a href=/tags/%E7%A0%B4%E8%A7%A3/>破解</a></div></div></article><ul class=pagination><li class="page-item active">
+<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E6%8A%80%E6%9C%AF/>技术</a>,&nbsp;<a href=/tags/gpt/>GPT</a>,&nbsp;<a href=/tags/ai/>AI</a></div></div></article><ul class=pagination><li class="page-item active">
 <span class=page-link>
 <a href=/>1</a>
 </span>
