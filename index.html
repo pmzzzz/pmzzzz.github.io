@@ -43,6 +43,18 @@
 </h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2023-07-11>2023-07-11</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E6%95%99%E7%A8%8B/><i class="far fa-folder fa-fw" aria-hidden=true></i>教程</a></span></div><div class=content><p><strong>打开</strong>互联网世界的大门</p></div><div class=post-footer>
 <a href=/posts/tutorials/vpn/>阅读全文</a><div class=post-tags>
 <i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E7%BF%BB%E5%A2%99/>翻墙</a>,&nbsp;<a href=/tags/vpn/>vpn</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
+<a href=/posts/learning/missingsemester/day2/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/missingsemester/day2/1.png data-srcset="/posts/learning/missingsemester/day2/1.png, /posts/learning/missingsemester/day2/1.png 1.5x, /posts/learning/missingsemester/day2/1.png 2x" data-sizes=auto alt=/posts/learning/missingsemester/day2/1.png title=/posts/learning/missingsemester/day2/1.png width=1280 height=640></a>
+</div><h1 class=single-title itemprop="name headline">
+<a href=/posts/learning/missingsemester/day2/>MissingSemester day2</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2024-01-02>2024-01-02</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a>&nbsp;<a href=/categories/missingsemester/><i class="far fa-folder fa-fw" aria-hidden=true></i>MissingSemester</a></span></div><div class=content>课程总结 shell脚本的基础知识，变量的使用以及shebang 常用工具的介绍，文件搜索工具和方法 重点内容 shell脚本 变量的定义和赋值 foo=bar 提示 空格在shell中十分敏感，切勿随意添加空格，如果写成 foo = bar它的意思是运行foo这个程序，第二和第三个参数分别为 = 和 bar，这明显不是我们想要的 变量的引用 echo $foo # 输出 bar 使用$来引用变量的值
+单引号与双引号 foo=bar echo "$foo" # prints bar echo '$foo' # prints $foo 提示 从上面的例子可以看出，双引号会将其中的变量引用进行解释，而单引号是将其中的内容直接当作一个字符串。 特殊变量引用 若mcd.sh内容如下：
+mcd () { mkdir -p "$1" cd "$1" } 该脚本的功能为 新建一个文件夹，然后自动cd进去
+source mcd.sh mcd test 使用source file 将脚本的内容进行加载和执行，上面的例子即是将函数进行了加载
+然后使用 mcd 命令来调用函数
+值得注意的是，在脚本中，我们使用了"$1"来表示接受到的第一个参数，在这个例子中，我们的参数是test,所以它会创建名为test的文件夹，然后cd进去
+还有其他的特殊变量：</div><div class=post-footer>
+<a href=/posts/learning/missingsemester/day2/>阅读全文</a><div class=post-tags>
+<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/missingsemester/>MissingSemester</a>,&nbsp;<a href=/tags/cs/>CS</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
 <a href=/posts/learning/missingsemester/day1/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/missingsemester/day1/1.png data-srcset="/posts/learning/missingsemester/day1/1.png, /posts/learning/missingsemester/day1/1.png 1.5x, /posts/learning/missingsemester/day1/1.png 2x" data-sizes=auto alt=/posts/learning/missingsemester/day1/1.png title=/posts/learning/missingsemester/day1/1.png width=1280 height=640></a>
 </div><h1 class=single-title itemprop="name headline">
 <a href=/posts/learning/missingsemester/day1/>MissingSemester day1</a>
@@ -73,26 +85,7 @@ missing:~$ ls -l /home drwxr-xr-x 1 missing users 4096 Jun 15 2019 missing d代�
 <a href=/posts/techs/githubissue/>解决curl拒绝连接问题</a>
 </h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2023-07-31>2023-07-31</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E6%8A%80%E6%9C%AF/><i class="far fa-folder fa-fw" aria-hidden=true></i>技术</a></span></div><div class=content><p>使用SwitchHosts</p></div><div class=post-footer>
 <a href=/posts/techs/githubissue/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E6%8A%80%E6%9C%AF/>技术</a>,&nbsp;<a href=/tags/github/>github</a>,&nbsp;<a href=/tags/dns/>DNS</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
-<a href=/posts/techs/gptserver/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/techs/gptserver/1.jpeg data-srcset="/posts/techs/gptserver/1.jpeg, /posts/techs/gptserver/1.jpeg 1.5x, /posts/techs/gptserver/1.jpeg 2x" data-sizes=auto alt=/posts/techs/gptserver/1.jpeg title=/posts/techs/gptserver/1.jpeg width=1200 height=730></a>
-</div><h1 class=single-title itemprop="name headline">
-<a href=/posts/techs/gptserver/>搭建自己的GPT服务，提高访问速度</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2023-07-30>2023-07-30</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E6%8A%80%E6%9C%AF/><i class="far fa-folder fa-fw" aria-hidden=true></i>技术</a></span></div><div class=content>问题 chatGPT就不介绍了，所有人都明白它的厉害之处，但是对于国人来说，访问它是十分困难的，就算你历经千辛万苦终于注册到了账号，使用了科学上网，也还是很有可能遇到以下问题
-you have been blocked 被屏蔽，这是最令人头疼的事情，需要你的飞机场提供可用的服务器，而且他的服务器还有随时被封ip的风险 blockedblocked
-" blocked vpnvpn
-" vpn something wrong 基本只能通过刷新和等待解决，这样会影响你上下文，可能需要重新提问 wrongwrong
-" wrong
-材料 感谢pengzhile大佬提供的方案：pandora-潘多拉，一个让你呼吸顺畅的ChatGPT
-你也可以直接访问大佬的网站，免费提供服务【需要自己有账号】
-免费服务 免费服务 如果你想搭建自己的服务不给大佬占用带宽，可以准备以下材料自己搭建一个服务
-chatGPT账号 github账号 是的你需要先自行解决账号问题
-步骤 点击这个按钮就可以了 它会导航到vercel网站并从大佬的仓库中copy将代码copy到你的仓库并启动服务
-点击github按钮并输入你的仓库名称 例如我的是： pmzzgpt githubgithub
-" github
-效果 效果效果
-" 效果</div><div class=post-footer>
-<a href=/posts/techs/gptserver/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E6%8A%80%E6%9C%AF/>技术</a>,&nbsp;<a href=/tags/gpt/>GPT</a>,&nbsp;<a href=/tags/ai/>AI</a></div></div></article><ul class=pagination><li class="page-item active">
+<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E6%8A%80%E6%9C%AF/>技术</a>,&nbsp;<a href=/tags/github/>github</a>,&nbsp;<a href=/tags/dns/>DNS</a></div></div></article><ul class=pagination><li class="page-item active">
 <span class=page-link>
 <a href=/>1</a>
 </span>
@@ -100,10 +93,14 @@ chatGPT账号 github账号 是的你需要先自行解决账号问题
 <span class=page-link>
 <a href=/page/2/>2</a>
 </span>
+</li><li class=page-item>
+<span class=page-link>
+<a href=/page/3/>3</a>
+</span>
 </li></ul></div></div></main><footer class=footer>
 <div class=footer-container><div class=footer-line>
 <span id=run-time></span>
-</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a href=https://creativecommons.org/licenses/by-nc/4.0>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023 - 2024</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a href=https://creativecommons.org/licenses/by-nc/4.0>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
 <i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
 </a><a href=# id=view-comments class=fixed-button title=查看评论>
 <i class="fas fa-comment fa-fw" aria-hidden=true></i>
