@@ -43,6 +43,34 @@
 </h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2023-07-11>2023-07-11</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E6%95%99%E7%A8%8B/><i class="far fa-folder fa-fw" aria-hidden=true></i>教程</a></span></div><div class=content><p><strong>打开</strong>互联网世界的大门</p></div><div class=post-footer>
 <a href=/posts/tutorials/vpn/>阅读全文</a><div class=post-tags>
 <i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E7%BF%BB%E5%A2%99/>翻墙</a>,&nbsp;<a href=/tags/vpn/>vpn</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
+<a href=/posts/leetcode/2/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/leetcode/2/1.png data-srcset="/posts/leetcode/2/1.png, /posts/leetcode/2/1.png 1.5x, /posts/leetcode/2/1.png 2x" data-sizes=auto alt=/posts/leetcode/2/1.png title=/posts/leetcode/2/1.png width=1008 height=504></a>
+</div><h1 class=single-title itemprop="name headline">
+<a href=/posts/leetcode/2/>002-两数相加</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2024-03-17>2024-03-17</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/leetcode/><i class="far fa-folder fa-fw" aria-hidden=true></i>LeetCode</a></span></div><div class=content>题目 给你两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。
+请你将两个数相加，并以相同形式返回一个表示和的链表。
+你可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+示例 1：
+输入：l1 = [2,4,3], l2 = [5,6,4] 输出：[7,0,8] 解释：342 + 465 = 807. 示例 2：
+输入：l1 = [0], l2 = [0] 输出：[0] 示例 3：
+输入：l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9] 输出：[8,9,9,9,0,0,0,1] 提示：
+每个链表中的节点数在范围 [1, 100] 内 0 &lt;= Node.val &lt;= 9 题目数据保证列表表示的数字不含前导零 解答 /** * Definition for singly-linked list. * struct ListNode { * int val; * struct ListNode *next; * }; */ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) { struct ListNode *head = NULL,*tail = NULL; int carry = 0; int sum =0; while(l1 || l2){ if(!</div><div class=post-footer>
+<a href=/posts/leetcode/2/>阅读全文</a><div class=post-tags>
+<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/leetcode/>LeetCode</a>,&nbsp;<a href=/tags/cs/>CS</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
+<a href=/posts/leetcode/1/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/leetcode/1/1.png data-srcset="/posts/leetcode/1/1.png, /posts/leetcode/1/1.png 1.5x, /posts/leetcode/1/1.png 2x" data-sizes=auto alt=/posts/leetcode/1/1.png title=/posts/leetcode/1/1.png width=1008 height=504></a>
+</div><h1 class=single-title itemprop="name headline">
+<a href=/posts/leetcode/1/>001-两数之和</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2024-03-17>2024-03-17</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/leetcode/><i class="far fa-folder fa-fw" aria-hidden=true></i>LeetCode</a></span></div><div class=content>使用hugo new content posts/LeetCode/2/index.md 来创建文章，可以使用模板，自动填充frontmatter
+题目 题目链接
+给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target 的那 两个 整数，并返回它们的数组下标。
+你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。
+你可以按任意顺序返回答案。
+示例 1：
+输入：nums = [2,7,11,15], target = 9 输出：[0,1] 解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。 示例 2：
+输入：nums = [3,2,4], target = 6 输出：[1,2] 示例 3：
+输入：nums = [3,3], target = 6 输出：[0,1] 提示：
+2 &lt;= nums.length &lt;= 104 -109 &lt;= nums[i] &lt;= 109 -109 &lt;= target &lt;= 109 只会存在一个有效答案 解题 1暴力解题 直接两层循环，判断两数之和等于target之后就返回，时间复杂度为O(n2)</div><div class=post-footer>
+<a href=/posts/leetcode/1/>阅读全文</a><div class=post-tags>
+<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/leetcode/>LeetCode</a>,&nbsp;<a href=/tags/cs/>CS</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
 <a href=/posts/learning/missingsemester/day3/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/missingsemester/day3/1.png data-srcset="/posts/learning/missingsemester/day3/1.png, /posts/learning/missingsemester/day3/1.png 1.5x, /posts/learning/missingsemester/day3/1.png 2x" data-sizes=auto alt=/posts/learning/missingsemester/day3/1.png title=/posts/learning/missingsemester/day3/1.png width=1280 height=640></a>
 </div><h1 class=single-title itemprop="name headline">
 <a href=/posts/learning/missingsemester/day3/>MissingSemester day3</a>
@@ -75,19 +103,7 @@ missing:~$ ls -l /home drwxr-xr-x 1 missing users 4096 Jun 15 2019 missing d代�
 首先要知道的是：对于一个程序来说，一般有输入流和输出流，例如从键盘输出，然后打印到屏幕上
 (base) ➜ TheMissingSemester echo hello hello 使用>&lt;符号将输入输出流重定向： missing:~$ echo hello > hello.</div><div class=post-footer>
 <a href=/posts/learning/missingsemester/day1/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/missingsemester/>MissingSemester</a>,&nbsp;<a href=/tags/cs/>CS</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
-<a href=/posts/diaries/2023-12-21/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/diaries/2023-12-21/1.png data-srcset="/posts/diaries/2023-12-21/1.png, /posts/diaries/2023-12-21/1.png 1.5x, /posts/diaries/2023-12-21/1.png 2x" data-sizes=auto alt=/posts/diaries/2023-12-21/1.png title=/posts/diaries/2023-12-21/1.png width=512 height=512></a>
-</div><h1 class=single-title itemprop="name headline">
-<a href=/posts/diaries/2023-12-21/>2023-12-21</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2023-12-21>2023-12-21</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E6%97%A5%E8%AE%B0/><i class="far fa-folder fa-fw" aria-hidden=true></i>日记</a></span></div><div class=content><p><strong>讨论令我愤怒</strong></p></div><div class=post-footer>
-<a href=/posts/diaries/2023-12-21/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E6%97%A5%E8%AE%B0/>日记</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
-<a href=/posts/techs/appletips/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/techs/appletips/1.jpeg data-srcset="/posts/techs/appletips/1.jpeg, /posts/techs/appletips/1.jpeg 1.5x, /posts/techs/appletips/1.jpeg 2x" data-sizes=auto alt=/posts/techs/appletips/1.jpeg title=/posts/techs/appletips/1.jpeg width=640 height=360></a>
-</div><h1 class=single-title itemprop="name headline">
-<a href=/posts/techs/appletips/>苹果tips</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2023-07-31>2023-07-31</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E6%8A%80%E6%9C%AF/><i class="far fa-folder fa-fw" aria-hidden=true></i>技术</a></span></div><div class=content>软件安装相关 macOS无法验证此App不包含恶意软件 sudo spctl --master-disable sudo xattr -r -d com.apple.quarantine /applications/xxx.app brew相关 安装brew /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" brew 换源 cd “$(brew —repo)” git remote set-url origin https://mirrors.ustc.edu.cn/brew.git echo ‘export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottle source~/. bash profile cd “$(brew —repo)/Library/Taps/homebrew/homebrew-core” git remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git 命令行相关 环境变量编辑 code ~/.zshrc python相关 jupyter notebook 切换虚拟环境 (base) conda install -c conda-forge jupyterlab (base) conda install Jupiter notebook #安装这个之后就可以识别其他环境 (base) conda install nb_conda_kernels #在其他环境安装jupyter/ipykernel 就能被识别（ipykernel更轻量，推荐） (ml) conda install jupyter (ml) conda install ipykernel # 注册新的kernel也可以被识别 pip install ipykernels python -m ipykernel install —user —name mykernelname </div><div class=post-footer>
-<a href=/posts/techs/appletips/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E6%8A%80%E6%9C%AF/>技术</a>,&nbsp;<a href=/tags/apple/>apple</a>,&nbsp;<a href=/tags/mac/>mac</a></div></div></article><ul class=pagination><li class="page-item active">
+<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/missingsemester/>MissingSemester</a>,&nbsp;<a href=/tags/cs/>CS</a></div></div></article><ul class=pagination><li class="page-item active">
 <span class=page-link>
 <a href=/>1</a>
 </span>
