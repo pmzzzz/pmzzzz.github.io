@@ -43,6 +43,35 @@
 </h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2023-07-11>2023-07-11</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E6%95%99%E7%A8%8B/><i class="far fa-folder fa-fw" aria-hidden=true></i>教程</a></span></div><div class=content><p><strong>打开</strong>互联网世界的大门</p></div><div class=post-footer>
 <a href=/posts/tutorials/vpn/>阅读全文</a><div class=post-tags>
 <i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E7%BF%BB%E5%A2%99/>翻墙</a>,&nbsp;<a href=/tags/vpn/>vpn</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
+<a href=/posts/techs/stablediffusion/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/techs/stablediffusion/1.png data-srcset="/posts/techs/stablediffusion/1.png, /posts/techs/stablediffusion/1.png 1.5x, /posts/techs/stablediffusion/1.png 2x" data-sizes=auto alt=/posts/techs/stablediffusion/1.png title=/posts/techs/stablediffusion/1.png width=864 height=1152></a>
+</div><h1 class=single-title itemprop="name headline">
+<a href=/posts/techs/stablediffusion/>StableDiffusion-图片预览失效</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2024-04-01>2024-04-01</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E6%8A%80%E6%9C%AF/><i class="far fa-folder fa-fw" aria-hidden=true></i>技术</a></span></div><div class=content>环境 macos 12.7.2 现象 生成图片之后，预览窗口啥也没有，以至于不能进行后续操作
+原因 代理软件让它需要的一个包下载不下来
+解决 关闭代理 这是一个比较直接的解决方法，但确实很不方便
+修改配置 在webui-user.sh中修改成以下配置:
+export COMMANDLINE_ARGS="--skip-torch-cuda-test --upcast-sampling --no-half-vae --use-cpu interrogate --no-gradio-queue " 禁止这个包来避免这个问题</div><div class=post-footer>
+<a href=/posts/techs/stablediffusion/>阅读全文</a><div class=post-tags>
+<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/sd/>SD</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
+<a href=/posts/diaries/2024-04-01/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/diaries/2024-04-01/1.png data-srcset="/posts/diaries/2024-04-01/1.png, /posts/diaries/2024-04-01/1.png 1.5x, /posts/diaries/2024-04-01/1.png 2x" data-sizes=auto alt=/posts/diaries/2024-04-01/1.png title=/posts/diaries/2024-04-01/1.png width=512 height=512></a>
+</div><h1 class=single-title itemprop="name headline">
+<a href=/posts/diaries/2024-04-01/>2024-04-01</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2024-04-01>2024-04-01</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E6%97%A5%E8%AE%B0/><i class="far fa-folder fa-fw" aria-hidden=true></i>日记</a></span></div><div class=content>前言 昨天晚上结束了一个面试，尽管我在之前已经做了很多准备，但是还是由于过于紧张，一进入那个场合就败下阵来，逻辑混乱、口齿不清，真的对自己特别失望，有好多准备的东西没有发挥出来，有好多提前想好的预案都付诸东流。。。。经历了绝望、忏悔、拒绝、侥幸。。可能现在算是能正常看待这件事情了&mdash;&ndash;我有一个很大的缺点。
+我的缺点是什么 首先我能想到的是一些表象的缺点
+1口齿不清 我是重庆人，在普通话的发音上确实是有天生的劣势的，但这是我基本能克服的，平时我都是使用普通话与人交流，口齿不清经常主要发生在“说得太快的场景”，一旦语速起来了，就很容易出现“吞字”的现象，给人的观感很不好，信息的传达也很低效。
+2逻辑混乱 我特别害怕开放性的问题，目前来看也很少在这种问题上回答的令人满意，在听到这样的问题的时候呢，真是一片空白，时常找不到一个好的点去切入，缺乏客观性，老是在讲自己的体验，自己的感受，信息量真的太低了，并且也没有任何语言组织技巧，让人云里雾里的。
+3动作僵硬 一旦处在这样的环境当中，我的肢体动作会非常的不自然，一直在笑，显得非常不尊重这个场合。
+4顺坡下驴 人家说什么就是什么，自己也不展示自己的价值，有种跟别人一起攻击自己的感觉。
+唉、我都不知道还有多少缺点，经过我的思考，可能这一切的一切来源于一个本质的问题：
+我没有自信 哈哈哈，居然是这种不痛不痒的问题。。其实并不是，这个问题真的困扰了我好久好久。。因为不自信，所以采取的防御的策略，但是没有完美的防御，一旦被攻破，那就是节节败退。因为不自信总是听信别人的观点，当问起自己的观点的时候就会觉得&ndash;这不是我的观点啊，都是别人的。卧槽，我好菜
+我为什么会有这样的缺点 根源，根源到底是什么呢？真不知道。从现象来说，我缺乏一个能让我自信的东西，我长得不好看，声音不好听，唱歌跑调，没有特长，没有独特的魅力，我真的，真的就是个垃圾啊。
+我该如何改正这个缺点 完了我给自己攻击了一遍。这简直就是一个恶性循环！不行，我一定得打破这个循环。那我尝试着拆解一下、如何去让自己有自信呢。
+心态转变 哈哈哈，先自我欺骗呗？ 缺点在什么时候才是缺点呢&ndash;在被发现的时候，在你需要飞的时候，坚实的地基就是缺点，所以，缺点是一个特点。
+技术支持 先把表象的东西改了，这些东西都是容易训练的，口齿不清你就去读文章呗，逻辑混乱你就去整理呗，动作僵硬你就去锻炼呗。
+充实自己 知识和技能是最好的武装，我回顾自己，似乎没有什么拿得出手的知识的技能，没有对某一个领域有稍微深一点的研究，所以需要汲取知识。
+计划制定 综述文献，综述文献一般是比较易懂的，尝试看它们，进行总结和分享，培养阅读、整理的习惯 书籍阅读，阅读人文、科学、哲学方面的经典书籍，充实知识材料 朗读练习，以书籍或新闻为材料，尝试大声朗读，口齿清晰，逻辑流畅 拒绝挑战，尝试被陌生人拒绝，锻炼平和冷静的心态 经营项目，收集整理制作项目，学会更好的展示和包装自己，获取经济利益 </div><div class=post-footer>
+<a href=/posts/diaries/2024-04-01/>阅读全文</a><div class=post-tags>
+<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E6%97%A5%E8%AE%B0/>日记</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
 <a href=/posts/leetcode/2/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/leetcode/2/1.png data-srcset="/posts/leetcode/2/1.png, /posts/leetcode/2/1.png 1.5x, /posts/leetcode/2/1.png 2x" data-sizes=auto alt=/posts/leetcode/2/1.png title=/posts/leetcode/2/1.png width=1008 height=504></a>
 </div><h1 class=single-title itemprop="name headline">
 <a href=/posts/leetcode/2/>002-两数相加</a>
@@ -78,31 +107,6 @@
 vim的模式 Normal: for moving around a file and making edits Insert: for inserting text Replace: for replacing text Visual (plain, line, or block): for selecting blocks of text Command-line: for running a command 移动 movement 即光标的移动。在normal模式和Visual模式都能用。
 基本移动： hjkl &ndash;> 左下上右 单词移动：w后一个单词的开始，b前一个单词的开始，e单词的结尾 行内移动：0行首，^首个非空字符,$行尾 屏幕移动： HML &ndash;> 屏幕最高、中间、最低行 high，middle、low 翻页 ：&lt;C-D>、&lt;C-U> &mdash;> 向上、向下翻页 文件 : G文件末尾，gg文件开头 (g is for go) 行号 ： {行号}G 去行号(23G),或者:{行号} 行内查找：t{char}、f{char}向后查找,T{char}、F{char}向前查找 【f到该字符上，t在该字符前面】 ,、;查找结果跳转&mdash;>前、后 搜索: /{正则表达式}, n / N 用于导航匹配 选择 Selection 配合前面的移动来选择字符</div><div class=post-footer>
 <a href=/posts/learning/missingsemester/day3/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/missingsemester/>MissingSemester</a>,&nbsp;<a href=/tags/cs/>CS</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
-<a href=/posts/learning/missingsemester/day2/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/missingsemester/day2/1.png data-srcset="/posts/learning/missingsemester/day2/1.png, /posts/learning/missingsemester/day2/1.png 1.5x, /posts/learning/missingsemester/day2/1.png 2x" data-sizes=auto alt=/posts/learning/missingsemester/day2/1.png title=/posts/learning/missingsemester/day2/1.png width=1280 height=640></a>
-</div><h1 class=single-title itemprop="name headline">
-<a href=/posts/learning/missingsemester/day2/>MissingSemester day2</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2024-01-02>2024-01-02</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a>&nbsp;<a href=/categories/missingsemester/><i class="far fa-folder fa-fw" aria-hidden=true></i>MissingSemester</a></span></div><div class=content>课程总结 shell脚本的基础知识，变量的使用以及shebang 常用工具的介绍，文件搜索工具和方法 重点内容 shell脚本 变量的定义和赋值 foo=bar 提示 空格在shell中十分敏感，切勿随意添加空格，如果写成 foo = bar它的意思是运行foo这个程序，第二和第三个参数分别为 = 和 bar，这明显不是我们想要的 变量的引用 echo $foo # 输出 bar 使用$来引用变量的值
-单引号与双引号 foo=bar echo "$foo" # prints bar echo '$foo' # prints $foo 提示 从上面的例子可以看出，双引号会将其中的变量引用进行解释，而单引号是将其中的内容直接当作一个字符串。 特殊变量引用 若mcd.sh内容如下：
-mcd () { mkdir -p "$1" cd "$1" } 该脚本的功能为 新建一个文件夹，然后自动cd进去
-source mcd.sh mcd test 使用source file 将脚本的内容进行加载和执行，上面的例子即是将函数进行了加载
-然后使用 mcd 命令来调用函数
-值得注意的是，在脚本中，我们使用了"$1"来表示接受到的第一个参数，在这个例子中，我们的参数是test,所以它会创建名为test的文件夹，然后cd进去
-还有其他的特殊变量：</div><div class=post-footer>
-<a href=/posts/learning/missingsemester/day2/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/missingsemester/>MissingSemester</a>,&nbsp;<a href=/tags/cs/>CS</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
-<a href=/posts/learning/missingsemester/day1/><img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/missingsemester/day1/1.png data-srcset="/posts/learning/missingsemester/day1/1.png, /posts/learning/missingsemester/day1/1.png 1.5x, /posts/learning/missingsemester/day1/1.png 2x" data-sizes=auto alt=/posts/learning/missingsemester/day1/1.png title=/posts/learning/missingsemester/day1/1.png width=1280 height=640></a>
-</div><h1 class=single-title itemprop="name headline">
-<a href=/posts/learning/missingsemester/day1/>MissingSemester day1</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2023-12-27>2023-12-27</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a>&nbsp;<a href=/categories/missingsemester/><i class="far fa-folder fa-fw" aria-hidden=true></i>MissingSemester</a></span></div><div class=content>课程概览 本节课主要对整个课程进行了大致的描述，包括设置这门课的意义，以及内容安排。 讲解了SHELL的基本概念和特性，以及一些程序和符号的使用（man、ls、mkdir、｜、&lt;>、etc..） 重点 什么是SHELL SHELL是文本交互界面，区别于图形化交互界面，SHELL通过文本与系统交互，比图形界面更能掌控我们的电脑
-shell如何知道你要运行的程序在哪里 shell会通过一个特定的顺序（不同的文件夹目录）来搜寻程序，如果找到了就会运行找到的第一个程序
-通过 $PATH 能观察shell的搜索路径，下面的例子通过echo将它打印了出来
-另外，可以使用which 命令，来告诉你如果运行某个程序，它具体来自哪个目录,例如echo就来自于/bin/echo
-missing:~$ echo $PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin missing:~$ which echo /bin/echo missing:~$ /bin/echo $PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin 文件和文件夹的访问权限 使用ls -l ，显示文件夹下文件的详细信息，其中第一列代表了文件/文件夹的权限
-missing:~$ ls -l /home drwxr-xr-x 1 missing users 4096 Jun 15 2019 missing d代表这是一个文件夹 后续一共九个字符分为三组，每一组都是按照rwx(读、写、执行)的顺序排列，如果有权限则限制字母，反正则显示- 三组字母分别代表用户、组、其他人对该文件\文件夹的权限 tips 文件夹的执行，代表是否能够打开文件夹，文件夹的读，代表能否查看内容，文件夹的写，代表能否删除内部的文件 连接程序,重定向与管道 通过 &lt; ，> ，| 可以将程序的输入输出流连接起来
-首先要知道的是：对于一个程序来说，一般有输入流和输出流，例如从键盘输出，然后打印到屏幕上
-(base) ➜ TheMissingSemester echo hello hello 使用>&lt;符号将输入输出流重定向： missing:~$ echo hello > hello.</div><div class=post-footer>
-<a href=/posts/learning/missingsemester/day1/>阅读全文</a><div class=post-tags>
 <i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/missingsemester/>MissingSemester</a>,&nbsp;<a href=/tags/cs/>CS</a></div></div></article><ul class=pagination><li class="page-item active">
 <span class=page-link>
 <a href=/>1</a>
