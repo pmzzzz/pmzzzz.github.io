@@ -70,9 +70,11 @@ jQuery(document).ready(function($) {
 $(function () {
 	$.backstretch([
 		"/imgs/bg/3.jpg",
-		  "/imgs/bg/1.jpeg",
-		  "/imgs/bg/2.jpeg",
-	], { duration: 2000, fade: 1500 });
+		//   "/imgs/bg/1.jpeg",
+		//   "/imgs/bg/2.jpeg",
+	]
+	// , { duration: 2000, fade: 1500 }
+);
 });
 
 /* 拉姆蕾姆回到顶部或底部按钮 */
