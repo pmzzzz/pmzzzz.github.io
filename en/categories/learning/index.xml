@@ -1,0 +1,7 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Learning - Category - 泡面zz的小屋</title><link>https://pmzzzt.eu.org/en/categories/learning/</link><description>Learning - Category - 泡面zz的小屋</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>zt_blog@outlook.com (泡面zz)</managingEditor><webMaster>zt_blog@outlook.com (泡面zz)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 09 May 2024 15:00:00 +0800</lastBuildDate><atom:link href="https://pmzzzt.eu.org/en/categories/learning/" rel="self" type="application/rss+xml"/><item><title>BP Validation in Pytorch</title><link>https://pmzzzt.eu.org/en/posts/learning/cs/pytorch_bp/</link><pubDate>Thu, 09 May 2024 15:00:00 +0800</pubDate><author>泡面zz</author><guid>https://pmzzzt.eu.org/en/posts/learning/cs/pytorch_bp/</guid><description><![CDATA[<div class="featured-image">
+                <img src="/1.png" referrerpolicy="no-referrer">
+            </div>Backgroud It&rsquo;s very easy to do BP in Pytorch , just call backward() with loss .
+to further my understanding , I&rsquo;ll try to figure out the compute procces with a little example.
+Turns out that doing it with my hand has the same result with pytorch.
+I`ve got some basic understanding about BP and Pytorch
+Key Point  add parameterrequires_grad=True to Tensor who need to be updated,pytorch will caculate gradiant automaticly.]]></description></item></channel></rss>
