@@ -67,17 +67,36 @@ jQuery(document).ready(function($) {
 });
 
  /* 轮播背景图片 */
-// $(function () {
-// 	$.backstretch([
-// 		"/imgs/bg/3.jpg",
-// 		//   "/imgs/bg/1.jpeg",
-// 		//   "/imgs/bg/2.jpeg",
-// 	]
-// 	// , { duration: 2000, fade: 1500 }
-// );
+$(function () {
+	$.backstretch([
+		"/imgs/bg/3.jpg",
+		//   "/imgs/bg/1.jpeg",
+		//   "/imgs/bg/2.jpeg",
+	]
+	// , { duration: 2000, fade: 1500 }
+);
+});
+
+/* 拉姆蕾姆回到顶部或底部按钮 */
+// $(function() {
+// 	$("#lamu img").eq(0).click(function() {
+// 		$("html,body").animate({scrollTop:$(document).height()},800);
+// 		return false;
+// 	});
+// 	$("#leimu img").eq(0).click(function() {
+// 		$("html,body").animate({scrollTop:0},800);
+// 		return false;
+// 	});
 // });
 
+// /* 后置加载页面组件的背景图片 */
+// $(function() {
+// 	/* 首页头像div加载GitHub Chart作为背景图片 */
+// 	$("div.home-avatar").attr('style', "background: url(https://ghchart.rshah.org/FFA500/lewky);background-repeat: no-repeat;background-position: center;background-size: auto 7.5rem;");
 
+// 	/* 评论框加载背景图片 */
+// 	$(".v[data-class=v] .veditor").attr('style', "background-image: url(" + $cdnPrefix + "/images/common/valinebg.webp) !important;");
+// });
 
 function getCurrentDateString() {
 	var now = new Date();
@@ -88,25 +107,25 @@ function getCurrentDateString() {
 }
 
 /* 离开当前页面时修改网页标题，回到当前页面时恢复原来标题 */
-// window.onload = function() {
-//   var OriginTitile = document.title;
-//   var titleTime;
-//   document.addEventListener('visibilitychange', function() {
-//     if(document.hidden) {
-//       $('[rel="icon"]').attr('href', "/failure.ico");
-//       $('[rel="shortcut icon"]').attr('href', "/failure.ico");
-//       document.title = '喔唷，崩溃啦！';
-//       clearTimeout(titleTime);
-//     } else {
-//       $('[rel="icon"]').attr('href', "/favicon-32x32.png");
-//       $('[rel="shortcut icon"]').attr('href', "/favicon-32x32.png");
-//       document.title = '咦，页面又好了！';
-//       titleTime = setTimeout(function() {
-//         document.title = OriginTitile;
-//       }, 2000);
-// 	}
-//   });
-// }
+window.onload = function() {
+  var OriginTitile = document.title;
+  var titleTime;
+  document.addEventListener('visibilitychange', function() {
+    if(document.hidden) {
+      $('[rel="icon"]').attr('href', "/failure.ico");
+      $('[rel="shortcut icon"]').attr('href', "/failure.ico");
+      document.title = '喔唷，崩溃啦！';
+      clearTimeout(titleTime);
+    } else {
+      $('[rel="icon"]').attr('href', "/favicon-32x32.png");
+      $('[rel="shortcut icon"]').attr('href', "/favicon-32x32.png");
+      document.title = '咦，页面又好了！';
+      titleTime = setTimeout(function() {
+        document.title = OriginTitile;
+      }, 2000);
+	}
+  });
+}
 
 /* 站点运行时间 */
 function runtime() {
