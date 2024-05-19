@@ -17,13 +17,21 @@
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
 <link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/cs/grade/><link rel=prev href=https://pmzzzt.eu.org/posts/log/><link rel=next href=https://pmzzzt.eu.org/posts/learning/cs/pytorch_bp/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
 <noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
-<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"梯度","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/grade\/"},"genre":"posts","keywords":"CS","wordcount":721,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/grade\/","datePublished":"2024-05-06T16:00:00+08:00","dateModified":"2024-05-06T16:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"light"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"light"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"梯度","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/grade\/"},"genre":"posts","keywords":"CS","wordcount":743,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/grade\/","datePublished":"2024-05-06T16:00:00+08:00","dateModified":"2024-05-06T16:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"light"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"light"==="dark")&&document.body.setAttribute("theme","dark")</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
 <div class=header-title>
 <a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
 </div><div class=menu>
-<div class=menu-inner><a class=menu-item href=/academy/ title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术 </a><a class=menu-item href=/posts/ title=Posts><i class="fas fa-book"></i> 文章 </a><a class=menu-item href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a class=menu-item href=/readlist/><i class="fas fa-list"></i> 书单 </a><a class=menu-item href=/categories/ title=Categories><i class="fas fa-table"></i> 分类 </a><a class=menu-item href=/about/ title=About><i class="fa-regular fa-address-card"></i> 关于 </a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链 </a><span class="menu-item delimiter"></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<div class=menu-inner>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-table"></i> 分类 </a></div></div><a class=menu-item href=/academy/ title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a><a class=menu-item href=/readlist/><i class="fas fa-list"></i> 书单
+</a><a class=menu-item href=/about/ title=About><i class="fas fa-fw fa-at"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
 <i class="fas fa-adjust fa-fw" aria-hidden=true></i>
 </a><a href=javascript:void(0); class="menu-item language" title=选择语言>
 <i class="fa fa-globe" aria-hidden=true></i>
@@ -35,7 +43,15 @@
 <a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
 </div><div class=menu-toggle id=menu-toggle-mobile>
 <span></span><span></span><span></span>
-</div></div><div class=menu id=menu-mobile><a class=menu-item href=/academy/ title=Academy><i class="fa-solid fa-graduation-cap"></i>学术</a><a class=menu-item href=/posts/ title=Posts><i class="fas fa-book"></i>文章</a><a class=menu-item href=/tags/ title=Tags><i class="fas fa-tags"></i>标签</a><a class=menu-item href=/readlist/ title><i class="fas fa-list"></i>书单</a><a class=menu-item href=/categories/ title=Categories><i class="fas fa-table"></i>分类</a><a class=menu-item href=/about/ title=About><i class="fa-regular fa-address-card"></i>关于</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i>友链</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+</div></div><div class=menu id=menu-mobile>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-table"></i> 分类 </a></div></div><a class=menu-item href=/academy/ title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a><a class=menu-item href=/readlist/><i class="fas fa-list"></i> 书单
+</a><a class=menu-item href=/about/ title=About><i class="fas fa-fw fa-at"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
 <i class="fas fa-adjust fa-fw" aria-hidden=true></i>
 </a><a href=javascript:void(0); class=menu-item title=选择语言>
 <i class="fa fa-globe fa-fw" aria-hidden=true></i>
@@ -44,20 +60,20 @@
 <div class=container>
 <div class=toc id=toc-auto>
 <h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">梯度</h1><div class=post-meta>
-<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-05-06>2024-05-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 721 字&nbsp;
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-05-06>2024-05-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 743 字&nbsp;
 <i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 2 分钟&nbsp;</div></div><div class="details toc" id=toc-static data-kept>
 <div class="details-summary toc-title">
 <span>目录</span>
 <span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
 </div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
 <ul>
-<li><a href=#原文>原文</a></li><li><a href=#理解>理解</a></li></ul></nav></div></div><div class=content id=content><h2 id=原文>原文</h2><blockquote>
+<li><a href=#原文>原文</a></li><li><a href=#理解>理解</a></li><li><a href=#引用>引用</a></li></ul></nav></div></div><div class=content id=content><h2 id=原文>原文</h2><blockquote>
 <p>我们可以连结一个多元函数对其所有变量的偏导数，以得到该函数的<em>梯度</em>（gradient）向量。
 具体而言，设函数$f:\mathbb{R}^n\rightarrow\mathbb{R}$的输入是
 一个$n$维向量$\mathbf{x}=[x_1,x_2,\ldots,x_n]^\top$，并且输出是一个标量。
 函数$f(\mathbf{x})$相对于$\mathbf{x}$的梯度是一个包含$n$个偏导数的向量:</p><p>$$\nabla_{\mathbf{x}} f(\mathbf{x}) = \bigg[\frac{\partial f(\mathbf{x})}{\partial x_1}, \frac{\partial f(\mathbf{x})}{\partial x_2}, \ldots, \frac{\partial f(\mathbf{x})}{\partial x_n}\bigg]^\top,$$</p><p>其中$\nabla_{\mathbf{x}} f(\mathbf{x})$通常在没有歧义时被$\nabla f(\mathbf{x})$取代。</p><p>假设$\mathbf{x}$为$n$维向量，在微分多元函数时经常使用以下规则:</p><ul>
 <li>对于所有$\mathbf{A} \in \mathbb{R}^{m \times n}$，都有$\nabla_{\mathbf{x}} \mathbf{A} \mathbf{x} = \mathbf{A}^\top$</li><li>对于所有$\mathbf{A} \in \mathbb{R}^{n \times m}$，都有$\nabla_{\mathbf{x}} \mathbf{x}^\top \mathbf{A} = \mathbf{A}$</li><li>对于所有$\mathbf{A} \in \mathbb{R}^{n \times n}$，都有$\nabla_{\mathbf{x}} \mathbf{x}^\top \mathbf{A} \mathbf{x} = (\mathbf{A} + \mathbf{A}^\top)\mathbf{x}$</li><li>$\nabla_{\mathbf{x}} |\mathbf{x} |^2 = \nabla_{\mathbf{x}} \mathbf{x}^\top \mathbf{x} = 2\mathbf{x}$</li></ul><p>同样，对于任何矩阵$\mathbf{X}$，都有$\nabla_{\mathbf{X}} |\mathbf{X} |_F^2 = 2\mathbf{X}$。
-正如我们之后将看到的，梯度对于设计深度学习中的优化算法有很大用处。</p></blockquote><h2 id=理解>理解</h2><p><strong>当函数输出是一个向量的时候，每一行就是一个函数</strong><br>
+正如我们之后将看到的，梯度对于设计深度学习中的优化算法有很大用处。</p></blockquote><h2 id=理解>理解</h2><p><strong>当函数输出是一个向量的时候，每一个元素就是一个函数的输出</strong><br>
 例如 ：</p><p>$$
 A = \begin{bmatrix}
 1 & 2 \\
@@ -91,8 +107,9 @@ $$
 1 & 3 & 5 \\
 2 & 4 & 6
 \end{bmatrix}
-$$</p><blockquote>
-<p><a href=https://www.cnblogs.com/Davy-Chen/articles/17317031.html target=_blank rel="noopener noreffer">backward方法中gradient参数的意义</a></p></blockquote><div class=post-reward>
+$$</p><h2 id=引用>引用</h2><p>也可查看雅可比矩阵。</p><blockquote>
+<p><a href=https://www.cnblogs.com/Davy-Chen/articles/17317031.html target=_blank rel="noopener noreffer">backward方法中gradient参数的意义</a><br>
+<a href=https://zh.wikipedia.org/wiki/%E9%9B%85%E5%8F%AF%E6%AF%94%E7%9F%A9%E9%98%B5 target=_blank rel="noopener noreffer">雅可比矩阵</a></p></blockquote><div class=post-reward>
 <input type=checkbox name=reward id=reward hidden>
 <label class=reward-button for=reward>赞赏支持</label>
 <div class=qr-code>

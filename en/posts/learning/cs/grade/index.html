@@ -23,7 +23,15 @@
 <div class=header-title>
 <a href=/en/ title="pmzz's cabin"><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>Home</a>
 </div><div class=menu>
-<div class=menu-inner><a class=menu-item href=/en/academy/ title=Academy><i class="fa-solid fa-graduation-cap"></i> Academy </a><a class=menu-item href=/en/posts/><i class="fas fa-book"></i> Posts </a><a class=menu-item href=/en/tags/><i class="fas fa-tags"></i> Tags </a><a class=menu-item href=/en/categories/><i class="fas fa-table"></i> Categories </a><a class=menu-item href=/en/readlist/><i class="fas fa-list"></i> Read </a><a class=menu-item href=/en/about/><i class="fa-regular fa-address-card"></i> About </a><a class=menu-item href=/en/friend/><i class="fas fa-fw fa-link"></i> Friend </a><span class="menu-item delimiter"></span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<div class=menu-inner>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title><i class="fas fa-fw fa-archive"></i> Archive
+</a>
+<div class="menu-more-content dropdown-content"><a href=/en/tags/ title><i class="fas fa-tags"></i> Tags </a><a href=/en/categories/ title><i class="fas fa-table"></i> Categories </a></div></div><a class=menu-item href=/en/academy/ title=Academy><i class="fa-solid fa-graduation-cap"></i> Academy
+</a><a class=menu-item href=/en/readlist/><i class="fas fa-list"></i> Read
+</a><a class=menu-item href=/en/about/><i class="fas fa-fw fa-at"></i> About
+</a><a class=menu-item href=/en/friend/><i class="fas fa-fw fa-link"></i> Friend
+</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
 <i class="fas fa-adjust fa-fw" aria-hidden=true></i>
 </a><a href=javascript:void(0); class="menu-item language" title="Select Language">
 <i class="fa fa-globe" aria-hidden=true></i>
@@ -35,7 +43,15 @@
 <a href=/en/ title="pmzz's cabin"><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>Home</a>
 </div><div class=menu-toggle id=menu-toggle-mobile>
 <span></span><span></span><span></span>
-</div></div><div class=menu id=menu-mobile><a class=menu-item href=/en/academy/ title=Academy><i class="fa-solid fa-graduation-cap"></i>Academy</a><a class=menu-item href=/en/posts/ title><i class="fas fa-book"></i>Posts</a><a class=menu-item href=/en/tags/ title><i class="fas fa-tags"></i>Tags</a><a class=menu-item href=/en/categories/ title><i class="fas fa-table"></i>Categories</a><a class=menu-item href=/en/readlist/ title><i class="fas fa-list"></i>Read</a><a class=menu-item href=/en/about/ title><i class="fa-regular fa-address-card"></i>About</a><a class=menu-item href=/en/friend/ title><i class="fas fa-fw fa-link"></i>Friend</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+</div></div><div class=menu id=menu-mobile>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title><i class="fas fa-fw fa-archive"></i> Archive
+</a>
+<div class="menu-more-content dropdown-content"><a href=/en/tags/ title><i class="fas fa-tags"></i> Tags </a><a href=/en/categories/ title><i class="fas fa-table"></i> Categories </a></div></div><a class=menu-item href=/en/academy/ title=Academy><i class="fa-solid fa-graduation-cap"></i> Academy
+</a><a class=menu-item href=/en/readlist/><i class="fas fa-list"></i> Read
+</a><a class=menu-item href=/en/about/><i class="fas fa-fw fa-at"></i> About
+</a><a class=menu-item href=/en/friend/><i class="fas fa-fw fa-link"></i> Friend
+</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
 <i class="fas fa-adjust fa-fw" aria-hidden=true></i>
 </a><a href=javascript:void(0); class=menu-item title="Select Language">
 <i class="fa fa-globe fa-fw" aria-hidden=true></i>
@@ -57,7 +73,7 @@
 一个$n$维向量$\mathbf{x}=[x_1,x_2,\ldots,x_n]^\top$，并且输出是一个标量。
 函数$f(\mathbf{x})$相对于$\mathbf{x}$的梯度是一个包含$n$个偏导数的向量:</p><p>$$\nabla_{\mathbf{x}} f(\mathbf{x}) = \bigg[\frac{\partial f(\mathbf{x})}{\partial x_1}, \frac{\partial f(\mathbf{x})}{\partial x_2}, \ldots, \frac{\partial f(\mathbf{x})}{\partial x_n}\bigg]^\top,$$</p><p>其中$\nabla_{\mathbf{x}} f(\mathbf{x})$通常在没有歧义时被$\nabla f(\mathbf{x})$取代。</p><p>假设$\mathbf{x}$为$n$维向量，在微分多元函数时经常使用以下规则:</p><ul>
 <li>对于所有$\mathbf{A} \in \mathbb{R}^{m \times n}$，都有$\nabla_{\mathbf{x}} \mathbf{A} \mathbf{x} = \mathbf{A}^\top$</li><li>对于所有$\mathbf{A} \in \mathbb{R}^{n \times m}$，都有$\nabla_{\mathbf{x}} \mathbf{x}^\top \mathbf{A} = \mathbf{A}$</li><li>对于所有$\mathbf{A} \in \mathbb{R}^{n \times n}$，都有$\nabla_{\mathbf{x}} \mathbf{x}^\top \mathbf{A} \mathbf{x} = (\mathbf{A} + \mathbf{A}^\top)\mathbf{x}$</li><li>$\nabla_{\mathbf{x}} |\mathbf{x} |^2 = \nabla_{\mathbf{x}} \mathbf{x}^\top \mathbf{x} = 2\mathbf{x}$</li></ul><p>同样，对于任何矩阵$\mathbf{X}$，都有$\nabla_{\mathbf{X}} |\mathbf{X} |_F^2 = 2\mathbf{X}$。
-正如我们之后将看到的，梯度对于设计深度学习中的优化算法有很大用处。</p></blockquote><h2 id=understanding>Understanding</h2><p><strong>consider as a fun every row</strong><br>
+正如我们之后将看到的，梯度对于设计深度学习中的优化算法有很大用处。</p></blockquote><h2 id=understanding>Understanding</h2><p><strong>consider as a function every element</strong><br>
 example ：</p><p>$$
 A = \begin{bmatrix}
 1 & 2 \\
