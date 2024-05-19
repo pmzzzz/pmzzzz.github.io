@@ -4,18 +4,18 @@
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=robots content="noodp">
 <title>pytorch反向传播验证 - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="pytorch反向传播验证">
-<meta property="og:description" content="背景 pytorch的反响传播十分方便，对loss 调用backward()就可以，为了更加深刻理解，尝试用一个小例子搞清楚计算的流程，发现跟手">
+<meta property="og:description" content="背景 pytorch的反向传播十分方便，对loss 调用backward()就可以，为了更加深刻理解，尝试用一个小例子搞清楚计算的流程，发现跟手">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://pmzzzt.eu.org/posts/learning/cs/pytorch_bp/"><meta property="article:section" content="posts">
 <meta property="article:published_time" content="2024-05-09T15:00:00+08:00">
 <meta property="article:modified_time" content="2024-05-09T15:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
 <meta name=twitter:card content="summary">
 <meta name=twitter:title content="pytorch反向传播验证">
-<meta name=twitter:description content="背景 pytorch的反响传播十分方便，对loss 调用backward()就可以，为了更加深刻理解，尝试用一个小例子搞清楚计算的流程，发现跟手">
+<meta name=twitter:description content="背景 pytorch的反向传播十分方便，对loss 调用backward()就可以，为了更加深刻理解，尝试用一个小例子搞清楚计算的流程，发现跟手">
 <meta name=application-name content="泡面zz">
 <meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/cs/pytorch_bp/><link rel=prev href=https://pmzzzt.eu.org/posts/learning/cs/grade/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/cs/pytorch_bp/><link rel=prev href=https://pmzzzt.eu.org/posts/learning/cs/grade/><link rel=next href=https://pmzzzt.eu.org/posts/lifa/2024-05-19/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
 <noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
 <noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"pytorch反向传播验证","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/pytorch_bp\/"},"genre":"posts","keywords":"CS, pytorch, 深度学习","wordcount":646,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/pytorch_bp\/","datePublished":"2024-05-09T15:00:00+08:00","dateModified":"2024-05-09T15:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"light"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"light"==="dark")&&document.body.setAttribute("theme","dark")</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
@@ -27,9 +27,10 @@
 <div class=dropdown>
 <a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
 </a>
-<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-table"></i> 分类 </a></div></div><a class=menu-item href=/academy/ title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
-</a><a class=menu-item href=/readlist/><i class="fas fa-list"></i> 书单
-</a><a class=menu-item href=/about/ title=About><i class="fas fa-fw fa-at"></i> 关于
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/readlist/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
 </a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
 </a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
 <i class="fas fa-adjust fa-fw" aria-hidden=true></i>
@@ -47,9 +48,10 @@
 <div class=dropdown>
 <a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
 </a>
-<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-table"></i> 分类 </a></div></div><a class=menu-item href=/academy/ title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
-</a><a class=menu-item href=/readlist/><i class="fas fa-list"></i> 书单
-</a><a class=menu-item href=/about/ title=About><i class="fas fa-fw fa-at"></i> 关于
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/readlist/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
 </a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
 </a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
 <i class="fas fa-adjust fa-fw" aria-hidden=true></i>
@@ -67,7 +69,7 @@
 <span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
 </div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
 <ul>
-<li><a href=#背景>背景</a></li><li><a href=#要点>要点</a></li><li><a href=#题目>题目</a></li><li><a href=#分析>分析</a></li><li><a href=#手推>手推</a></li><li><a href=#代码>代码</a></li><li><a href=#疑问>疑问</a></li></ul></nav></div></div><div class=content id=content><h2 id=背景>背景</h2><p>pytorch的反响传播十分方便，对loss 调用backward()就可以，为了更加深刻理解，尝试用一个小例子搞清楚计算的流程，发现跟手动计的结果符合，通过这个例子对pytorch和反向传播都有所掌握</p><h2 id=要点>要点</h2><ol>
+<li><a href=#背景>背景</a></li><li><a href=#要点>要点</a></li><li><a href=#题目>题目</a></li><li><a href=#分析>分析</a></li><li><a href=#手推>手推</a></li><li><a href=#代码>代码</a></li><li><a href=#疑问>疑问</a></li></ul></nav></div></div><div class=content id=content><h2 id=背景>背景</h2><p>pytorch的反向传播十分方便，对loss 调用backward()就可以，为了更加深刻理解，尝试用一个小例子搞清楚计算的流程，发现跟手动计的结果符合，通过这个例子对pytorch和反向传播都有所掌握</p><h2 id=要点>要点</h2><ol>
 <li>需要更新的值加上<code>requires_grad=True</code>参数就可以，在之后的计算中，pytorch会自动计算梯度</li><li>理论来说，使用<code>x = x-lr*x.grad</code>更新值之后，loss就会减小</li></ol><h2 id=题目>题目</h2><p>$$
 \boldsymbol{x} = [0,1,2,3] \\
 \boldsymbol{y} = \boldsymbol{x}^\top\boldsymbol{x} \\
@@ -131,7 +133,8 @@ $$
 </div></div></div><div class=post-info-more>
 <section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/pytorch/>pytorch</a>,&nbsp;<a href=/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/>深度学习</a></section><section>
 <span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
-</section></div><div class=post-nav><a href=/posts/learning/cs/grade/ class=prev rel=prev title=梯度><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>梯度</a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+</section></div><div class=post-nav><a href=/posts/learning/cs/grade/ class=prev rel=prev title=梯度><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>梯度</a>
+<a href=/posts/lifa/2024-05-19/ class=next rel=next title=2024-05-19>2024-05-19<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
 <script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:null,placeholder:"开启魔法上网方可使用评论～",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
 <div class=footer-container><div class=footer-line>
 <span id=run-time></span>
