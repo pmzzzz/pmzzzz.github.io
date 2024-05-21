@@ -1,0 +1,143 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title>计算图 - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="计算图">
+<meta property="og:description" content="为各类神经网络计算提供统一的描述">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pmzzzt.eu.org/posts/learning/cs/dag/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2024-05-21T16:00:00+08:00">
+<meta property="article:modified_time" content="2024-05-21T16:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="计算图">
+<meta name=twitter:description content="为各类神经网络计算提供统一的描述">
+<meta name=application-name content="泡面zz">
+<meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/cs/dag/><link rel=prev href=https://pmzzzt.eu.org/posts/lifa/2024-05-19/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"计算图","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/dag\/"},"genre":"posts","keywords":"CS","wordcount":1293,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/dag\/","datePublished":"2024-05-21T16:00:00+08:00","dateModified":"2024-05-21T16:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"light"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"light"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu>
+<div class=menu-inner>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/readlist/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="menu-item language" title=选择语言>
+<i class="fa fa-globe" aria-hidden=true></i>
+<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/posts/learning/cs/dag/ selected>简体中文</option></select>
+</a></div></div></div></header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div></div><div class=menu id=menu-mobile>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/readlist/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>
+<i class="fa fa-globe fa-fw" aria-hidden=true></i>
+<select class=language-select onchange="location=this.value"><option value=/posts/learning/cs/dag/ selected>简体中文</option></select>
+</a></div></div></header><main class=main>
+<div class=container>
+<div class=toc id=toc-auto>
+<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">计算图</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-05-21>2024-05-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 1293 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 3 分钟&nbsp;</div></div><div class="details toc" id=toc-static data-kept>
+<div class="details-summary toc-title">
+<span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#计算图提出>计算图提出</a></li><li><a href=#计算图与自动微分>计算图与自动微分</a>
+<ul>
+<li><a href=#为什么需要自动微分>为什么需要自动微分</a></li><li><a href=#如何自动微分反向传播>如何自动微分/反向传播</a></li></ul></li></ul></nav></div></div><div class=content id=content><p><strong>为各类神经网络计算提供统一的描述</strong></p><h2 id=计算图提出>计算图提出</h2><p>计算图又叫数据流图，用一个有向无环图表示计算过程。边表示数据(data)，点表示算子(Operator)。
+<figure><a class=lightgallery href=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE.png title=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE.png data-thumbnail=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE.png data-sub-html="<h2>计算图实例</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE.png data-srcset="/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE.png, /posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE.png 1.5x, /posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE.png 2x" data-sizes=auto alt=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE.png width=787 height=327>
+</a><figcaption class=image-caption>计算图实例</figcaption></figure>以下几个问题可以引出计算图：</p><ul>
+<li>如何在系统中统一表示神经网络？</li><li>如何实现自动求导？</li><li>如何对神经网络进行化简、合并、变换？</li><li>如何规划基本计算单元在加速器上高速执行？</li><li>如何进行内存预分配和管理？</li><li>基本处理单元派发到特定后端执行？</li></ul><p>作为一个单纯的使用者，我认为能浅浅思考一下前两个问题就可以了。AI框架有很多种，在底层是不是应该有一个通用表示方法呢，这个表示方法肯定要满足精确性和“单元解释性”，也就是说它得是数学表达式。</p><p>在AI求导的时候，用数值估计的方式会损失精度并且计算开销太大了(<code>f(x+h)-f(x)/h</code>)，用纯数学表达又会遇到某些函数没有解析导函数的情况(<code>relu、gate</code>)</p><p>以我目前的理解，计算图是一种AI模型的通用表示，并且框架可以利用它存储前向的信息从而快速求导的工具<br>
+或者说：<strong>为各类神经网络计算提供统一的描述</strong></p><h2 id=计算图与自动微分>计算图与自动微分</h2><p><strong>自动微分</strong>：由原子操作构成的复杂前向计算程序，关注自动生成高效的反向计算程序</p><h3 id=为什么需要自动微分>为什么需要自动微分</h3><p>我们在训练大多数AI模型的时候,其实目标就一个,减少loss,说白了就是找到这个loss的<strong>鞍点</strong>，可以说，训练流程核心就是<strong>求导</strong>
+<figure><a class=lightgallery href=/posts/learning/cs/dag/%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B%E6%95%B0%E5%AD%A6%E8%A1%A8%E7%A4%BA.png title=/posts/learning/cs/dag/%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B%E6%95%B0%E5%AD%A6%E8%A1%A8%E7%A4%BA.png data-thumbnail=/posts/learning/cs/dag/%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B%E6%95%B0%E5%AD%A6%E8%A1%A8%E7%A4%BA.png data-sub-html="<h2>训练流程数学表示</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/dag/%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B%E6%95%B0%E5%AD%A6%E8%A1%A8%E7%A4%BA.png data-srcset="/posts/learning/cs/dag/%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B%E6%95%B0%E5%AD%A6%E8%A1%A8%E7%A4%BA.png, /posts/learning/cs/dag/%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B%E6%95%B0%E5%AD%A6%E8%A1%A8%E7%A4%BA.png 1.5x, /posts/learning/cs/dag/%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B%E6%95%B0%E5%AD%A6%E8%A1%A8%E7%A4%BA.png 2x" data-sizes=auto alt=/posts/learning/cs/dag/%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B%E6%95%B0%E5%AD%A6%E8%A1%A8%E7%A4%BA.png width=531 height=354>
+</a><figcaption class=image-caption>训练流程数学表示</figcaption></figure></p><table>
+<thead>
+<tr>
+<th style=text-align:center>名称</th><th style=text-align:center>特点</th><th style=text-align:center>优点</th><th style=text-align:center>缺点</th></tr></thead><tbody>
+<tr>
+<td style=text-align:center><strong>符号微分(Symbolic Differentiation)</strong></td><td style=text-align:center>通过求导法则和导数变换公式，精确计算函数的导数</td><td style=text-align:center>精确数值结果</td><td style=text-align:center>表达式膨胀</td></tr><tr>
+<td style=text-align:center><strong>数值微分(Numerical Differentiation)</strong></td><td style=text-align:center>使用有限差分进行近似导数</td><td style=text-align:center>容易实现</td><td style=text-align:center>计算结果不精确、计算复杂度高、对 ℎ 的要求高</td></tr><tr>
+<td style=text-align:center><strong>自动微分(Auto Differentiation)</strong></td><td style=text-align:center>所有数值计算都由有限的基本运算组成、基本运算的导数表达式是已知的、通过链式法则将数值计算各部分组合成整体</td><td style=text-align:center>计算机友好</td><td style=text-align:center></td></tr></tbody></table><p>通过以上表格，选择自动微分是合理的。</p><h3 id=如何自动微分反向传播>如何自动微分/反向传播</h3><p>考虑如下表达式：
+$$𝑓(𝑥_1,𝑥_2 )=ln⁡(𝑥_1 )+𝑥_1 𝑥_2−sin⁡(𝑥_2)$$
+<figure><a class=lightgallery href=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%A1%A8%E7%A4%BA.png title=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%A1%A8%E7%A4%BA.png data-thumbnail=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%A1%A8%E7%A4%BA.png data-sub-html="<h2>计算图正向表示</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%A1%A8%E7%A4%BA.png data-srcset="/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%A1%A8%E7%A4%BA.png, /posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%A1%A8%E7%A4%BA.png 1.5x, /posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%A1%A8%E7%A4%BA.png 2x" data-sizes=auto alt=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%A1%A8%E7%A4%BA.png width=988 height=312>
+</a><figcaption class=image-caption>计算图正向表示</figcaption></figure>从图中我们可以看出，计算图的本质就是将方程式拆解成小的计算单元，为此引入了许多中间变量（$v_{-1}$到$v_5$）。根据这个图，我们可以将方程式拆解：
+<figure><a class=lightgallery href=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%AE%A1%E7%AE%97.png title=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%AE%A1%E7%AE%97.png data-thumbnail=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%AE%A1%E7%AE%97.png data-sub-html="<h2>计算图正向计算</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%AE%A1%E7%AE%97.png data-srcset="/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%AE%A1%E7%AE%97.png, /posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%AE%A1%E7%AE%97.png 1.5x, /posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%AE%A1%E7%AE%97.png 2x" data-sizes=auto alt=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%AD%A3%E5%90%91%E8%AE%A1%E7%AE%97.png width=451 height=314>
+</a><figcaption class=image-caption>计算图正向计算</figcaption></figure>接下来构建反向传播的计算图，它们有相同的结构：
+<figure><a class=lightgallery href=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%A1%A8%E7%A4%BA.png title=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%A1%A8%E7%A4%BA.png data-thumbnail=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%A1%A8%E7%A4%BA.png data-sub-html="<h2>计算图反向表示</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%A1%A8%E7%A4%BA.png data-srcset="/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%A1%A8%E7%A4%BA.png, /posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%A1%A8%E7%A4%BA.png 1.5x, /posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%A1%A8%E7%A4%BA.png 2x" data-sizes=auto alt=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%A1%A8%E7%A4%BA.png width=384 height=233>
+</a><figcaption class=image-caption>计算图反向表示</figcaption></figure>值得注意的是，反向图计算图中，会用到正向时的数据。
+<figure><a class=lightgallery href=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%AE%A1%E7%AE%97.png title=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%AE%A1%E7%AE%97.png data-thumbnail=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%AE%A1%E7%AE%97.png data-sub-html="<h2>计算图反向计算</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%AE%A1%E7%AE%97.png data-srcset="/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%AE%A1%E7%AE%97.png, /posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%AE%A1%E7%AE%97.png 1.5x, /posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%AE%A1%E7%AE%97.png 2x" data-sizes=auto alt=/posts/learning/cs/dag/%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%8F%8D%E5%90%91%E8%AE%A1%E7%AE%97.png width=786 height=568>
+</a><figcaption class=image-caption>计算图反向计算</figcaption></figure>在反向计算的时候，我们的目标可以设置为，算出：结果改变1需要输入改变多少。这是一个可以分层计算的，对应数学其实就是链式法则。使它有可操作性。<br>
+为了更快的计算，我们需要用到矩阵表示：</p><p>之前我们了解了输入输出都是向量的函数的偏导数表示:雅克比矩阵
+<figure><a class=lightgallery href=/posts/learning/cs/dag/%E9%9B%85%E5%8F%AF%E6%AF%94%E7%9F%A9%E9%98%B5.png title=/posts/learning/cs/dag/%E9%9B%85%E5%8F%AF%E6%AF%94%E7%9F%A9%E9%98%B5.png data-thumbnail=/posts/learning/cs/dag/%E9%9B%85%E5%8F%AF%E6%AF%94%E7%9F%A9%E9%98%B5.png data-sub-html="<h2>雅可比矩阵</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/dag/%E9%9B%85%E5%8F%AF%E6%AF%94%E7%9F%A9%E9%98%B5.png data-srcset="/posts/learning/cs/dag/%E9%9B%85%E5%8F%AF%E6%AF%94%E7%9F%A9%E9%98%B5.png, /posts/learning/cs/dag/%E9%9B%85%E5%8F%AF%E6%AF%94%E7%9F%A9%E9%98%B5.png 1.5x, /posts/learning/cs/dag/%E9%9B%85%E5%8F%AF%E6%AF%94%E7%9F%A9%E9%98%B5.png 2x" data-sizes=auto alt=/posts/learning/cs/dag/%E9%9B%85%E5%8F%AF%E6%AF%94%E7%9F%A9%E9%98%B5.png width=535 height=234>
+</a><figcaption class=image-caption>雅可比矩阵</figcaption></figure></p><p>在pytorch中规定loss是个标量，后一层损失函数对当前层输出的导数可以表示为</p><p>$$\boldsymbol{v}=[\frac{\partial loss}{\partial y_1},&mldr;,\frac{\partial loss}{\partial y_m}]^\top$$</p><p>将雅可比矩阵和上面的向量相乘,就得到了再前一层的导数【此例为第二层，也就是x】:
+<figure><a class=lightgallery href=/posts/learning/cs/dag/vector-Jacobian%E7%9A%84%E4%B9%98%E7%A7%AF.png title=/posts/learning/cs/dag/vector-Jacobian%E7%9A%84%E4%B9%98%E7%A7%AF.png data-thumbnail=/posts/learning/cs/dag/vector-Jacobian%E7%9A%84%E4%B9%98%E7%A7%AF.png data-sub-html="<h2>vector-Jacobian的乘积</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/dag/vector-Jacobian%E7%9A%84%E4%B9%98%E7%A7%AF.png data-srcset="/posts/learning/cs/dag/vector-Jacobian%E7%9A%84%E4%B9%98%E7%A7%AF.png, /posts/learning/cs/dag/vector-Jacobian%E7%9A%84%E4%B9%98%E7%A7%AF.png 1.5x, /posts/learning/cs/dag/vector-Jacobian%E7%9A%84%E4%B9%98%E7%A7%AF.png 2x" data-sizes=auto alt=/posts/learning/cs/dag/vector-Jacobian%E7%9A%84%E4%B9%98%E7%A7%AF.png width=533 height=218>
+</a><figcaption class=image-caption>vector-Jacobian的乘积</figcaption></figure></p><p>如果网络再深，也不过是多做几次矩阵乘法，这对计算机来说是效率很高的！</p><div class=post-reward>
+<input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label>
+<div class=qr-code>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/wechat.png>
+<span>微信打赏</span>
+</label>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/alipay.png>
+<span>支付宝打赏</span>
+</label>
+</div></div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>更新于 2024-05-21</span>
+</div></div><div class=post-info-line>
+<div class=post-info-md></div><div class=post-info-share>
+<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/learning/cs/dag/ data-hashtag=CS><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/learning/cs/dag/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/learning/cs/dag/ data-title=计算图><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
+</div></div></div><div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a></section><section>
+<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
+</section></div><div class=post-nav><a href=/posts/lifa/2024-05-19/ class=prev rel=prev title=2024-05-19><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>2024-05-19</a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+<script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:null,placeholder:"开启魔法上网方可使用评论～",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+<span id=run-time></span>
+</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023 - 2024</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+<i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论>
+<i class="fas fa-comment fa-fw" aria-hidden=true></i>
+</a>
+</div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js></script>
+<script type=text/javascript src=/js/custom.js></script>
+<script type=text/javascript src=/js/test.js></script></body></html>
