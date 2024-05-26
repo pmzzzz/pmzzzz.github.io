@@ -1,0 +1,229 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title>softmax(2)--从零实现 - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="softmax(2)--从零实现">
+<meta property="og:description" content="注意 本文主要记录代码，优化细节，添加注释。 数据加载 import torch from IPython import display from d2l import torch as d2l batch_size = 256 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size) 其中load_data_fashion_mnist由">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pmzzzt.eu.org/posts/learning/cs/softmax2/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2024-05-24T15:00:00+08:00">
+<meta property="article:modified_time" content="2024-05-24T15:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="softmax(2)--从零实现">
+<meta name=twitter:description content="注意 本文主要记录代码，优化细节，添加注释。 数据加载 import torch from IPython import display from d2l import torch as d2l batch_size = 256 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size) 其中load_data_fashion_mnist由">
+<meta name=application-name content="泡面zz">
+<meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/cs/softmax2/><link rel=prev href=https://pmzzzt.eu.org/posts/learning/cs/softmax1/><link rel=next href=https://pmzzzt.eu.org/posts/learning/cs/softmax3/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"softmax(2)--从零实现","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/softmax2\/"},"genre":"posts","keywords":"CS, softmax, 机器学习","wordcount":1086,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/softmax2\/","datePublished":"2024-05-24T15:00:00+08:00","dateModified":"2024-05-24T15:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu>
+<div class=menu-inner>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/readlist/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="menu-item language" title=选择语言>
+<i class="fa fa-globe" aria-hidden=true></i>
+<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/posts/learning/cs/softmax2/ selected>简体中文</option></select>
+</a></div></div></div></header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div></div><div class=menu id=menu-mobile>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/readlist/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>
+<i class="fa fa-globe fa-fw" aria-hidden=true></i>
+<select class=language-select onchange="location=this.value"><option value=/posts/learning/cs/softmax2/ selected>简体中文</option></select>
+</a></div></div></header><main class=main>
+<div class=container>
+<div class=toc id=toc-auto>
+<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">softmax(2)--从零实现</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-05-24>2024-05-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 1086 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 3 分钟&nbsp;</div></div><div class="details toc" id=toc-static data-kept>
+<div class="details-summary toc-title">
+<span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#数据加载>数据加载</a></li><li><a href=#模型参数>模型参数</a></li><li><a href=#softmax实现>softmax实现</a></li><li><a href=#模型定义>模型定义</a></li><li><a href=#损失函数>损失函数</a></li><li><a href=#分类精度>分类精度</a>
+<ul>
+<li><a href=#评估精度>评估精度</a></li></ul></li><li><a href=#训练>训练</a></li><li><a href=#预测>预测</a></li></ul></nav></div></div><div class=content id=content><div class="details admonition tip open">
+<div class="details-summary admonition-title">
+<i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>注意<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i>
+</div><div class=details-content>
+<div class=admonition-content>本文主要记录代码，优化细节，添加注释。</div></div></div><h2 id=数据加载>数据加载</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>torch</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>IPython</span> <span class=kn>import</span> <span class=n>display</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>d2l</span> <span class=kn>import</span> <span class=n>torch</span> <span class=k>as</span> <span class=n>d2l</span>
+</span></span><span class=line><span class=cl><span class=n>batch_size</span> <span class=o>=</span> <span class=mi>256</span>
+</span></span><span class=line><span class=cl><span class=n>train_iter</span><span class=p>,</span> <span class=n>test_iter</span> <span class=o>=</span> <span class=n>d2l</span><span class=o>.</span><span class=n>load_data_fashion_mnist</span><span class=p>(</span><span class=n>batch_size</span><span class=p>)</span>
+</span></span></code></pre></div><blockquote>
+<p>其中<code>load_data_fashion_mnist</code>由下面给出，主要返回训练集和测试集的DataLoader对象，是一个iterator,每次随机从数据集中取<code>batch_size</code>个数据</p></blockquote><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>load_data_fashion_mnist</span><span class=p>(</span><span class=n>batch_size</span><span class=p>,</span> <span class=n>resize</span><span class=o>=</span><span class=kc>None</span><span class=p>):</span>  <span class=c1>#@save</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;下载Fashion-MNIST数据集，然后将其加载到内存中&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>trans</span> <span class=o>=</span> <span class=p>[</span><span class=n>transforms</span><span class=o>.</span><span class=n>ToTensor</span><span class=p>()]</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>resize</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>trans</span><span class=o>.</span><span class=n>insert</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=n>transforms</span><span class=o>.</span><span class=n>Resize</span><span class=p>(</span><span class=n>resize</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=n>trans</span> <span class=o>=</span> <span class=n>transforms</span><span class=o>.</span><span class=n>Compose</span><span class=p>(</span><span class=n>trans</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mnist_train</span> <span class=o>=</span> <span class=n>torchvision</span><span class=o>.</span><span class=n>datasets</span><span class=o>.</span><span class=n>FashionMNIST</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>root</span><span class=o>=</span><span class=s2>&#34;../data&#34;</span><span class=p>,</span> <span class=n>train</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>transform</span><span class=o>=</span><span class=n>trans</span><span class=p>,</span> <span class=n>download</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mnist_test</span> <span class=o>=</span> <span class=n>torchvision</span><span class=o>.</span><span class=n>datasets</span><span class=o>.</span><span class=n>FashionMNIST</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=n>root</span><span class=o>=</span><span class=s2>&#34;../data&#34;</span><span class=p>,</span> <span class=n>train</span><span class=o>=</span><span class=kc>False</span><span class=p>,</span> <span class=n>transform</span><span class=o>=</span><span class=n>trans</span><span class=p>,</span> <span class=n>download</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>(</span><span class=n>data</span><span class=o>.</span><span class=n>DataLoader</span><span class=p>(</span><span class=n>mnist_train</span><span class=p>,</span> <span class=n>batch_size</span><span class=p>,</span> <span class=n>shuffle</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                            <span class=n>num_workers</span><span class=o>=</span><span class=n>get_dataloader_workers</span><span class=p>()),</span>
+</span></span><span class=line><span class=cl>            <span class=n>data</span><span class=o>.</span><span class=n>DataLoader</span><span class=p>(</span><span class=n>mnist_test</span><span class=p>,</span> <span class=n>batch_size</span><span class=p>,</span> <span class=n>shuffle</span><span class=o>=</span><span class=kc>False</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                            <span class=n>num_workers</span><span class=o>=</span><span class=n>get_dataloader_workers</span><span class=p>()))</span>
+</span></span></code></pre></div><h2 id=模型参数>模型参数</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>num_inputs</span> <span class=o>=</span> <span class=mi>784</span>
+</span></span><span class=line><span class=cl><span class=n>num_outputs</span> <span class=o>=</span> <span class=mi>10</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>W</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>normal</span><span class=p>(</span><span class=mi>0</span><span class=p>,</span> <span class=mf>0.01</span><span class=p>,</span> <span class=n>size</span><span class=o>=</span><span class=p>(</span><span class=n>num_inputs</span><span class=p>,</span> <span class=n>num_outputs</span><span class=p>),</span> <span class=n>requires_grad</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>b</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>zeros</span><span class=p>(</span><span class=n>num_outputs</span><span class=p>,</span> <span class=n>requires_grad</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span></code></pre></div><blockquote>
+<p>输入为28x28的图像，输出为十个类别,参数W设置为均值为0标准差为0.01的矩阵</p></blockquote><h2 id=softmax实现>softmax实现</h2><p><strong>实现softmax</strong>由三个步骤组成：</p><ol>
+<li>对每个项求幂（使用<code>exp</code>）；</li><li>对每一行求和（小批量中每个样本是一行），得到每个样本的规范化常数；</li><li>将每一行除以其规范化常数，确保结果的和为1。</li></ol><a class=lightgallery href=/posts/learning/cs/softmax2/softmax.png title=/posts/learning/cs/softmax2/softmax.png data-thumbnail=/posts/learning/cs/softmax2/softmax.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/softmax2/softmax.png data-srcset="/posts/learning/cs/softmax2/softmax.png, /posts/learning/cs/softmax2/softmax.png 1.5x, /posts/learning/cs/softmax2/softmax.png 2x" data-sizes=auto alt=/posts/learning/cs/softmax2/softmax.png width=572 height=206>
+</a>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>softmax</span><span class=p>(</span><span class=n>X</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>X_exp</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>exp</span><span class=p>(</span><span class=n>X</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>partition</span> <span class=o>=</span> <span class=n>X_exp</span><span class=o>.</span><span class=n>sum</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=n>keepdim</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>X_exp</span> <span class=o>/</span> <span class=n>partition</span>  <span class=c1># 这里应用了广播机制</span>
+</span></span></code></pre></div><blockquote>
+<p>正如上述代码，对于任何随机输入，[<strong>我们将每个元素变成一个非负数。 此外，依据概率原理，每行总和为1</strong>]。</p></blockquote><h2 id=模型定义>模型定义</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>net</span><span class=p>(</span><span class=n>X</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>softmax</span><span class=p>(</span><span class=n>torch</span><span class=o>.</span><span class=n>matmul</span><span class=p>(</span><span class=n>X</span><span class=o>.</span><span class=n>reshape</span><span class=p>((</span><span class=o>-</span><span class=mi>1</span><span class=p>,</span> <span class=n>W</span><span class=o>.</span><span class=n>shape</span><span class=p>[</span><span class=mi>0</span><span class=p>])),</span> <span class=n>W</span><span class=p>)</span> <span class=o>+</span> <span class=n>b</span><span class=p>)</span>
+</span></span></code></pre></div><blockquote>
+<p>这个模型就是在全联接层后面套上一个softmax</p></blockquote><h2 id=损失函数>损失函数</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>cross_entropy</span><span class=p>(</span><span class=n>y_hat</span><span class=p>,</span> <span class=n>y</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=o>-</span> <span class=n>torch</span><span class=o>.</span><span class=n>log</span><span class=p>(</span><span class=n>y_hat</span><span class=p>[</span><span class=nb>range</span><span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=n>y_hat</span><span class=p>)),</span> <span class=n>y</span><span class=p>])</span>
+</span></span></code></pre></div><blockquote>
+<p>本质就是将<strong>正确答案</strong>对应的输出取<code>-log</code>,注意这里对<code>y_hat</code>的索引方式</p></blockquote><h2 id=分类精度>分类精度</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>accuracy</span><span class=p>(</span><span class=n>y_hat</span><span class=p>,</span> <span class=n>y</span><span class=p>):</span>  <span class=c1>#@save</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;计算预测正确的数量&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=nb>len</span><span class=p>(</span><span class=n>y_hat</span><span class=o>.</span><span class=n>shape</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>1</span> <span class=ow>and</span> <span class=n>y_hat</span><span class=o>.</span><span class=n>shape</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>&gt;</span> <span class=mi>1</span><span class=p>:</span> 
+</span></span><span class=line><span class=cl>        <span class=n>y_hat</span> <span class=o>=</span> <span class=n>y_hat</span><span class=o>.</span><span class=n>argmax</span><span class=p>(</span><span class=n>axis</span><span class=o>=</span><span class=mi>1</span><span class=p>)</span> <span class=c1># 每一行的最大值所在的索引</span>
+</span></span><span class=line><span class=cl>    <span class=n>cmp</span> <span class=o>=</span> <span class=n>y_hat</span><span class=o>.</span><span class=n>type</span><span class=p>(</span><span class=n>y</span><span class=o>.</span><span class=n>dtype</span><span class=p>)</span> <span class=o>==</span> <span class=n>y</span> <span class=c1># 预测正确则为1</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nb>float</span><span class=p>(</span><span class=n>cmp</span><span class=o>.</span><span class=n>type</span><span class=p>(</span><span class=n>y</span><span class=o>.</span><span class=n>dtype</span><span class=p>)</span><span class=o>.</span><span class=n>sum</span><span class=p>())</span>
+</span></span></code></pre></div><h3 id=评估精度>评估精度</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>evaluate_accuracy</span><span class=p>(</span><span class=n>net</span><span class=p>,</span> <span class=n>data_iter</span><span class=p>):</span>  <span class=c1>#@save</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;计算在指定数据集上模型的精度&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=nb>isinstance</span><span class=p>(</span><span class=n>net</span><span class=p>,</span> <span class=n>torch</span><span class=o>.</span><span class=n>nn</span><span class=o>.</span><span class=n>Module</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>net</span><span class=o>.</span><span class=n>eval</span><span class=p>()</span>  <span class=c1># 将模型设置为评估模式</span>
+</span></span><span class=line><span class=cl>    <span class=n>metric</span> <span class=o>=</span> <span class=n>Accumulator</span><span class=p>(</span><span class=mi>2</span><span class=p>)</span>  <span class=c1># 正确预测数、预测总数</span>
+</span></span><span class=line><span class=cl>    <span class=k>with</span> <span class=n>torch</span><span class=o>.</span><span class=n>no_grad</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=n>X</span><span class=p>,</span> <span class=n>y</span> <span class=ow>in</span> <span class=n>data_iter</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>metric</span><span class=o>.</span><span class=n>add</span><span class=p>(</span><span class=n>accuracy</span><span class=p>(</span><span class=n>net</span><span class=p>(</span><span class=n>X</span><span class=p>),</span> <span class=n>y</span><span class=p>),</span> <span class=n>y</span><span class=o>.</span><span class=n>numel</span><span class=p>())</span>  <span class=c1># a是正确的个数，b是总数</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>metric</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>/</span> <span class=n>metric</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Accumulator</span><span class=p>:</span>  <span class=c1>#@save</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;在n个变量上累加&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>n</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>data</span> <span class=o>=</span> <span class=p>[</span><span class=mf>0.0</span><span class=p>]</span> <span class=o>*</span> <span class=n>n</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>add</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=o>*</span><span class=n>args</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>data</span> <span class=o>=</span> <span class=p>[</span><span class=n>a</span> <span class=o>+</span> <span class=nb>float</span><span class=p>(</span><span class=n>b</span><span class=p>)</span> <span class=k>for</span> <span class=n>a</span><span class=p>,</span> <span class=n>b</span> <span class=ow>in</span> <span class=nb>zip</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>data</span><span class=p>,</span> <span class=n>args</span><span class=p>)]</span> <span class=c1># 累加,每次都是将原先的data加上新的b</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>reset</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>data</span> <span class=o>=</span> <span class=p>[</span><span class=mf>0.0</span><span class=p>]</span> <span class=o>*</span> <span class=nb>len</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>data</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__getitem__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>idx</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>data</span><span class=p>[</span><span class=n>idx</span><span class=p>]</span>
+</span></span></code></pre></div><h2 id=训练>训练</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>num_epochs</span><span class=p>,</span> <span class=n>lr</span> <span class=o>=</span> <span class=mi>5</span><span class=p>,</span> <span class=mf>0.1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 本函数已保存在d2lzh_pytorch包中方便以后使用</span>
+</span></span><span class=line><span class=cl><span class=n>num_epochs</span><span class=p>,</span> <span class=n>lr</span> <span class=o>=</span> <span class=mi>5</span><span class=p>,</span> <span class=mf>0.1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 本函数已保存在d2lzh_pytorch包中方便以后使用</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>train_ch3</span><span class=p>(</span><span class=n>net</span><span class=p>,</span> <span class=n>train_iter</span><span class=p>,</span> <span class=n>test_iter</span><span class=p>,</span> <span class=n>loss</span><span class=p>,</span> <span class=n>num_epochs</span><span class=p>,</span> <span class=n>batch_size</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>              <span class=n>params</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>lr</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>optimizer</span><span class=o>=</span><span class=kc>None</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>epoch</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=n>num_epochs</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>train_l_sum</span><span class=p>,</span> <span class=n>train_acc_sum</span><span class=p>,</span> <span class=n>n</span> <span class=o>=</span> <span class=mf>0.0</span><span class=p>,</span> <span class=mf>0.0</span><span class=p>,</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=n>X</span><span class=p>,</span> <span class=n>y</span> <span class=ow>in</span> <span class=n>train_iter</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>y_hat</span> <span class=o>=</span> <span class=n>net</span><span class=p>(</span><span class=n>X</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>l</span> <span class=o>=</span> <span class=n>loss</span><span class=p>(</span><span class=n>y_hat</span><span class=p>,</span> <span class=n>y</span><span class=p>)</span><span class=o>.</span><span class=n>sum</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            
+</span></span><span class=line><span class=cl>            <span class=c1># 梯度清零</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>optimizer</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>optimizer</span><span class=o>.</span><span class=n>zero_grad</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=k>elif</span> <span class=n>params</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span> <span class=ow>and</span> <span class=n>params</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span><span class=o>.</span><span class=n>grad</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=k>for</span> <span class=n>param</span> <span class=ow>in</span> <span class=n>params</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=n>param</span><span class=o>.</span><span class=n>grad</span><span class=o>.</span><span class=n>data</span><span class=o>.</span><span class=n>zero_</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            
+</span></span><span class=line><span class=cl>            <span class=n>l</span><span class=o>.</span><span class=n>backward</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>optimizer</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>d2l</span><span class=o>.</span><span class=n>sgd</span><span class=p>(</span><span class=n>params</span><span class=p>,</span> <span class=n>lr</span><span class=p>,</span> <span class=n>batch_size</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>optimizer</span><span class=o>.</span><span class=n>step</span><span class=p>()</span>  <span class=c1># “softmax回归的简洁实现”一节将用到</span>
+</span></span><span class=line><span class=cl>            
+</span></span><span class=line><span class=cl>            
+</span></span><span class=line><span class=cl>            <span class=n>train_l_sum</span> <span class=o>+=</span> <span class=n>l</span><span class=o>.</span><span class=n>item</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=n>train_acc_sum</span> <span class=o>+=</span> <span class=p>(</span><span class=n>y_hat</span><span class=o>.</span><span class=n>argmax</span><span class=p>(</span><span class=n>dim</span><span class=o>=</span><span class=mi>1</span><span class=p>)</span> <span class=o>==</span> <span class=n>y</span><span class=p>)</span><span class=o>.</span><span class=n>sum</span><span class=p>()</span><span class=o>.</span><span class=n>item</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=n>n</span> <span class=o>+=</span> <span class=n>y</span><span class=o>.</span><span class=n>shape</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=n>test_acc</span> <span class=o>=</span> <span class=n>evaluate_accuracy</span><span class=p>(</span><span class=n>net</span><span class=p>,</span><span class=n>test_iter</span><span class=p>)</span> <span class=c1>## 注意与书中函数位置相反</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s1>&#39;epoch </span><span class=si>%d</span><span class=s1>, loss </span><span class=si>%.4f</span><span class=s1>, train acc </span><span class=si>%.3f</span><span class=s1>, test acc </span><span class=si>%.3f</span><span class=s1>&#39;</span>
+</span></span><span class=line><span class=cl>              <span class=o>%</span> <span class=p>(</span><span class=n>epoch</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span> <span class=n>train_l_sum</span> <span class=o>/</span> <span class=n>n</span><span class=p>,</span> <span class=n>train_acc_sum</span> <span class=o>/</span> <span class=n>n</span><span class=p>,</span> <span class=n>test_acc</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>train_ch3</span><span class=p>(</span><span class=n>net</span><span class=p>,</span> <span class=n>train_iter</span><span class=p>,</span> <span class=n>test_iter</span><span class=p>,</span> <span class=n>cross_entropy</span><span class=p>,</span> <span class=n>num_epochs</span><span class=p>,</span> <span class=n>batch_size</span><span class=p>,</span> <span class=p>[</span><span class=n>W</span><span class=p>,</span> <span class=n>b</span><span class=p>],</span> <span class=n>lr</span><span class=p>)</span>
+</span></span></code></pre></div><h2 id=预测>预测</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>X</span><span class=p>,</span> <span class=n>y</span> <span class=o>=</span> <span class=nb>iter</span><span class=p>(</span><span class=n>test_iter</span><span class=p>)</span><span class=o>.</span><span class=n>next</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>true_labels</span> <span class=o>=</span> <span class=n>d2l</span><span class=o>.</span><span class=n>get_fashion_mnist_labels</span><span class=p>(</span><span class=n>y</span><span class=o>.</span><span class=n>numpy</span><span class=p>())</span>
+</span></span><span class=line><span class=cl><span class=n>pred_labels</span> <span class=o>=</span> <span class=n>d2l</span><span class=o>.</span><span class=n>get_fashion_mnist_labels</span><span class=p>(</span><span class=n>net</span><span class=p>(</span><span class=n>X</span><span class=p>)</span><span class=o>.</span><span class=n>argmax</span><span class=p>(</span><span class=n>dim</span><span class=o>=</span><span class=mi>1</span><span class=p>)</span><span class=o>.</span><span class=n>numpy</span><span class=p>())</span>
+</span></span><span class=line><span class=cl><span class=n>titles</span> <span class=o>=</span> <span class=p>[</span><span class=n>true</span> <span class=o>+</span> <span class=s1>&#39;</span><span class=se>\n</span><span class=s1>&#39;</span> <span class=o>+</span> <span class=n>pred</span> <span class=k>for</span> <span class=n>true</span><span class=p>,</span> <span class=n>pred</span> <span class=ow>in</span> <span class=nb>zip</span><span class=p>(</span><span class=n>true_labels</span><span class=p>,</span> <span class=n>pred_labels</span><span class=p>)]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>d2l</span><span class=o>.</span><span class=n>show_fashion_mnist</span><span class=p>(</span><span class=n>X</span><span class=p>[</span><span class=mi>0</span><span class=p>:</span><span class=mi>9</span><span class=p>],</span> <span class=n>titles</span><span class=p>[</span><span class=mi>0</span><span class=p>:</span><span class=mi>9</span><span class=p>])</span>
+</span></span></code></pre></div><blockquote>
+<p>走一遍前向即是预测</p></blockquote><div class=post-reward>
+<input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label>
+<div class=qr-code>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/wechat.png>
+<span>微信打赏</span>
+</label>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/alipay.png>
+<span>支付宝打赏</span>
+</label>
+</div></div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>更新于 2024-05-24</span>
+</div></div><div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/posts/learning/cs/softmax2/index.md target=_blank>阅读原始文档</a>
+</span></div><div class=post-info-share>
+<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/learning/cs/softmax2/ data-hashtag=CS><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/learning/cs/softmax2/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/learning/cs/softmax2/ data-title=softmax(2)--从零实现><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
+</div></div></div><div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/softmax/>softmax</a>,&nbsp;<a href=/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/>机器学习</a></section><section>
+<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
+</section></div><div class=post-nav><a href=/posts/learning/cs/softmax1/ class=prev rel=prev title=softmax(1)--算法><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>softmax(1)--算法</a>
+<a href=/posts/learning/cs/softmax3/ class=next rel=next title=softmax(3)--简洁实现>softmax(3)--简洁实现<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+<script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:null,placeholder:"开启魔法上网方可使用评论～",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+<span id=run-time></span>
+</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023 - 2024</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+<i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论>
+<i class="fas fa-comment fa-fw" aria-hidden=true></i>
+</a>
+</div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js></script>
+<script type=text/javascript src=/js/custom.js></script>
+<script type=text/javascript src=/js/test.js></script></body></html>

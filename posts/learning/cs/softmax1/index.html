@@ -1,0 +1,163 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title>softmax(1)--算法 - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="softmax(1)--算法">
+<meta property="og:description" content="分类问题与回归问题有明显的区别，本质是连续和离散的区别，比如我想知道某张照片是猫还是狗，如果模型的输出是一个0.9其实不能代表任何事情，难道">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pmzzzt.eu.org/posts/learning/cs/softmax1/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2024-05-23T15:00:00+08:00">
+<meta property="article:modified_time" content="2024-05-23T15:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="softmax(1)--算法">
+<meta name=twitter:description content="分类问题与回归问题有明显的区别，本质是连续和离散的区别，比如我想知道某张照片是猫还是狗，如果模型的输出是一个0.9其实不能代表任何事情，难道">
+<meta name=application-name content="泡面zz">
+<meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/cs/softmax1/><link rel=prev href=https://pmzzzt.eu.org/posts/learning/cs/linear_regression3/><link rel=next href=https://pmzzzt.eu.org/posts/learning/cs/softmax2/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"softmax(1)--算法","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/softmax1\/"},"genre":"posts","keywords":"CS, softmax, 机器学习, 交叉熵","wordcount":1908,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/softmax1\/","datePublished":"2024-05-23T15:00:00+08:00","dateModified":"2024-05-23T15:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu>
+<div class=menu-inner>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/readlist/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="menu-item language" title=选择语言>
+<i class="fa fa-globe" aria-hidden=true></i>
+<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/posts/learning/cs/softmax1/ selected>简体中文</option></select>
+</a></div></div></div></header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div></div><div class=menu id=menu-mobile>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/readlist/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>
+<i class="fa fa-globe fa-fw" aria-hidden=true></i>
+<select class=language-select onchange="location=this.value"><option value=/posts/learning/cs/softmax1/ selected>简体中文</option></select>
+</a></div></div></header><main class=main>
+<div class=container>
+<div class=toc id=toc-auto>
+<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">softmax(1)--算法</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-05-23>2024-05-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 1908 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 4 分钟&nbsp;</div></div><div class="details toc" id=toc-static data-kept>
+<div class="details-summary toc-title">
+<span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#softmax的模型>Softmax的模型</a></li><li><a href=#softmax计算>softmax计算</a></li><li><a href=#softmax矩阵化>softmax矩阵化</a></li><li><a href=#交叉熵损失函数>交叉熵损失函数</a></li><li><a href=#softmax的导数>softmax的导数</a></li></ul></nav></div></div><div class=content id=content><p>分类问题与回归问题有明显的区别，本质是连续和离散的区别，比如我想知道某张照片是猫还是狗，如果模型的输出是一个0.9其实不能代表任何事情，难道越大越像狗吗？（如果是预测婴儿、小孩、青年、老年那还可以用值的大小来界定，但是大多数时候是没有这种自然的大小规律的）。如果模型的输出本身就是离散化的则不会有这个问题，比如模型的输出是两个数，分别代表这个图片是猫或者狗的概率，那就很容易得出预测的结论。</p><h2 id=softmax的模型>Softmax的模型</h2><p>从之前的例子可以容易的看出来，softmax的最明显特征就是它的输出是一个向量
+<figure><a class=lightgallery href=/posts/learning/cs/softmax1/softmaxreg.png title=/posts/learning/cs/softmax1/softmaxreg.png data-thumbnail=/posts/learning/cs/softmax1/softmaxreg.png data-sub-html="<h2>softmax结构</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/softmax1/softmaxreg.png data-srcset="/posts/learning/cs/softmax1/softmaxreg.png, /posts/learning/cs/softmax1/softmaxreg.png 1.5x, /posts/learning/cs/softmax1/softmaxreg.png 2x" data-sizes=auto alt=/posts/learning/cs/softmax1/softmaxreg.png width=252 height=87>
+</a><figcaption class=image-caption>softmax结构</figcaption></figure></p><p>它的数学表达式如下,其实就是一个全联接层：
+$$
+\begin{aligned}
+o_1 &= x_1 w_{11} + x_2 w_{12} + x_3 w_{13} + x_4 w_{14} + b_1,\\
+o_2 &= x_1 w_{21} + x_2 w_{22} + x_3 w_{23} + x_4 w_{24} + b_2,\\
+o_3 &= x_1 w_{31} + x_2 w_{32} + x_3 w_{33} + x_4 w_{34} + b_3.
+\end{aligned}
+$$</p><p>为了更简洁地表达模型，我们仍然使用线性代数符号。
+通过向量形式表达为 $\mathbf{o} = \mathbf{W} \mathbf{x} + \mathbf{b}$ ，
+这是一种更适合数学和编写代码的形式。
+由此，我们已经将所有权重放到一个 $3 \times 4$ 矩阵中。
+对于给定数据样本的特征 $\mathbf{x}$ ，
+我们的输出是由权重与输入特征进行矩阵-向量乘法再加上偏置$\mathbf{b}$得到的。
+<div class="details admonition tip open">
+<div class="details-summary admonition-title">
+<i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>注意<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i>
+</div><div class=details-content>
+<div class=admonition-content>这里的Wx和b都是向量，o也是向量</div></div></div></p><h2 id=softmax计算>softmax计算</h2><p>ok现在我们已经有了一个模型，他可以输出一个向量，我们可以规定向量的每个元素代表着某个类别（猫、狗、鸡）的概率，但是还是有问题:</p><ol>
+<li>直接的全联接层可能会有负数的结果产生，它们的和也不为1，不符合概率学定义</li><li>同一个输出可能有不同的意义，例如[1,2,3]和[10,20,3],虽然都是3，但是意义完全不同</li></ol><p>所以我们需要一个运算，将这个向量变成另一个向量满足概率学的定义:</p><p>$$\hat{\mathbf{y}} = \mathrm{softmax}(\mathbf{o})\quad \text{其中}\quad \hat{y}_j = \frac{\exp(o_j)}{\sum_k \exp(o_k)}$$</p><p>这里，对于所有的$j$总有$0 \leq \hat{y}_j \leq 1$。
+因此，$\hat{\mathbf{y}}$可以视为一个正确的概率分布。<br>
+softmax运算不会改变未规范化的预测$\mathbf{o}$之间的大小次序，只会确定分配给每个类别的概率。<br>
+因此，在预测过程中，我们仍然可以用下式来选择最有可能的类别。也就是选择概率最大的那个作为预测结果</p><p>$$
+\operatorname*{argmax}_j \hat y_j = \operatorname*{argmax}_j o_j.
+$$</p><p>尽管softmax是一个非线性函数，但softmax回归的输出仍然由输入特征的仿射变换决定。
+因此，softmax回归是一个<em>线性模型</em>（linear model）。</p><blockquote>
+<p>从式子可以看出来，softmax可以理解为一种更先进的求最大值的方法，它的好处有：</p><ul>
+<li>符合概率学规律</li><li>指数函数容易求导，所以容易反向传播</li><li>指数函数能放大差异，e的1次方远远大于1次方</li></ul></blockquote><h2 id=softmax矩阵化>softmax矩阵化</h2><p>为了提高计算效率并且充分利用GPU，我们通常会对小批量样本的数据执行矢量计算。<br>
+假设我们读取了一个批量的样本$\mathbf{X}$，
+其中特征维度（输入数量）为$d$，批量大小为$n$。
+此外，假设我们在输出中有$q$个类别。
+那么小批量样本的特征为$\mathbf{X} \in \mathbb{R}^{n \times d}$，
+权重为$\mathbf{W} \in \mathbb{R}^{d \times q}$，
+偏置为$\mathbf{b} \in \mathbb{R}^{1\times q}$。
+softmax回归的矢量计算表达式为：</p><p>$$ \begin{aligned} \mathbf{O} &= \mathbf{X} \mathbf{W} + \mathbf{b}, \\ \hat{\mathbf{Y}} & = \mathrm{softmax}(\mathbf{O}). \end{aligned} $$</p><p>相对于一次处理一个样本，
+小批量样本的矢量化加快了$\mathbf{X}和\mathbf{W}$的矩阵-向量乘法。
+由于$\mathbf{X}$中的每一行代表一个数据样本，
+那么softmax运算可以<em>按行</em>（rowwise）执行：<br>
+对于$\mathbf{O}$的每一行，我们先对所有项进行幂运算，然后通过求和对它们进行标准化。<br>
+$\mathbf{X} \mathbf{W} + \mathbf{b}$的求和会使用广播机制，
+小批量的未规范化预测$\mathbf{O}$和输出概率$\hat{\mathbf{Y}}$
+都是形状为$n \times q$的矩阵。</p><h2 id=交叉熵损失函数>交叉熵损失函数</h2><p>回归模型的损失可以使用均方误差来描述，那这种离散的模型呢则需要交叉熵损失(cross-entropy loss)，它的公式如下：</p><p>对于任何标签 $\mathbf{y}$ 和模型预测 $\hat{\mathbf{y}}$ ，损失函数为：</p><p>$$ l(\mathbf{y}, \hat{\mathbf{y}}) = - \sum_{j=1}^q y_j \log \hat{y}_j. $$</p><blockquote>
+<p>在这个公式中，$\mathbf{y}$ 是一个独热的向量（单分类），也就是说，只有$\mathbf{y}_j=1$,该公式可以写为
+$$ l(\mathbf{y}, \hat{\mathbf{y}}) = - y_j \log \hat{y}_j. $$
+就是从多个输出中挑出了真实结果的概率，这个概率越大越好(损失越小)。交叉熵损失函数可以这样理解：让真实标签对应的那个输出更大。</p></blockquote><h2 id=softmax的导数>softmax的导数</h2><p>由于softmax和相关的损失函数很常见，利用softmax的定义，我们得到：</p><p>$$
+\begin{aligned}
+l(\mathbf{y}, \hat{\mathbf{y}}) &= - \sum_{j=1}^q y_j \log \frac{\exp(o_j)}{\sum_{k=1}^q \exp(o_k)} \\
+&= \sum_{j=1}^q y_j \log \sum_{k=1}^q \exp(o_k) - \sum_{j=1}^q y_j o_j\\
+&= \log \sum_{k=1}^q \exp(o_k) - \sum_{j=1}^q y_j o_j.
+\end{aligned}
+$$</p><p>考虑相对于任何未规范化的预测$o_j$的导数，我们得到：</p><p>$$
+\partial_{o_j} l(\mathbf{y}, \hat{\mathbf{y}}) = \frac{\exp(o_j)}{\sum_{k=1}^q \exp(o_k)} - y_j = \mathrm{softmax}(\mathbf{o})_j - y_j.
+$$</p><p>换句话说，导数是我们softmax模型分配的概率与实际发生的情况（由独热标签向量表示）之间的差异。</p><div class=post-reward>
+<input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label>
+<div class=qr-code>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/wechat.png>
+<span>微信打赏</span>
+</label>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/alipay.png>
+<span>支付宝打赏</span>
+</label>
+</div></div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>更新于 2024-05-23</span>
+</div></div><div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/posts/learning/cs/softmax1/index.md target=_blank>阅读原始文档</a>
+</span></div><div class=post-info-share>
+<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/learning/cs/softmax1/ data-hashtag=CS><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/learning/cs/softmax1/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/learning/cs/softmax1/ data-title=softmax(1)--算法><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
+</div></div></div><div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/softmax/>softmax</a>,&nbsp;<a href=/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/>机器学习</a>,&nbsp;<a href=/tags/%E4%BA%A4%E5%8F%89%E7%86%B5/>交叉熵</a></section><section>
+<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
+</section></div><div class=post-nav><a href=/posts/learning/cs/linear_regression3/ class=prev rel=prev title=线性回归(3)--简洁实现><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>线性回归(3)--简洁实现</a>
+<a href=/posts/learning/cs/softmax2/ class=next rel=next title=softmax(2)--从零实现>softmax(2)--从零实现<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+<script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:null,placeholder:"开启魔法上网方可使用评论～",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+<span id=run-time></span>
+</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023 - 2024</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+<i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论>
+<i class="fas fa-comment fa-fw" aria-hidden=true></i>
+</a>
+</div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js></script>
+<script type=text/javascript src=/js/custom.js></script>
+<script type=text/javascript src=/js/test.js></script></body></html>
