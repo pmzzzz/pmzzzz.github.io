@@ -61,47 +61,15 @@
 </a></div></div></header><main class=main>
 <div class=container>
 <div class="page home" data-home=posts><div class=home-profile><div class=home-avatar><a href=/posts/ title=Posts><img class=lazyload src=/svg/loading.min.svg data-src=/imgs/avatar.png data-srcset="/imgs/avatar.png, /imgs/avatar.png 1.5x, /imgs/avatar.png 2x" data-sizes=auto alt=/imgs/avatar.png title=/imgs/avatar.png></a></div><div class=home-subtitle><div id=id-1 class=typeit></div></div><div class=links><a href=https://github.com/pmzzzz title=GitHub target=_blank rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden=true></i></a><a href=https://steamcommunity.com/profiles/76561198323770100 title=Steam target=_blank rel="noopener noreffer me"><i class="fab fa-steam fa-fw" aria-hidden=true></i></a><a href=https://space.bilibili.com/8388740 title=bilibili target=_blank rel="noopener noreffer me"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/bilibili.svg aria-hidden=true></i></a><a href=mailto:zt_blog@outlook.com title=Email rel=me><i class="far fa-envelope fa-fw" aria-hidden=true></i></a><a href=/index.xml title=RSS target=_blank rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden=true></i></a></div></div><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/posts/learning/cs/softmax3/>softmax(3)--简洁实现</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2024-05-24>2024-05-24</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=content>注意 本文主要记录代码，优化细节，添加注释。 加载数据 import torch from torch import nn from d2l import torch as d2l batch_size = 256 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size) 初始化参数 # PyTorch不会隐式地调整输入的形状。</div><div class=post-footer>
-<a href=/posts/learning/cs/softmax3/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/softmax/>softmax</a>,&nbsp;<a href=/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/>机器学习</a>,&nbsp;<a href=/tags/%E4%BA%A4%E5%8F%89%E7%86%B5/>交叉熵</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/posts/learning/cs/softmax2/>softmax(2)--从零实现</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2024-05-24>2024-05-24</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=content>注意 本文主要记录代码，优化细节，添加注释。 数据加载 import torch from IPython import display from d2l import torch as d2l batch_size = 256 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size) 其中load_data_fashion_mnist由</div><div class=post-footer>
-<a href=/posts/learning/cs/softmax2/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/softmax/>softmax</a>,&nbsp;<a href=/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/>机器学习</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/posts/learning/cs/softmax1/>softmax(1)--算法</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2024-05-23>2024-05-23</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=content>分类问题与回归问题有明显的区别，本质是连续和离散的区别，比如我想知道某张照片是猫还是狗，如果模型的输出是一个0.9其实不能代表任何事情，难道</div><div class=post-footer>
-<a href=/posts/learning/cs/softmax1/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/softmax/>softmax</a>,&nbsp;<a href=/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/>机器学习</a>,&nbsp;<a href=/tags/%E4%BA%A4%E5%8F%89%E7%86%B5/>交叉熵</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/posts/learning/cs/linear_regression3/>线性回归(3)--简洁实现</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2024-05-22>2024-05-22</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=content><p>通过使用深度学习框架来简洁地实现 <a href=../linear_regression2/ rel>线性回归(2)&ndash;从零实现</a>中 的(线性回归模型)</p></div><div class=post-footer>
-<a href=/posts/learning/cs/linear_regression3/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/>线性回归</a>,&nbsp;<a href=/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/>机器学习</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/posts/learning/cs/linear_regression2/>线性回归(2)--从零实现</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2024-05-22>2024-05-22</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=content><p>使用基础的<code>Tensor</code>以及<code>autograd</code>实现线性回归模型的构建和训练</p></div><div class=post-footer>
-<a href=/posts/learning/cs/linear_regression2/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/>线性回归</a>,&nbsp;<a href=/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/>机器学习</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/posts/learning/cs/linear_regression1/>线性回归(1)--算法</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2024-05-22>2024-05-22</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=content><p>回归（regression）是能为一个或多个自变量与因变量之间关系建模的一类方法。在自然科学和社会科学领域，回归经常用来表示输入和输出之间的关系。</p><p>在机器学习领域中的大多数任务通常都与预测（prediction）有关。 当我们想预测一个<strong>数值</strong>时，就会涉及到回归问题。 常见的例子包括：预测价格（房屋、股票等）、预测住院时间（针对住院病人等）、 预测需求（零售销量等）。 但不是所有的预测都是回归问题。</p></div><div class=post-footer>
-<a href=/posts/learning/cs/linear_regression1/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/>线性回归</a>,&nbsp;<a href=/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/>机器学习</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><h1 class=single-title itemprop="name headline">
-<a href=/posts/learning/cs/dag/>计算图</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2024-05-20>2024-05-20</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=content><p><strong>为各类神经网络计算提供统一的描述</strong></p></div><div class=post-footer>
-<a href=/posts/learning/cs/dag/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a></div></div></article><article class="single summary" itemscope itemtype=http://schema.org/Article><div class=featured-image-preview>
-<a href=/posts/lifa/2024_05_19/><img class=lazyload src=/svg/loading.min.svg data-src=imgs/preview/lifa.png data-srcset="imgs/preview/lifa.png, imgs/preview/lifa.png 1.5x, imgs/preview/lifa.png 2x" data-sizes=auto alt=imgs/preview/lifa.png title=imgs/preview/lifa.png></a>
-</div><h1 class=single-title itemprop="name headline">
-<a href=/posts/lifa/2024_05_19/>第一周</a>
-</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2024-05-19>2024-05-19</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E6%80%9D%E6%84%9F%E8%A1%8C/><i class="far fa-folder fa-fw" aria-hidden=true></i>学思感行</a></span></div><div class=content><p><strong>《Dive-into-DL-PyTorch》</strong> 学习记录(P0-P41)</p></div><div class=post-footer>
-<a href=/posts/lifa/2024_05_19/>阅读全文</a><div class=post-tags>
-<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/torch/>torch</a></div></div></article><ul class=pagination><li class=page-item>
+<a href=/posts/learning/music_theory1/>一些乐理基础</a>
+</h1><div class=post-meta><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-publish>发布于 <time datetime=2023-03-17>2023-03-17</time></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=content>背景 我是一个纯纯的工科生，艺术细胞基本为零，像所有九零后一样，听周杰伦长大的，初中听到音乐频道推荐了一首Maroon5&ndash;Dayl</div><div class=post-footer>
+<a href=/posts/learning/music_theory1/>阅读全文</a><div class=post-tags>
+<i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E4%B9%90%E7%90%86/>乐理</a>,&nbsp;<a href=/tags/music-theory/>music theory</a></div></div></article><ul class=pagination><li class=page-item>
 <span class=page-link>
 <a href=/>1</a>
 </span>
-</li><li class="page-item active">
-<span class=page-link>
-<a href=/page/2/>2</a>
-</span>
+</li><li class=page-item>
+<span class=page-link aria-hidden=true>&mldr;</span>
 </li><li class=page-item>
 <span class=page-link>
 <a href=/page/3/>3</a>
@@ -110,7 +78,7 @@
 <span class=page-link>
 <a href=/page/4/>4</a>
 </span>
-</li><li class=page-item>
+</li><li class="page-item active">
 <span class=page-link>
 <a href=/page/5/>5</a>
 </span>
