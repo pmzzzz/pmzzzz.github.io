@@ -1,0 +1,137 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title>ImageNet Classification with Deep Convolutional Neural Networks[2012] - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="ImageNet Classification with Deep Convolutional Neural Networks[2012]">
+<meta property="og:description" content="Alexnet经典之作,卷积神经网络效果突飞,端到端的先驱">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pmzzzt.eu.org/posts/learning/paper_review/alexnet/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2024-05-31T10:00:00+08:00">
+<meta property="article:modified_time" content="2024-05-31T10:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="ImageNet Classification with Deep Convolutional Neural Networks[2012]">
+<meta name=twitter:description content="Alexnet经典之作,卷积神经网络效果突飞,端到端的先驱">
+<meta name=application-name content="泡面zz">
+<meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/paper_review/alexnet/><link rel=prev href=https://pmzzzt.eu.org/posts/learning/cs/dropout/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"ImageNet Classification with Deep Convolutional Neural Networks[2012]","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/paper_review\/alexnet\/"},"genre":"posts","keywords":"CS, 深度学习, AlexNet, CNN","wordcount":1495,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/paper_review\/alexnet\/","datePublished":"2024-05-31T10:00:00+08:00","dateModified":"2024-05-31T10:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu>
+<div class=menu-inner>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/readlist/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="menu-item language" title=选择语言>
+<i class="fa fa-globe" aria-hidden=true></i>
+<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/posts/learning/paper_review/alexnet/ selected>简体中文</option></select>
+</a></div></div></div></header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div></div><div class=menu id=menu-mobile>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/readlist/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>
+<i class="fa fa-globe fa-fw" aria-hidden=true></i>
+<select class=language-select onchange="location=this.value"><option value=/posts/learning/paper_review/alexnet/ selected>简体中文</option></select>
+</a></div></div></header><main class=main>
+<div class=container>
+<div class=toc id=toc-auto>
+<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">ImageNet Classification with Deep Convolutional Neural Networks[2012]</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/><i class="far fa-folder fa-fw" aria-hidden=true></i>论文阅读</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-05-31>2024-05-31</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 1495 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 3 分钟&nbsp;</div></div><div class=featured-image><img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/alexnet/1.png data-srcset="/posts/learning/paper_review/alexnet/1.png, /posts/learning/paper_review/alexnet/1.png 1.5x, /posts/learning/paper_review/alexnet/1.png 2x" data-sizes=auto alt=/posts/learning/paper_review/alexnet/1.png title=/posts/learning/paper_review/alexnet/1.png width=1878 height=590></div><div class="details toc" id=toc-static data-kept>
+<div class="details-summary toc-title">
+<span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#简介>简介</a></li><li><a href=#数据处理>数据处理</a></li><li><a href=#模型设计>模型设计</a>
+<ul>
+<li><a href=#激活函数使用relu>激活函数使用reLU</a></li><li><a href=#在多个gpu上进行训练>在多个GPU上进行训练</a></li><li><a href=#局部标准化>局部标准化</a></li><li><a href=#重叠池化>重叠池化</a></li></ul></li><li><a href=#减少过拟合>减少过拟合</a>
+<ul>
+<li><a href=#数据增强>数据增强</a></li><li><a href=#dropout>dropout</a></li></ul></li><li><a href=#实验结果>实验结果</a>
+<ul>
+<li><a href=#定量>定量</a></li><li><a href=#定性>定性</a></li></ul></li><li><a href=#讨论>讨论</a></li></ul></nav></div></div><div class=content id=content><p>Alexnet经典之作,卷积神经网络效果突飞,端到端的先驱</p><blockquote>
+<p>paper: <a href=https://papers.nips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf target=_blank rel="noopener noreffer">ImageNet Classification with Deep Convolutional Neural Networks</a></p></blockquote><h2 id=简介>简介</h2><p>本文训练了一个深度卷积网络，使用ImageNet LSVRC-2010 中的1.7m高分辨图像进行了1000个类别的分类任务，top-1 和 top-5 错误率为 37.5% 和 17.0%。该模型使用5个卷积层和3个全连接层以及softmax。为了加速训练，使用了非饱和神经元（non-saturating neurons）和并行GPU的技巧，使用dropout和数据增强减轻全连接层中的过拟合。对原始图像进行裁切后直接使用原始RGB图像进行训练，而无需进行（label-preserving transformations）。</p><h2 id=数据处理>数据处理</h2><ul>
+<li>将原始图像等比例缩小至短边长度为256</li><li>从结果图像中裁剪出中央 256 × 256 的块</li><li><strong>直接使用原始像素值（raw RGB）进行训练</strong></li></ul><h2 id=模型设计>模型设计</h2><figure><a class=lightgallery href=/posts/learning/paper_review/alexnet/alexnet.png title=/posts/learning/paper_review/alexnet/alexnet.png data-thumbnail=/posts/learning/paper_review/alexnet/alexnet.png data-sub-html="<h2>alexnet</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/alexnet/alexnet.png data-srcset="/posts/learning/paper_review/alexnet/alexnet.png, /posts/learning/paper_review/alexnet/alexnet.png 1.5x, /posts/learning/paper_review/alexnet/alexnet.png 2x" data-sizes=auto alt=/posts/learning/paper_review/alexnet/alexnet.png width=2250 height=686>
+</a><figcaption class=image-caption>alexnet</figcaption></figure><ul>
+<li>第一层使用96 个 11 × 11 × 3 的卷积核进行卷积stride为4，然后maxpooling</li><li>第二层使用256 个 5 × 5 × 48 卷积核，然后进行maxpooling</li><li>第三层使用384 个3 × 3 × 256卷积核</li><li>第四层使用384 个3 × 3 × 192卷积核</li><li>第五层使用256 个 3 × 3 × 192 卷积核，然后maxpooliing</li><li>全连接层使用两层4096个神经元，最后一层为1000个神经元，然后加上softmax以得到所有类别的概率分布</li></ul><h3 id=激活函数使用relu>激活函数使用reLU</h3><p>(<strong>$$\operatorname{ReLU}(x) = \max(x, 0).$$</strong>)</p><h3 id=在多个gpu上进行训练>在多个GPU上进行训练</h3><ul>
+<li>在第一层，两个gpu分别承担一半的卷积核个数对上一层进行卷积（每个GPU输出一半的通道数48+48）</li><li>二层同理，对自己上次的输出进行卷积（128+128）</li><li>注意第三层，两个gpu对上一层两个gpu的输出结果都进行了卷积（256）</li><li>四五层与一二层同理，各自卷积自己的结果</li></ul><h3 id=局部标准化>局部标准化</h3><p>本文认为，使用以下方式能提高模型的泛化性：
+<figure><a class=lightgallery href=/posts/learning/paper_review/alexnet/normalize.png title=/posts/learning/paper_review/alexnet/normalize.png data-thumbnail=/posts/learning/paper_review/alexnet/normalize.png data-sub-html="<h2>normalization</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/alexnet/normalize.png data-srcset="/posts/learning/paper_review/alexnet/normalize.png, /posts/learning/paper_review/alexnet/normalize.png 1.5x, /posts/learning/paper_review/alexnet/normalize.png 2x" data-sizes=auto alt=/posts/learning/paper_review/alexnet/normalize.png width=1052 height=238>
+</a><figcaption class=image-caption>normalization</figcaption></figure>其中：</p><ul>
+<li>N代表该层的卷积核个数</li><li>x,y表示像素位置</li><li>i，j表示卷积核的索引</li><li>本文设置 k = 2, n = 5, α = 10−4, and β = 0.75. 它们为超参数</li></ul><p>总的来说，该方法使用一个周围几个内核的值来归一化卷积的值</p><h3 id=重叠池化>重叠池化</h3><p>s代表两个窗口的距离，z x z代表窗口的大小，当s = z，就是普通的池化操作
+本文发现with s = 2 and z = 3 模型更不容易过拟合，效果要更好，但并未给出解释</p><h2 id=减少过拟合>减少过拟合</h2><h3 id=数据增强>数据增强</h3><p>本文使用了两种数据增强的方法，均使用原始图像进行变换，使用python处理，计算开销不大，也不需要存储在硬件上。</p><ol>
+<li>从256x256的图像中随机抽取224x224的图像</li><li>对RGB通道作PCA</li></ol><h3 id=dropout>dropout</h3><p>本文在前两层MLP使用了dropout</p><p>在测试的时候，将所有的神经元输出都乘0.5，这是对使用dropout的近似估计</p><h2 id=实验结果>实验结果</h2><h3 id=定量>定量</h3><figure><a class=lightgallery href=/posts/learning/paper_review/alexnet/ILSVRC_2010.png title=/posts/learning/paper_review/alexnet/ILSVRC_2010.png data-thumbnail=/posts/learning/paper_review/alexnet/ILSVRC_2010.png data-sub-html="<h2>ILSVRC 2010</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/alexnet/ILSVRC_2010.png data-srcset="/posts/learning/paper_review/alexnet/ILSVRC_2010.png, /posts/learning/paper_review/alexnet/ILSVRC_2010.png 1.5x, /posts/learning/paper_review/alexnet/ILSVRC_2010.png 2x" data-sizes=auto alt=/posts/learning/paper_review/alexnet/ILSVRC_2010.png width=792 height=256>
+</a><figcaption class=image-caption>ILSVRC 2010</figcaption></figure><figure><a class=lightgallery href=/posts/learning/paper_review/alexnet/ILSVRC_2012.png title=/posts/learning/paper_review/alexnet/ILSVRC_2012.png data-thumbnail=/posts/learning/paper_review/alexnet/ILSVRC_2012.png data-sub-html="<h2>ILSVRC 2012</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/alexnet/ILSVRC_2012.png data-srcset="/posts/learning/paper_review/alexnet/ILSVRC_2012.png, /posts/learning/paper_review/alexnet/ILSVRC_2012.png 1.5x, /posts/learning/paper_review/alexnet/ILSVRC_2012.png 2x" data-sizes=auto alt=/posts/learning/paper_review/alexnet/ILSVRC_2012.png width=1210 height=380>
+</a><figcaption class=image-caption>ILSVRC 2012</figcaption></figure><h3 id=定性>定性</h3><p><figure><a class=lightgallery href=/posts/learning/paper_review/alexnet/conv_result.png title=/posts/learning/paper_review/alexnet/conv_result.png data-thumbnail=/posts/learning/paper_review/alexnet/conv_result.png data-sub-html="<h2>conv result</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/alexnet/conv_result.png data-srcset="/posts/learning/paper_review/alexnet/conv_result.png, /posts/learning/paper_review/alexnet/conv_result.png 1.5x, /posts/learning/paper_review/alexnet/conv_result.png 2x" data-sizes=auto alt=/posts/learning/paper_review/alexnet/conv_result.png width=754 height=324>
+</a><figcaption class=image-caption>conv result</figcaption></figure>上图揭示了进行一次卷积运算之后图像的样子，其中上面一半是CPU0的结果，下面一半是CPU1的结果，可以看出来，进过卷积之后学习到了纹理和色彩的特征</p><p><figure><a class=lightgallery href=/posts/learning/paper_review/alexnet/pres.png title=/posts/learning/paper_review/alexnet/pres.png data-thumbnail=/posts/learning/paper_review/alexnet/pres.png data-sub-html="<h2>predictions</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/alexnet/pres.png data-srcset="/posts/learning/paper_review/alexnet/pres.png, /posts/learning/paper_review/alexnet/pres.png 1.5x, /posts/learning/paper_review/alexnet/pres.png 2x" data-sizes=auto alt=/posts/learning/paper_review/alexnet/pres.png width=852 height=708>
+</a><figcaption class=image-caption>predictions</figcaption></figure>本图是对预测结果的展示，本文预测的输出是各种类别的概率</p><p><figure><a class=lightgallery href=/posts/learning/paper_review/alexnet/euclidean_distance.png title=/posts/learning/paper_review/alexnet/euclidean_distance.png data-thumbnail=/posts/learning/paper_review/alexnet/euclidean_distance.png data-sub-html="<h2>Euclidean distance</h2>">
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/alexnet/euclidean_distance.png data-srcset="/posts/learning/paper_review/alexnet/euclidean_distance.png, /posts/learning/paper_review/alexnet/euclidean_distance.png 1.5x, /posts/learning/paper_review/alexnet/euclidean_distance.png 2x" data-sizes=auto alt=/posts/learning/paper_review/alexnet/euclidean_distance.png width=974 height=710>
+</a><figcaption class=image-caption>Euclidean distance</figcaption></figure>本图的第一列是随机的原始数据，后面的列则是模型运算之后生成的向量，对向量进行欧式距离，与原始图像距离最近的一些图像。可以看出，模型将图片“压缩”成了向量，并且保留了语义信息。</p><h2 id=讨论>讨论</h2><ol>
+<li>文中所说的非饱和神经元（non-saturating neurons）应该是指使用relu进行的激活，因为他叫relu为non-saturating nonlinearity</li><li>对于多GPU的方法如今看来有点画蛇添足，如今的硬件不需要进行这样繁琐的操作</li><li>直接使用raw RGB图像进行训练提高了模型的可解释性，我们能看到图像在网络中是如何一步步变换的</li><li>本文最后就是使用4096维的向量来表征所有的图像，可以理解为将原始图像信息进行了压缩，并且相似类别的向量距离更近，这与语义空间的概念极其吻合。</li></ol><div class=post-reward>
+<input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label>
+<div class=qr-code>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/wechat.png>
+<span>微信打赏</span>
+</label>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/alipay.png>
+<span>支付宝打赏</span>
+</label>
+</div></div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>更新于 2024-05-31</span>
+</div></div><div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/posts/learning/paper_review/alexnet/index.md target=_blank>阅读原始文档</a>
+</span></div><div class=post-info-share>
+<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/learning/paper_review/alexnet/ data-hashtag=CS><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/learning/paper_review/alexnet/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/learning/paper_review/alexnet/ data-title="ImageNet Classification with Deep Convolutional Neural Networks[2012]" data-image=1.png><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
+</div></div></div><div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/>深度学习</a>,&nbsp;<a href=/tags/alexnet/>AlexNet</a>,&nbsp;<a href=/tags/cnn/>CNN</a></section><section>
+<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
+</section></div><div class=post-nav><a href=/posts/learning/cs/dropout/ class=prev rel=prev title=暂退法（dropout）><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>暂退法（dropout）</a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+<script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:null,placeholder:"开启魔法上网方可使用评论～",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+<span id=run-time></span>
+</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023 - 2024</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+<i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论>
+<i class="fas fa-comment fa-fw" aria-hidden=true></i>
+</a>
+</div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js></script>
+<script type=text/javascript src=/js/custom.js></script>
+<script type=text/javascript src=/js/test.js></script></body></html>
