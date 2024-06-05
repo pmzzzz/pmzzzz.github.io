@@ -1,0 +1,186 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title>LeNet - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="LeNet">
+<meta property="og:description" content="模型结构 总体来看，(LeNet（LeNet-5）由两个部分组成：) 卷积编码器：由两个卷积层组成; 全连接层密集块：由三个全连接层组成。 import torch from torch">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pmzzzt.eu.org/posts/learning/cs/convolutional_neural_networks/lenet/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2024-06-04T15:00:00+08:00">
+<meta property="article:modified_time" content="2024-06-04T15:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="LeNet">
+<meta name=twitter:description content="模型结构 总体来看，(LeNet（LeNet-5）由两个部分组成：) 卷积编码器：由两个卷积层组成; 全连接层密集块：由三个全连接层组成。 import torch from torch">
+<meta name=application-name content="泡面zz">
+<meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/cs/convolutional_neural_networks/lenet/><link rel=prev href=https://pmzzzt.eu.org/posts/learning/cs/convolutional_neural_networks/pooling/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"LeNet","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/convolutional_neural_networks\/lenet\/"},"genre":"posts","keywords":"CS, 机器学习, 深度学习, LeNet","wordcount":648,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/convolutional_neural_networks\/lenet\/","datePublished":"2024-06-04T15:00:00+08:00","dateModified":"2024-06-04T15:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu>
+<div class=menu-inner>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/readlist/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="menu-item language" title=选择语言>
+<i class="fa fa-globe" aria-hidden=true></i>
+<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/posts/learning/cs/convolutional_neural_networks/lenet/ selected>简体中文</option></select>
+</a></div></div></div></header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div></div><div class=menu id=menu-mobile>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/readlist/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>
+<i class="fa fa-globe fa-fw" aria-hidden=true></i>
+<select class=language-select onchange="location=this.value"><option value=/posts/learning/cs/convolutional_neural_networks/lenet/ selected>简体中文</option></select>
+</a></div></div></header><main class=main>
+<div class=container>
+<div class=toc id=toc-auto>
+<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">LeNet</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-06-04>2024-06-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 648 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 2 分钟&nbsp;</div></div><div class="details toc" id=toc-static data-kept>
+<div class="details-summary toc-title">
+<span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#模型结构>模型结构</a></li><li><a href=#模型训练>模型训练</a></li><li><a href=#小结>小结</a></li></ul></nav></div></div><div class=content id=content><h2 id=模型结构>模型结构</h2><p>总体来看，(<strong>LeNet（LeNet-5）由两个部分组成：</strong>)</p><ul>
+<li>卷积编码器：由两个卷积层组成;</li><li>全连接层密集块：由三个全连接层组成。
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/convolutional_neural_networks/lenet/arc.png data-srcset="/posts/learning/cs/convolutional_neural_networks/lenet/arc.png, /posts/learning/cs/convolutional_neural_networks/lenet/arc.png 1.5x, /posts/learning/cs/convolutional_neural_networks/lenet/arc.png 2x" data-sizes=auto alt=/posts/learning/cs/convolutional_neural_networks/lenet/arc.png title=/posts/learning/cs/convolutional_neural_networks/lenet/arc.png width=354 height=684></li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>torch</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>torch</span> <span class=kn>import</span> <span class=n>nn</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>d2l</span> <span class=kn>import</span> <span class=n>torch</span> <span class=k>as</span> <span class=n>d2l</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>net</span> <span class=o>=</span> <span class=n>nn</span><span class=o>.</span><span class=n>Sequential</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=n>nn</span><span class=o>.</span><span class=n>Conv2d</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=mi>6</span><span class=p>,</span> <span class=n>kernel_size</span><span class=o>=</span><span class=mi>5</span><span class=p>,</span> <span class=n>padding</span><span class=o>=</span><span class=mi>2</span><span class=p>),</span> <span class=n>nn</span><span class=o>.</span><span class=n>Sigmoid</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>    <span class=n>nn</span><span class=o>.</span><span class=n>AvgPool2d</span><span class=p>(</span><span class=n>kernel_size</span><span class=o>=</span><span class=mi>2</span><span class=p>,</span> <span class=n>stride</span><span class=o>=</span><span class=mi>2</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=n>nn</span><span class=o>.</span><span class=n>Conv2d</span><span class=p>(</span><span class=mi>6</span><span class=p>,</span> <span class=mi>16</span><span class=p>,</span> <span class=n>kernel_size</span><span class=o>=</span><span class=mi>5</span><span class=p>),</span> <span class=n>nn</span><span class=o>.</span><span class=n>Sigmoid</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>    <span class=n>nn</span><span class=o>.</span><span class=n>AvgPool2d</span><span class=p>(</span><span class=n>kernel_size</span><span class=o>=</span><span class=mi>2</span><span class=p>,</span> <span class=n>stride</span><span class=o>=</span><span class=mi>2</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>    <span class=n>nn</span><span class=o>.</span><span class=n>Flatten</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>    <span class=n>nn</span><span class=o>.</span><span class=n>Linear</span><span class=p>(</span><span class=mi>16</span> <span class=o>*</span> <span class=mi>5</span> <span class=o>*</span> <span class=mi>5</span><span class=p>,</span> <span class=mi>120</span><span class=p>),</span> <span class=n>nn</span><span class=o>.</span><span class=n>Sigmoid</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>    <span class=n>nn</span><span class=o>.</span><span class=n>Linear</span><span class=p>(</span><span class=mi>120</span><span class=p>,</span> <span class=mi>84</span><span class=p>),</span> <span class=n>nn</span><span class=o>.</span><span class=n>Sigmoid</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>    <span class=n>nn</span><span class=o>.</span><span class=n>Linear</span><span class=p>(</span><span class=mi>84</span><span class=p>,</span> <span class=mi>10</span><span class=p>))</span>
+</span></span></code></pre></div><h2 id=模型训练>模型训练</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>batch_size</span> <span class=o>=</span> <span class=mi>256</span>
+</span></span><span class=line><span class=cl><span class=n>train_iter</span><span class=p>,</span> <span class=n>test_iter</span> <span class=o>=</span> <span class=n>d2l</span><span class=o>.</span><span class=n>load_data_fashion_mnist</span><span class=p>(</span><span class=n>batch_size</span><span class=o>=</span><span class=n>batch_size</span><span class=p>)</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>evaluate_accuracy_gpu</span><span class=p>(</span><span class=n>net</span><span class=p>,</span> <span class=n>data_iter</span><span class=p>,</span> <span class=n>device</span><span class=o>=</span><span class=kc>None</span><span class=p>):</span> <span class=c1>#@save</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;使用GPU计算模型在数据集上的精度&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=nb>isinstance</span><span class=p>(</span><span class=n>net</span><span class=p>,</span> <span class=n>nn</span><span class=o>.</span><span class=n>Module</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>net</span><span class=o>.</span><span class=n>eval</span><span class=p>()</span>  <span class=c1># 设置为评估模式</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=n>device</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>device</span> <span class=o>=</span> <span class=nb>next</span><span class=p>(</span><span class=nb>iter</span><span class=p>(</span><span class=n>net</span><span class=o>.</span><span class=n>parameters</span><span class=p>()))</span><span class=o>.</span><span class=n>device</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 正确预测的数量，总预测的数量</span>
+</span></span><span class=line><span class=cl>    <span class=n>metric</span> <span class=o>=</span> <span class=n>d2l</span><span class=o>.</span><span class=n>Accumulator</span><span class=p>(</span><span class=mi>2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>with</span> <span class=n>torch</span><span class=o>.</span><span class=n>no_grad</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=n>X</span><span class=p>,</span> <span class=n>y</span> <span class=ow>in</span> <span class=n>data_iter</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=nb>isinstance</span><span class=p>(</span><span class=n>X</span><span class=p>,</span> <span class=nb>list</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>                <span class=c1># BERT微调所需的（之后将介绍）</span>
+</span></span><span class=line><span class=cl>                <span class=n>X</span> <span class=o>=</span> <span class=p>[</span><span class=n>x</span><span class=o>.</span><span class=n>to</span><span class=p>(</span><span class=n>device</span><span class=p>)</span> <span class=k>for</span> <span class=n>x</span> <span class=ow>in</span> <span class=n>X</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>            <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>X</span> <span class=o>=</span> <span class=n>X</span><span class=o>.</span><span class=n>to</span><span class=p>(</span><span class=n>device</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>y</span> <span class=o>=</span> <span class=n>y</span><span class=o>.</span><span class=n>to</span><span class=p>(</span><span class=n>device</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>metric</span><span class=o>.</span><span class=n>add</span><span class=p>(</span><span class=n>d2l</span><span class=o>.</span><span class=n>accuracy</span><span class=p>(</span><span class=n>net</span><span class=p>(</span><span class=n>X</span><span class=p>),</span> <span class=n>y</span><span class=p>),</span> <span class=n>y</span><span class=o>.</span><span class=n>numel</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>metric</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>/</span> <span class=n>metric</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1>#@save</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>train_ch6</span><span class=p>(</span><span class=n>net</span><span class=p>,</span> <span class=n>train_iter</span><span class=p>,</span> <span class=n>test_iter</span><span class=p>,</span> <span class=n>num_epochs</span><span class=p>,</span> <span class=n>lr</span><span class=p>,</span> <span class=n>device</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;用GPU训练模型(在第六章定义)&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>init_weights</span><span class=p>(</span><span class=n>m</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=nb>type</span><span class=p>(</span><span class=n>m</span><span class=p>)</span> <span class=o>==</span> <span class=n>nn</span><span class=o>.</span><span class=n>Linear</span> <span class=ow>or</span> <span class=nb>type</span><span class=p>(</span><span class=n>m</span><span class=p>)</span> <span class=o>==</span> <span class=n>nn</span><span class=o>.</span><span class=n>Conv2d</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>nn</span><span class=o>.</span><span class=n>init</span><span class=o>.</span><span class=n>xavier_uniform_</span><span class=p>(</span><span class=n>m</span><span class=o>.</span><span class=n>weight</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>net</span><span class=o>.</span><span class=n>apply</span><span class=p>(</span><span class=n>init_weights</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s1>&#39;training on&#39;</span><span class=p>,</span> <span class=n>device</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>net</span><span class=o>.</span><span class=n>to</span><span class=p>(</span><span class=n>device</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>optimizer</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>optim</span><span class=o>.</span><span class=n>SGD</span><span class=p>(</span><span class=n>net</span><span class=o>.</span><span class=n>parameters</span><span class=p>(),</span> <span class=n>lr</span><span class=o>=</span><span class=n>lr</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>loss</span> <span class=o>=</span> <span class=n>nn</span><span class=o>.</span><span class=n>CrossEntropyLoss</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>animator</span> <span class=o>=</span> <span class=n>d2l</span><span class=o>.</span><span class=n>Animator</span><span class=p>(</span><span class=n>xlabel</span><span class=o>=</span><span class=s1>&#39;epoch&#39;</span><span class=p>,</span> <span class=n>xlim</span><span class=o>=</span><span class=p>[</span><span class=mi>1</span><span class=p>,</span> <span class=n>num_epochs</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>                            <span class=n>legend</span><span class=o>=</span><span class=p>[</span><span class=s1>&#39;train loss&#39;</span><span class=p>,</span> <span class=s1>&#39;train acc&#39;</span><span class=p>,</span> <span class=s1>&#39;test acc&#39;</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>    <span class=n>timer</span><span class=p>,</span> <span class=n>num_batches</span> <span class=o>=</span> <span class=n>d2l</span><span class=o>.</span><span class=n>Timer</span><span class=p>(),</span> <span class=nb>len</span><span class=p>(</span><span class=n>train_iter</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>epoch</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=n>num_epochs</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=c1># 训练损失之和，训练准确率之和，样本数</span>
+</span></span><span class=line><span class=cl>        <span class=n>metric</span> <span class=o>=</span> <span class=n>d2l</span><span class=o>.</span><span class=n>Accumulator</span><span class=p>(</span><span class=mi>3</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>net</span><span class=o>.</span><span class=n>train</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=n>i</span><span class=p>,</span> <span class=p>(</span><span class=n>X</span><span class=p>,</span> <span class=n>y</span><span class=p>)</span> <span class=ow>in</span> <span class=nb>enumerate</span><span class=p>(</span><span class=n>train_iter</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=n>timer</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=n>optimizer</span><span class=o>.</span><span class=n>zero_grad</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=n>X</span><span class=p>,</span> <span class=n>y</span> <span class=o>=</span> <span class=n>X</span><span class=o>.</span><span class=n>to</span><span class=p>(</span><span class=n>device</span><span class=p>),</span> <span class=n>y</span><span class=o>.</span><span class=n>to</span><span class=p>(</span><span class=n>device</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>y_hat</span> <span class=o>=</span> <span class=n>net</span><span class=p>(</span><span class=n>X</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>l</span> <span class=o>=</span> <span class=n>loss</span><span class=p>(</span><span class=n>y_hat</span><span class=p>,</span> <span class=n>y</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>l</span><span class=o>.</span><span class=n>backward</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=n>optimizer</span><span class=o>.</span><span class=n>step</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=k>with</span> <span class=n>torch</span><span class=o>.</span><span class=n>no_grad</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>                <span class=n>metric</span><span class=o>.</span><span class=n>add</span><span class=p>(</span><span class=n>l</span> <span class=o>*</span> <span class=n>X</span><span class=o>.</span><span class=n>shape</span><span class=p>[</span><span class=mi>0</span><span class=p>],</span> <span class=n>d2l</span><span class=o>.</span><span class=n>accuracy</span><span class=p>(</span><span class=n>y_hat</span><span class=p>,</span> <span class=n>y</span><span class=p>),</span> <span class=n>X</span><span class=o>.</span><span class=n>shape</span><span class=p>[</span><span class=mi>0</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>            <span class=n>timer</span><span class=o>.</span><span class=n>stop</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=n>train_l</span> <span class=o>=</span> <span class=n>metric</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>/</span> <span class=n>metric</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>            <span class=n>train_acc</span> <span class=o>=</span> <span class=n>metric</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>/</span> <span class=n>metric</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=n>i</span> <span class=o>+</span> <span class=mi>1</span><span class=p>)</span> <span class=o>%</span> <span class=p>(</span><span class=n>num_batches</span> <span class=o>//</span> <span class=mi>5</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span> <span class=ow>or</span> <span class=n>i</span> <span class=o>==</span> <span class=n>num_batches</span> <span class=o>-</span> <span class=mi>1</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>animator</span><span class=o>.</span><span class=n>add</span><span class=p>(</span><span class=n>epoch</span> <span class=o>+</span> <span class=p>(</span><span class=n>i</span> <span class=o>+</span> <span class=mi>1</span><span class=p>)</span> <span class=o>/</span> <span class=n>num_batches</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                             <span class=p>(</span><span class=n>train_l</span><span class=p>,</span> <span class=n>train_acc</span><span class=p>,</span> <span class=kc>None</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=n>test_acc</span> <span class=o>=</span> <span class=n>evaluate_accuracy_gpu</span><span class=p>(</span><span class=n>net</span><span class=p>,</span> <span class=n>test_iter</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>animator</span><span class=o>.</span><span class=n>add</span><span class=p>(</span><span class=n>epoch</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span> <span class=p>(</span><span class=kc>None</span><span class=p>,</span> <span class=kc>None</span><span class=p>,</span> <span class=n>test_acc</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s1>&#39;loss </span><span class=si>{</span><span class=n>train_l</span><span class=si>:</span><span class=s1>.3f</span><span class=si>}</span><span class=s1>, train acc </span><span class=si>{</span><span class=n>train_acc</span><span class=si>:</span><span class=s1>.3f</span><span class=si>}</span><span class=s1>, &#39;</span>
+</span></span><span class=line><span class=cl>          <span class=sa>f</span><span class=s1>&#39;test acc </span><span class=si>{</span><span class=n>test_acc</span><span class=si>:</span><span class=s1>.3f</span><span class=si>}</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s1>&#39;</span><span class=si>{</span><span class=n>metric</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span> <span class=o>*</span> <span class=n>num_epochs</span> <span class=o>/</span> <span class=n>timer</span><span class=o>.</span><span class=n>sum</span><span class=p>()</span><span class=si>:</span><span class=s1>.1f</span><span class=si>}</span><span class=s1> examples/sec &#39;</span>
+</span></span><span class=line><span class=cl>          <span class=sa>f</span><span class=s1>&#39;on </span><span class=si>{</span><span class=nb>str</span><span class=p>(</span><span class=n>device</span><span class=p>)</span><span class=si>}</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>lr</span><span class=p>,</span> <span class=n>num_epochs</span> <span class=o>=</span> <span class=mf>0.9</span><span class=p>,</span> <span class=mi>10</span>
+</span></span><span class=line><span class=cl><span class=n>train_ch6</span><span class=p>(</span><span class=n>net</span><span class=p>,</span> <span class=n>train_iter</span><span class=p>,</span> <span class=n>test_iter</span><span class=p>,</span> <span class=n>num_epochs</span><span class=p>,</span> <span class=n>lr</span><span class=p>,</span> <span class=s2>&#34;mps&#34;</span><span class=p>)</span>
+</span></span></code></pre></div><h2 id=小结>小结</h2><ul>
+<li>卷积神经网络（CNN）是一类使用卷积层的网络。</li><li>在卷积神经网络中，我们组合使用卷积层、非线性激活函数和汇聚层。</li><li>为了构造高性能的卷积神经网络，我们通常对卷积层进行排列，逐渐降低其表示的空间分辨率，同时增加通道数。</li><li>在传统的卷积神经网络中，卷积块编码得到的表征在输出之前需由一个或多个全连接层进行处理。</li><li>LeNet是最早发布的卷积神经网络之一。</li></ul><div class=post-reward>
+<input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label>
+<div class=qr-code>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/wechat.png>
+<span>微信打赏</span>
+</label>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/alipay.png>
+<span>支付宝打赏</span>
+</label>
+</div></div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>更新于 2024-06-04</span>
+</div></div><div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/posts/learning/cs/convolutional_neural_networks/lenet/index.md target=_blank>阅读原始文档</a>
+</span></div><div class=post-info-share>
+<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/learning/cs/convolutional_neural_networks/lenet/ data-hashtag=CS><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/learning/cs/convolutional_neural_networks/lenet/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/learning/cs/convolutional_neural_networks/lenet/ data-title=LeNet><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
+</div></div></div><div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/>机器学习</a>,&nbsp;<a href=/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/>深度学习</a>,&nbsp;<a href=/tags/lenet/>LeNet</a></section><section>
+<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
+</section></div><div class=post-nav><a href=/posts/learning/cs/convolutional_neural_networks/pooling/ class=prev rel=prev title=汇聚/池化层><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>汇聚/池化层</a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+<script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:null,placeholder:"开启魔法上网方可使用评论～",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+<span id=run-time></span>
+</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023 - 2024</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+<i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论>
+<i class="fas fa-comment fa-fw" aria-hidden=true></i>
+</a>
+</div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js></script>
+<script type=text/javascript src=/js/custom.js></script>
+<script type=text/javascript src=/js/test.js></script></body></html>

@@ -143,12 +143,12 @@ b &\leftarrow b -  \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \partial_
 ### 神经网络
 
 根据线性回归的形式，很容易看出来它就是一个单层的神经网络：
-{{< image src="神经网络表示.png" caption="单层神经网络(图中没画出偏置)">}}
+{{< image src="neru.png" caption="单层神经网络(图中没画出偏置)">}}
 
 ### 矢量计算
 
 使用向pytorch的向量运算效率很高，因此，应该尽量将计算表示成向量运算的形式：
 
-![](向量表示.png)
+![](vector.png)
 其中梯度可表示为：
-![](梯度向量表示.png)
+![](grad_vector.png)

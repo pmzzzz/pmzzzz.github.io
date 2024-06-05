@@ -70,7 +70,7 @@ def set_figsize(figsize=(3.5, 2.5)):
 set_figsize()
 plt.scatter(features[:, 1].numpy(), labels.numpy(), 1);
 ```
-{{<image src="3.2_output1.png" caption="">}}
+{{<image src="output1.png" caption="">}}
 
 ## 读取数据
 
