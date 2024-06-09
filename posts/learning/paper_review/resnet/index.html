@@ -1,0 +1,193 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title>(ResNet)Deep Residual Learning for Image Recognition[2015] - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="(ResNet)Deep Residual Learning for Image Recognition[2015]">
+<meta property="og:description" content="思路 本文的主要贡献在于让更深的网络模型的效果不下降 问题发现 在以往的工作中，大家都在尝试让网络层数更深，来获得更好的效果，然而作者发现随着层数">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pmzzzt.eu.org/posts/learning/paper_review/resnet/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2024-06-08T11:00:00+08:00">
+<meta property="article:modified_time" content="2024-06-08T11:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="(ResNet)Deep Residual Learning for Image Recognition[2015]">
+<meta name=twitter:description content="思路 本文的主要贡献在于让更深的网络模型的效果不下降 问题发现 在以往的工作中，大家都在尝试让网络层数更深，来获得更好的效果，然而作者发现随着层数">
+<meta name=application-name content="泡面zz">
+<meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/paper_review/resnet/><link rel=prev href=https://pmzzzt.eu.org/posts/learning/cs/convolutional-modern/batch-norm/><link rel=next href=https://pmzzzt.eu.org/posts/learning/cs/convolutional-modern/densenet/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"(ResNet)Deep Residual Learning for Image Recognition[2015]","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/paper_review\/resnet\/"},"genre":"posts","keywords":"CS, 机器学习, 深度学习","wordcount":1378,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/paper_review\/resnet\/","datePublished":"2024-06-08T11:00:00+08:00","dateModified":"2024-06-08T11:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu>
+<div class=menu-inner>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/categories/paper-review/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="menu-item language" title=选择语言>
+<i class="fa fa-globe" aria-hidden=true></i>
+<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/posts/learning/paper_review/resnet/ selected>简体中文</option></select>
+</a></div></div></div></header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div></div><div class=menu id=menu-mobile>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/categories/paper-review/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>
+<i class="fa fa-globe fa-fw" aria-hidden=true></i>
+<select class=language-select onchange="location=this.value"><option value=/posts/learning/paper_review/resnet/ selected>简体中文</option></select>
+</a></div></div></header><main class=main>
+<div class=container>
+<div class=toc id=toc-auto>
+<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">(ResNet)Deep Residual Learning for Image Recognition[2015]</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/paper-review/><i class="far fa-folder fa-fw" aria-hidden=true></i>Paper Review</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-06-08>2024-06-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 1378 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 3 分钟&nbsp;</div></div><div class=featured-image><img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/resnet/1.png data-srcset="/posts/learning/paper_review/resnet/1.png, /posts/learning/paper_review/resnet/1.png 1.5x, /posts/learning/paper_review/resnet/1.png 2x" data-sizes=auto alt=/posts/learning/paper_review/resnet/1.png title=/posts/learning/paper_review/resnet/1.png width=1684 height=608></div><div class="details toc" id=toc-static data-kept>
+<div class="details-summary toc-title">
+<span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#思路>思路</a>
+<ul>
+<li><a href=#问题发现>问题发现</a></li><li><a href=#问题分析>问题分析</a></li></ul></li><li><a href=#模型deep-residual-learning>模型(Deep Residual Learning)</a>
+<ul>
+<li><a href=#残差学习residual-learning>残差学习(Residual Learning)</a></li><li><a href=#短路实现恒等映射identity-mapping-by-shortcuts>短路实现恒等映射(Identity Mapping by Shortcuts)</a></li><li><a href=#网络架构network-architectures>网络架构(Network Architectures)</a></li><li><a href=#模型实现implementation>模型实现(Implementation)</a></li></ul></li><li><a href=#代码>代码</a>
+<ul>
+<li><a href=#resnet>ResNet</a></li></ul></li><li><a href=#小结>小结</a></li></ul></nav></div></div><div class=content id=content><h2 id=思路>思路</h2><p><strong>本文的主要贡献在于让更深的网络模型的效果不下降</strong></p><h3 id=问题发现>问题发现</h3><p>在以往的工作中，大家都在尝试让网络层数更深，来获得更好的效果，然而作者发现随着层数的增加，效果会反而降低。<br>
+<a class=lightgallery href=/posts/learning/paper_review/resnet/nores.png title=/posts/learning/paper_review/resnet/nores.png data-thumbnail=/posts/learning/paper_review/resnet/nores.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/resnet/nores.png data-srcset="/posts/learning/paper_review/resnet/nores.png, /posts/learning/paper_review/resnet/nores.png 1.5x, /posts/learning/paper_review/resnet/nores.png 2x" data-sizes=auto alt=/posts/learning/paper_review/resnet/nores.png width=988 height=300px>
+</a>
+出乎意料的是，这种退化并不是由过度拟合引起的，并且在适当深度的模型中添加更多层会导致更高的训练误差</p><h3 id=问题分析>问题分析</h3><p>考虑在原来好效果的模型之上添加新的层，如果这些层是恒等映射(identity mapping),它们不会对原有模型有任何影响所以会保持原来的效果。如果这些新层学习到了新知识，整个网络的效果应该更好或者至少不下降，但是试验表明目前的方法不能达到更好的效果(或者需要过大的计算开销)</p><p>本文的解决方法就是显式地让这些新的层去学习恒等映射而不是直接堆叠连接</p><p>假设我们的理想映射是 $\mathbf{H}(\mathbf{x})$ ,让叠加的新层学习 $\mathbf{F}(\mathbf{x}) = \mathbf{H}(\mathbf{x}) - \mathbf{x}$ 则原始的映射就表示为 $\mathbf{H}(\mathbf{x}) = \mathbf{F}(\mathbf{x}) +\mathbf{x}$<br>
+<a class=lightgallery href=/posts/learning/paper_review/resnet/resblock.png title=/posts/learning/paper_review/resnet/resblock.png data-thumbnail=/posts/learning/paper_review/resnet/resblock.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/resnet/resblock.png data-srcset="/posts/learning/paper_review/resnet/resblock.png, /posts/learning/paper_review/resnet/resblock.png 1.5x, /posts/learning/paper_review/resnet/resblock.png 2x" data-sizes=auto alt=/posts/learning/paper_review/resnet/resblock.png width=750 height=300px>
+</a>
+在极端情况下，如果恒等映射是最优的，则将新层置为零比通过一堆非线性层拟合恒等映射更容易</p><h2 id=模型deep-residual-learning>模型(Deep Residual Learning)</h2><h3 id=残差学习residual-learning>残差学习(Residual Learning)</h3><h3 id=短路实现恒等映射identity-mapping-by-shortcuts>短路实现恒等映射(Identity Mapping by Shortcuts)</h3><p>残差块的公式如下：
+$$
+{\bf y}=\mathcal{F}({\bf x},\{W_{i}\})+{\bf x}.
+$$
+其中${\bf x}，{\bf y}$ 是输入输出，$\mathcal{F}({\bf x},\{W_{i}\})$代表了需要学习的残差映射<br>
+方程中的快捷连接既不引入额外的参数，也不引入额外的计算复杂性。这不仅在实践中有吸引力，而且在我们比较普通网络和残差网络时也很重要。</p><p>要求 $\mathcal{x}$和 $\mathcal{F}$ 的维度要一致，如果不一致，需要将 $\mathcal{x}$ 进行投影， $W_{s}$仅在匹配尺寸时使用
+$$
+{\bf y}=\mathcal{F}({\bf x},\{W_{i}\})+W_{s}{\bf x}.
+$$</p><h3 id=网络架构network-architectures>网络架构(Network Architectures)</h3><p>ResNet的前两层跟之前介绍的GoogLeNet中的一样：
+在输出通道数为64、步幅为2的$7 \times 7$卷积层后，接步幅为2的$3 \times 3$的最大汇聚层。
+不同之处在于ResNet每个卷积层后增加了批量规范化层。
+<a class=lightgallery href=/posts/learning/paper_review/resnet/resnet.png title=/posts/learning/paper_review/resnet/resnet.png data-thumbnail=/posts/learning/paper_review/resnet/resnet.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/resnet/resnet.png data-srcset="/posts/learning/paper_review/resnet/resnet.png, /posts/learning/paper_review/resnet/resnet.png 1.5x, /posts/learning/paper_review/resnet/resnet.png 2x" data-sizes=auto alt=/posts/learning/paper_review/resnet/resnet.png width=680 height=1500>
+</a></p><h3 id=模型实现implementation>模型实现(Implementation)</h3><p>主要介绍对数据处理以及模型的具体参数设置等，不做总结
+<a class=lightgallery href=/posts/learning/paper_review/resnet/im.png title=/posts/learning/paper_review/resnet/im.png data-thumbnail=/posts/learning/paper_review/resnet/im.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/resnet/im.png data-srcset="/posts/learning/paper_review/resnet/im.png, /posts/learning/paper_review/resnet/im.png 1.5x, /posts/learning/paper_review/resnet/im.png 2x" data-sizes=auto alt=/posts/learning/paper_review/resnet/im.png width=1210 height=300px>
+</a></p><h2 id=代码>代码</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>torch</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>torch</span> <span class=kn>import</span> <span class=n>nn</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>torch.nn</span> <span class=kn>import</span> <span class=n>functional</span> <span class=k>as</span> <span class=n>F</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>d2l</span> <span class=kn>import</span> <span class=n>torch</span> <span class=k>as</span> <span class=n>d2l</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>Residual</span><span class=p>(</span><span class=n>nn</span><span class=o>.</span><span class=n>Module</span><span class=p>):</span> 
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>input_channels</span><span class=p>,</span> <span class=n>num_channels</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                 <span class=n>use_1x1conv</span><span class=o>=</span><span class=kc>False</span><span class=p>,</span> <span class=n>strides</span><span class=o>=</span><span class=mi>1</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=nb>super</span><span class=p>()</span><span class=o>.</span><span class=fm>__init__</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>conv1</span> <span class=o>=</span> <span class=n>nn</span><span class=o>.</span><span class=n>Conv2d</span><span class=p>(</span><span class=n>input_channels</span><span class=p>,</span> <span class=n>num_channels</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                               <span class=n>kernel_size</span><span class=o>=</span><span class=mi>3</span><span class=p>,</span> <span class=n>padding</span><span class=o>=</span><span class=mi>1</span><span class=p>,</span> <span class=n>stride</span><span class=o>=</span><span class=n>strides</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>conv2</span> <span class=o>=</span> <span class=n>nn</span><span class=o>.</span><span class=n>Conv2d</span><span class=p>(</span><span class=n>num_channels</span><span class=p>,</span> <span class=n>num_channels</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                               <span class=n>kernel_size</span><span class=o>=</span><span class=mi>3</span><span class=p>,</span> <span class=n>padding</span><span class=o>=</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>use_1x1conv</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>conv3</span> <span class=o>=</span> <span class=n>nn</span><span class=o>.</span><span class=n>Conv2d</span><span class=p>(</span><span class=n>input_channels</span><span class=p>,</span> <span class=n>num_channels</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                                   <span class=n>kernel_size</span><span class=o>=</span><span class=mi>1</span><span class=p>,</span> <span class=n>stride</span><span class=o>=</span><span class=n>strides</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=bp>self</span><span class=o>.</span><span class=n>conv3</span> <span class=o>=</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>bn1</span> <span class=o>=</span> <span class=n>nn</span><span class=o>.</span><span class=n>BatchNorm2d</span><span class=p>(</span><span class=n>num_channels</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>bn2</span> <span class=o>=</span> <span class=n>nn</span><span class=o>.</span><span class=n>BatchNorm2d</span><span class=p>(</span><span class=n>num_channels</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>forward</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>X</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>Y</span> <span class=o>=</span> <span class=n>F</span><span class=o>.</span><span class=n>relu</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>bn1</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>conv1</span><span class=p>(</span><span class=n>X</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>        <span class=n>Y</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>bn2</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>conv2</span><span class=p>(</span><span class=n>Y</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=bp>self</span><span class=o>.</span><span class=n>conv3</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>X</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>conv3</span><span class=p>(</span><span class=n>X</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>Y</span> <span class=o>+=</span> <span class=n>X</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>F</span><span class=o>.</span><span class=n>relu</span><span class=p>(</span><span class=n>Y</span><span class=p>)</span>
+</span></span></code></pre></div><h3 id=resnet>ResNet</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>b1</span> <span class=o>=</span> <span class=n>nn</span><span class=o>.</span><span class=n>Sequential</span><span class=p>(</span><span class=n>nn</span><span class=o>.</span><span class=n>Conv2d</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=mi>64</span><span class=p>,</span> <span class=n>kernel_size</span><span class=o>=</span><span class=mi>7</span><span class=p>,</span> <span class=n>stride</span><span class=o>=</span><span class=mi>2</span><span class=p>,</span> <span class=n>padding</span><span class=o>=</span><span class=mi>3</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>                   <span class=n>nn</span><span class=o>.</span><span class=n>BatchNorm2d</span><span class=p>(</span><span class=mi>64</span><span class=p>),</span> <span class=n>nn</span><span class=o>.</span><span class=n>ReLU</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>                   <span class=n>nn</span><span class=o>.</span><span class=n>MaxPool2d</span><span class=p>(</span><span class=n>kernel_size</span><span class=o>=</span><span class=mi>3</span><span class=p>,</span> <span class=n>stride</span><span class=o>=</span><span class=mi>2</span><span class=p>,</span> <span class=n>padding</span><span class=o>=</span><span class=mi>1</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>resnet_block</span><span class=p>(</span><span class=n>input_channels</span><span class=p>,</span> <span class=n>num_channels</span><span class=p>,</span> <span class=n>num_residuals</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                 <span class=n>first_block</span><span class=o>=</span><span class=kc>False</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>blk</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=n>num_residuals</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>i</span> <span class=o>==</span> <span class=mi>0</span> <span class=ow>and</span> <span class=ow>not</span> <span class=n>first_block</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>blk</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>Residual</span><span class=p>(</span><span class=n>input_channels</span><span class=p>,</span> <span class=n>num_channels</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                                <span class=n>use_1x1conv</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>strides</span><span class=o>=</span><span class=mi>2</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>blk</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>Residual</span><span class=p>(</span><span class=n>num_channels</span><span class=p>,</span> <span class=n>num_channels</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>blk</span>
+</span></span><span class=line><span class=cl><span class=n>b2</span> <span class=o>=</span> <span class=n>nn</span><span class=o>.</span><span class=n>Sequential</span><span class=p>(</span><span class=o>*</span><span class=n>resnet_block</span><span class=p>(</span><span class=mi>64</span><span class=p>,</span> <span class=mi>64</span><span class=p>,</span> <span class=mi>2</span><span class=p>,</span> <span class=n>first_block</span><span class=o>=</span><span class=kc>True</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=n>b3</span> <span class=o>=</span> <span class=n>nn</span><span class=o>.</span><span class=n>Sequential</span><span class=p>(</span><span class=o>*</span><span class=n>resnet_block</span><span class=p>(</span><span class=mi>64</span><span class=p>,</span> <span class=mi>128</span><span class=p>,</span> <span class=mi>2</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=n>b4</span> <span class=o>=</span> <span class=n>nn</span><span class=o>.</span><span class=n>Sequential</span><span class=p>(</span><span class=o>*</span><span class=n>resnet_block</span><span class=p>(</span><span class=mi>128</span><span class=p>,</span> <span class=mi>256</span><span class=p>,</span> <span class=mi>2</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=n>b5</span> <span class=o>=</span> <span class=n>nn</span><span class=o>.</span><span class=n>Sequential</span><span class=p>(</span><span class=o>*</span><span class=n>resnet_block</span><span class=p>(</span><span class=mi>256</span><span class=p>,</span> <span class=mi>512</span><span class=p>,</span> <span class=mi>2</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=n>net</span> <span class=o>=</span> <span class=n>nn</span><span class=o>.</span><span class=n>Sequential</span><span class=p>(</span><span class=n>b1</span><span class=p>,</span> <span class=n>b2</span><span class=p>,</span> <span class=n>b3</span><span class=p>,</span> <span class=n>b4</span><span class=p>,</span> <span class=n>b5</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                    <span class=n>nn</span><span class=o>.</span><span class=n>AdaptiveAvgPool2d</span><span class=p>((</span><span class=mi>1</span><span class=p>,</span><span class=mi>1</span><span class=p>)),</span>
+</span></span><span class=line><span class=cl>                    <span class=n>nn</span><span class=o>.</span><span class=n>Flatten</span><span class=p>(),</span> <span class=n>nn</span><span class=o>.</span><span class=n>Linear</span><span class=p>(</span><span class=mi>512</span><span class=p>,</span> <span class=mi>10</span><span class=p>))</span>
+</span></span></code></pre></div><p>每个模块有4个卷积层（不包括恒等映射的$1\times 1$卷积层）。
+加上第一个$7\times 7$卷积层和最后一个全连接层，共有18层。
+因此，这种模型通常被称为ResNet-18。
+通过配置不同的通道数和模块里的残差块数可以得到不同的ResNet模型，例如更深的含152层的ResNet-152。
+虽然ResNet的主体架构跟GoogLeNet类似，但ResNet架构更简单，修改也更方便。这些因素都导致了ResNet迅速被广泛使用。</p><h2 id=小结>小结</h2><ul>
+<li>学习嵌套函数（nested function）是训练神经网络的理想情况。在深层神经网络中，学习另一层作为恒等映射（identity function）较容易（尽管这是一个极端情况）。</li><li>残差映射可以更容易地学习同一函数，例如将权重层中的参数近似为零。</li><li>利用残差块（residual blocks）可以训练出一个有效的深层神经网络：输入可以通过层间的残余连接更快地向前传播。</li><li>残差网络（ResNet）对随后的深层神经网络设计产生了深远影响。</li></ul><div class=post-reward>
+<input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label>
+<div class=qr-code>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/wechat.png>
+<span>微信打赏</span>
+</label>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/alipay.png>
+<span>支付宝打赏</span>
+</label>
+</div></div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>更新于 2024-06-08</span>
+</div></div><div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/posts/learning/paper_review/resnet/index.md target=_blank>阅读原始文档</a>
+</span></div><div class=post-info-share>
+<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/learning/paper_review/resnet/ data-hashtag=CS><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/learning/paper_review/resnet/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/learning/paper_review/resnet/ data-title="(ResNet)Deep Residual Learning for Image Recognition[2015]" data-image=1.png><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
+</div></div></div><div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/>机器学习</a>,&nbsp;<a href=/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/>深度学习</a></section><section>
+<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
+</section></div><div class=post-nav><a href=/posts/learning/cs/convolutional-modern/batch-norm/ class=prev rel=prev title=BatchNorm><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>BatchNorm</a>
+<a href=/posts/learning/cs/convolutional-modern/densenet/ class=next rel=next title=DenseNet>DenseNet<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+<script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:null,placeholder:"开启魔法上网方可使用评论～",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+<span id=run-time></span>
+</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023 - 2024</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+<i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论>
+<i class="fas fa-comment fa-fw" aria-hidden=true></i>
+</a>
+</div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js></script>
+<script type=text/javascript src=/js/custom.js></script>
+<script type=text/javascript src=/js/test.js></script></body></html>
