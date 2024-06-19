@@ -1,0 +1,141 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title>长短期记忆网络LSTM - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="长短期记忆网络LSTM">
+<meta property="og:description" content="长短记忆网络引入了记忆元，然后用输入门、输出门、遗忘门来控制记忆单元和隐藏状态的输出 输入门、忘记门和输出门 $\sigma$是sigmoid 函">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pmzzzt.eu.org/posts/learning/cs/recurrent-modern/lstm/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2024-06-18T13:00:00+08:00">
+<meta property="article:modified_time" content="2024-06-18T13:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="长短期记忆网络LSTM">
+<meta name=twitter:description content="长短记忆网络引入了记忆元，然后用输入门、输出门、遗忘门来控制记忆单元和隐藏状态的输出 输入门、忘记门和输出门 $\sigma$是sigmoid 函">
+<meta name=application-name content="泡面zz">
+<meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/cs/recurrent-modern/lstm/><link rel=prev href=https://pmzzzt.eu.org/posts/learning/cs/recurrent-modern/gru/><link rel=next href=https://pmzzzt.eu.org/posts/learning/cs/recurrent-modern/deep-rnn/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"长短期记忆网络LSTM","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/recurrent-modern\/lstm\/"},"genre":"posts","keywords":"CS, 机器学习, LSTM, RNN","wordcount":318,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/recurrent-modern\/lstm\/","datePublished":"2024-06-18T13:00:00+08:00","dateModified":"2024-06-18T13:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu>
+<div class=menu-inner>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/categories/paper-review/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="menu-item language" title=选择语言>
+<i class="fa fa-globe" aria-hidden=true></i>
+<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/posts/learning/cs/recurrent-modern/lstm/ selected>简体中文</option></select>
+</a></div></div></div></header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div></div><div class=menu id=menu-mobile>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/categories/paper-review/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>
+<i class="fa fa-globe fa-fw" aria-hidden=true></i>
+<select class=language-select onchange="location=this.value"><option value=/posts/learning/cs/recurrent-modern/lstm/ selected>简体中文</option></select>
+</a></div></div></header><main class=main>
+<div class=container>
+<div class=toc id=toc-auto>
+<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">长短期记忆网络LSTM</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-06-18>2024-06-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 318 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 1 分钟&nbsp;</div></div><div class="details toc" id=toc-static data-kept>
+<div class="details-summary toc-title">
+<span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#输入门忘记门和输出门>输入门、忘记门和输出门</a></li><li><a href=#候选记忆元>候选记忆元</a></li><li><a href=#记忆元>记忆元</a></li><li><a href=#隐状态>隐状态</a></li><li><a href=#代码实现>代码实现</a></li></ul></nav></div></div><div class=content id=content><blockquote>
+<p>长短记忆网络引入了记忆元，然后用输入门、输出门、遗忘门来控制记忆单元和隐藏状态的输出</p></blockquote><h2 id=输入门忘记门和输出门>输入门、忘记门和输出门</h2><a class=lightgallery href=/posts/learning/cs/recurrent-modern/lstm/io.png title=/posts/learning/cs/recurrent-modern/lstm/io.png data-thumbnail=/posts/learning/cs/recurrent-modern/lstm/io.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/recurrent-modern/lstm/io.png data-srcset="/posts/learning/cs/recurrent-modern/lstm/io.png, /posts/learning/cs/recurrent-modern/lstm/io.png 1.5x, /posts/learning/cs/recurrent-modern/lstm/io.png 2x" data-sizes=auto alt=/posts/learning/cs/recurrent-modern/lstm/io.png width=427 height=299>
+</a>
+<p><data id=id-1 data-raw></data>
+$\sigma$是sigmoid 函数，将门的值映射到0到1之间</p><h2 id=候选记忆元>候选记忆元</h2><a class=lightgallery href=/posts/learning/cs/recurrent-modern/lstm/tildec.png title=/posts/learning/cs/recurrent-modern/lstm/tildec.png data-thumbnail=/posts/learning/cs/recurrent-modern/lstm/tildec.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/recurrent-modern/lstm/tildec.png data-srcset="/posts/learning/cs/recurrent-modern/lstm/tildec.png, /posts/learning/cs/recurrent-modern/lstm/tildec.png 1.5x, /posts/learning/cs/recurrent-modern/lstm/tildec.png 2x" data-sizes=auto alt=/posts/learning/cs/recurrent-modern/lstm/tildec.png width=432 height=293>
+</a>
+<p><data id=id-2 data-raw></data>
+使用tanh函数将$\tilde{C}$映射到-1到1之间</p><h2 id=记忆元>记忆元</h2><a class=lightgallery href=/posts/learning/cs/recurrent-modern/lstm/ct.png title=/posts/learning/cs/recurrent-modern/lstm/ct.png data-thumbnail=/posts/learning/cs/recurrent-modern/lstm/ct.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/recurrent-modern/lstm/ct.png data-srcset="/posts/learning/cs/recurrent-modern/lstm/ct.png, /posts/learning/cs/recurrent-modern/lstm/ct.png 1.5x, /posts/learning/cs/recurrent-modern/lstm/ct.png 2x" data-sizes=auto alt=/posts/learning/cs/recurrent-modern/lstm/ct.png width=552 height=297>
+</a>
+<data id=id-3 data-raw></data>
+<p>由遗忘门和输入门分别控制前一时刻和候选记忆元的权重</p><h2 id=隐状态>隐状态</h2><a class=lightgallery href=/posts/learning/cs/recurrent-modern/lstm/h.png title=/posts/learning/cs/recurrent-modern/lstm/h.png data-thumbnail=/posts/learning/cs/recurrent-modern/lstm/h.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/recurrent-modern/lstm/h.png data-srcset="/posts/learning/cs/recurrent-modern/lstm/h.png, /posts/learning/cs/recurrent-modern/lstm/h.png 1.5x, /posts/learning/cs/recurrent-modern/lstm/h.png 2x" data-sizes=auto alt=/posts/learning/cs/recurrent-modern/lstm/h.png width=543 height=296>
+</a>
+<data id=id-4 data-raw></data>
+<p>注意对记忆元进行了tanh确保值域在-1到1之间，然后利用输出门控制当前记忆元多大程度决定隐状态以进行输出以及传递到下一时刻 。</p><h2 id=代码实现>代码实现</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>lstm</span><span class=p>(</span><span class=n>inputs</span><span class=p>,</span> <span class=n>state</span><span class=p>,</span> <span class=n>params</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=p>[</span><span class=n>W_xi</span><span class=p>,</span> <span class=n>W_hi</span><span class=p>,</span> <span class=n>b_i</span><span class=p>,</span> <span class=n>W_xf</span><span class=p>,</span> <span class=n>W_hf</span><span class=p>,</span> <span class=n>b_f</span><span class=p>,</span> <span class=n>W_xo</span><span class=p>,</span> <span class=n>W_ho</span><span class=p>,</span> <span class=n>b_o</span><span class=p>,</span> <span class=n>W_xc</span><span class=p>,</span> <span class=n>W_hc</span><span class=p>,</span> <span class=n>b_c</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>     <span class=n>W_hq</span><span class=p>,</span> <span class=n>b_q</span><span class=p>]</span> <span class=o>=</span> <span class=n>params</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=n>H</span><span class=p>,</span> <span class=n>C</span><span class=p>)</span> <span class=o>=</span> <span class=n>state</span>
+</span></span><span class=line><span class=cl>    <span class=n>outputs</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>X</span> <span class=ow>in</span> <span class=n>inputs</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>I</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>sigmoid</span><span class=p>((</span><span class=n>X</span> <span class=o>@</span> <span class=n>W_xi</span><span class=p>)</span> <span class=o>+</span> <span class=p>(</span><span class=n>H</span> <span class=o>@</span> <span class=n>W_hi</span><span class=p>)</span> <span class=o>+</span> <span class=n>b_i</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>F</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>sigmoid</span><span class=p>((</span><span class=n>X</span> <span class=o>@</span> <span class=n>W_xf</span><span class=p>)</span> <span class=o>+</span> <span class=p>(</span><span class=n>H</span> <span class=o>@</span> <span class=n>W_hf</span><span class=p>)</span> <span class=o>+</span> <span class=n>b_f</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>O</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>sigmoid</span><span class=p>((</span><span class=n>X</span> <span class=o>@</span> <span class=n>W_xo</span><span class=p>)</span> <span class=o>+</span> <span class=p>(</span><span class=n>H</span> <span class=o>@</span> <span class=n>W_ho</span><span class=p>)</span> <span class=o>+</span> <span class=n>b_o</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>C_tilda</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>tanh</span><span class=p>((</span><span class=n>X</span> <span class=o>@</span> <span class=n>W_xc</span><span class=p>)</span> <span class=o>+</span> <span class=p>(</span><span class=n>H</span> <span class=o>@</span> <span class=n>W_hc</span><span class=p>)</span> <span class=o>+</span> <span class=n>b_c</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>C</span> <span class=o>=</span> <span class=n>F</span> <span class=o>*</span> <span class=n>C</span> <span class=o>+</span> <span class=n>I</span> <span class=o>*</span> <span class=n>C_tilda</span>
+</span></span><span class=line><span class=cl>        <span class=n>H</span> <span class=o>=</span> <span class=n>O</span> <span class=o>*</span> <span class=n>torch</span><span class=o>.</span><span class=n>tanh</span><span class=p>(</span><span class=n>C</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>Y</span> <span class=o>=</span> <span class=p>(</span><span class=n>H</span> <span class=o>@</span> <span class=n>W_hq</span><span class=p>)</span> <span class=o>+</span> <span class=n>b_q</span>
+</span></span><span class=line><span class=cl>        <span class=n>outputs</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>Y</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>torch</span><span class=o>.</span><span class=n>cat</span><span class=p>(</span><span class=n>outputs</span><span class=p>,</span> <span class=n>dim</span><span class=o>=</span><span class=mi>0</span><span class=p>),</span> <span class=p>(</span><span class=n>H</span><span class=p>,</span> <span class=n>C</span><span class=p>)</span>
+</span></span></code></pre></div><div class=post-reward>
+<input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label>
+<div class=qr-code>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/wechat.png>
+<span>微信打赏</span>
+</label>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/alipay.png>
+<span>支付宝打赏</span>
+</label>
+</div></div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>更新于 2024-06-18</span>
+</div></div><div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/posts/learning/cs/recurrent-modern/lstm/index.md target=_blank>阅读原始文档</a>
+</span></div><div class=post-info-share>
+<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/learning/cs/recurrent-modern/lstm/ data-hashtag=CS><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/learning/cs/recurrent-modern/lstm/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/learning/cs/recurrent-modern/lstm/ data-title=长短期记忆网络LSTM><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
+</div></div></div><div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/>机器学习</a>,&nbsp;<a href=/tags/lstm/>LSTM</a>,&nbsp;<a href=/tags/rnn/>RNN</a></section><section>
+<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
+</section></div><div class=post-nav><a href=/posts/learning/cs/recurrent-modern/gru/ class=prev rel=prev title=门控单元GRU><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>门控单元GRU</a>
+<a href=/posts/learning/cs/recurrent-modern/deep-rnn/ class=next rel=next title=深度循环神经网络deep-RNN>深度循环神经网络deep-RNN<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+<script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:null,placeholder:"开启魔法上网方可使用评论～",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+<span id=run-time></span>
+</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023 - 2024</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+<i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论>
+<i class="fas fa-comment fa-fw" aria-hidden=true></i>
+</a>
+</div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{},data:{"id-1":"\n$$\n\\begin{aligned}\n\\mathbf{I}_t \u0026= \\sigma(\\mathbf{X}_t \\mathbf{W}_{xi} + \\mathbf{H}_{t-1} \\mathbf{W}_{hi} + \\mathbf{b}_i),\\\\\n\\mathbf{F}_t \u0026= \\sigma(\\mathbf{X}_t \\mathbf{W}_{xf} + \\mathbf{H}_{t-1} \\mathbf{W}_{hf} + \\mathbf{b}_f),\\\\\n\\mathbf{O}_t \u0026= \\sigma(\\mathbf{X}_t \\mathbf{W}_{xo} + \\mathbf{H}_{t-1} \\mathbf{W}_{ho} + \\mathbf{b}_o),\n\\end{aligned}\n$$\n\n","id-2":"\n$$\\tilde{\\mathbf{C}}_t = \\text{tanh}(\\mathbf{X}_t \\mathbf{W}_{xc} + \\mathbf{H}_{t-1} \\mathbf{W}_{hc} + \\mathbf{b}_c),$$\n","id-3":"\n$$\\mathbf{C}_t = \\mathbf{F}_t \\odot \\mathbf{C}_{t-1} + \\mathbf{I}_t \\odot \\tilde{\\mathbf{C}}_t.$$\n\n","id-4":"\n$$\\mathbf{H}_t = \\mathbf{O}_t \\odot \\tanh(\\mathbf{C}_t).$$\n\n"},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js></script>
+<script type=text/javascript src=/js/custom.js></script>
+<script type=text/javascript src=/js/test.js></script></body></html>
