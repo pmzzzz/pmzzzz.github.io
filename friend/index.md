@@ -50,7 +50,7 @@ border-animation="borderFlash"
 name="泡面zz的小屋"
 url="https://pmzzzt.eu.org"
 logo="https://pmzzzt.eu.org/imgs/avatar.png"
-word="如果没有车，那就走路"
+word="万般皆是心,点点皆由人"
 screenshot=""
 group="AI"
 ```
