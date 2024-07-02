@@ -3,21 +3,21 @@
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=robots content="noodp">
-<title>第七周 - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="第七周">
-<meta property="og:description" content="学习时间 5月24日 到 6月30日 学习目标 注意力机制 注意力提示 Nadaraya-Watson 核回归 注意力评分函数 Bahdanau 注意力 multihead-attention transformer 学习内容 注意力提示 Nadaraya-Watson 核回归 注意力评分函数 学习总结">
+<title>RAFT-Stereo:Multilevel Recurrent Field Transforms for Stereo Matching - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="RAFT-Stereo:Multilevel Recurrent Field Transforms for Stereo Matching">
+<meta property="og:description" content>
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://pmzzzt.eu.org/posts/lifa/2024_06_30/"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2024-06-30T00:00:00+08:00">
-<meta property="article:modified_time" content="2024-06-30T00:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
+<meta property="og:url" content="https://pmzzzt.eu.org/posts/learning/paper_review/raft-stereo/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2024-07-01T14:00:00+08:00">
+<meta property="article:modified_time" content="2024-07-01T14:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="第七周">
-<meta name=twitter:description content="学习时间 5月24日 到 6月30日 学习目标 注意力机制 注意力提示 Nadaraya-Watson 核回归 注意力评分函数 Bahdanau 注意力 multihead-attention transformer 学习内容 注意力提示 Nadaraya-Watson 核回归 注意力评分函数 学习总结">
+<meta name=twitter:title content="RAFT-Stereo:Multilevel Recurrent Field Transforms for Stereo Matching">
+<meta name=twitter:description content>
 <meta name=application-name content="泡面zz">
 <meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/lifa/2024_06_30/><link rel=prev href=https://pmzzzt.eu.org/posts/learning/cs/attention-mechanisms/attention-scoring-functions/><link rel=next href=https://pmzzzt.eu.org/posts/learning/paper_review/research-progress-on-binocular-stereo-vision-applications/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/paper_review/raft-stereo/><link rel=prev href=https://pmzzzt.eu.org/posts/learning/paper_review/research-progress-on-binocular-stereo-vision-applications/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
 <noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
-<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"第七周","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/lifa\/2024_06_30\/"},"genre":"posts","keywords":"note","wordcount":169,"url":"https:\/\/pmzzzt.eu.org\/posts\/lifa\/2024_06_30\/","datePublished":"2024-06-30T00:00:00+08:00","dateModified":"2024-06-30T00:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"RAFT-Stereo:Multilevel Recurrent Field Transforms for Stereo Matching","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/paper_review\/raft-stereo\/"},"genre":"posts","keywords":"CS, 立体匹配, 深度学习, 综述","wordcount":0,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/paper_review\/raft-stereo\/","datePublished":"2024-07-01T14:00:00+08:00","dateModified":"2024-07-01T14:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
 <div class=header-title>
@@ -36,7 +36,7 @@
 <i class="fas fa-adjust fa-fw" aria-hidden=true></i>
 </a><a href=javascript:void(0); class="menu-item language" title=选择语言>
 <i class="fa fa-globe" aria-hidden=true></i>
-<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/posts/lifa/2024_06_30/ selected>简体中文</option></select>
+<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/posts/learning/paper_review/raft-stereo/ selected>简体中文</option></select>
 </a></div></div></div></header><header class=mobile id=header-mobile>
 <div class=header-container>
 <div class=header-wrapper>
@@ -57,25 +57,17 @@
 <i class="fas fa-adjust fa-fw" aria-hidden=true></i>
 </a><a href=javascript:void(0); class=menu-item title=选择语言>
 <i class="fa fa-globe fa-fw" aria-hidden=true></i>
-<select class=language-select onchange="location=this.value"><option value=/posts/lifa/2024_06_30/ selected>简体中文</option></select>
+<select class=language-select onchange="location=this.value"><option value=/posts/learning/paper_review/raft-stereo/ selected>简体中文</option></select>
 </a></div></div></header><main class=main>
 <div class=container>
 <div class=toc id=toc-auto>
-<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">第七周</h1><div class=post-meta>
-<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E6%80%9D%E6%84%9F%E8%A1%8C/><i class="far fa-folder fa-fw" aria-hidden=true></i>学思感行</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-06-30>2024-06-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 169 字&nbsp;
-<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 1 分钟&nbsp;</div></div><div class="details toc" id=toc-static data-kept>
+<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">RAFT-Stereo:Multilevel Recurrent Field Transforms for Stereo Matching</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/paper-review/><i class="far fa-folder fa-fw" aria-hidden=true></i>Paper Review</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-07-01>2024-07-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 0 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 0 分钟&nbsp;</div></div><div class=featured-image><img class=lazyload src=/svg/loading.min.svg data-src=1.png data-srcset="1.png, 1.png 1.5x, 1.png 2x" data-sizes=auto alt=1.png title=1.png></div><div class="details toc" id=toc-static data-kept>
 <div class="details-summary toc-title">
 <span>目录</span>
 <span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
-</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
-<ul>
-<li><a href=#学习时间>学习时间</a></li><li><a href=#学习目标>学习目标</a></li><li><a href=#学习内容>学习内容</a></li><li><a href=#学习总结>学习总结</a></li><li><a href=#下周计划>下周计划</a></li></ul></nav></div></div><div class=content id=content><h2 id=学习时间>学习时间</h2><p>5月24日 到 6月30日</p><h2 id=学习目标>学习目标</h2><ul>
-<li><i class="far fa-square fa-fw" aria-hidden=true></i> 注意力机制
-<ul>
-<li><i class="far fa-check-square fa-fw" aria-hidden=true></i> 注意力提示</li><li><i class="far fa-check-square fa-fw" aria-hidden=true></i> Nadaraya-Watson 核回归</li><li><i class="far fa-check-square fa-fw" aria-hidden=true></i> 注意力评分函数</li><li><i class="far fa-square fa-fw" aria-hidden=true></i> Bahdanau 注意力</li><li><i class="far fa-square fa-fw" aria-hidden=true></i> multihead-attention</li><li><i class="far fa-square fa-fw" aria-hidden=true></i> transformer</li></ul></li></ul><h2 id=学习内容>学习内容</h2><ul>
-<li><a href=../../learning/cs/attention-mechanisms/attention-cues/ rel>注意力提示</a></li><li><a href=../../learning/cs/attention-mechanisms/attention-cues/ rel>Nadaraya-Watson 核回归</a></li><li><a href=../../learning/cs/attention-mechanisms/attention-cues/ rel>注意力评分函数</a></li></ul><h2 id=学习总结>学习总结</h2><p>所谓注意力机制，其实就是加权平均&ndash;将值通过查询和键进行加权平均。
-本周学习内容较少，主要是个人事务耽搁了，不过从下周一也就是7月1日开始我将到学校进行全身心的学习和生活。</p><h2 id=下周计划>下周计划</h2><ul>
-<li>3 paper reviews</li><li>attention mechanisms</li></ul><div class=post-reward>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents></nav></div></div><div class=content id=content><div class=post-reward>
 <input type=checkbox name=reward id=reward hidden>
 <label class=reward-button for=reward>赞赏支持</label>
 <div class=qr-code>
@@ -91,17 +83,16 @@
 <div class=post-info>
 <div class=post-info-line>
 <div class=post-info-mod>
-<span>更新于 2024-06-30</span>
+<span>更新于 2024-07-01</span>
 </div></div><div class=post-info-line>
 <div class=post-info-md><span>
-<a class=link-to-markdown href=/posts/lifa/2024_06_30/index.md target=_blank>阅读原始文档</a>
+<a class=link-to-markdown href=/posts/learning/paper_review/raft-stereo/index.md target=_blank>阅读原始文档</a>
 </span></div><div class=post-info-share>
-<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/lifa/2024_06_30/ data-hashtag=note><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/lifa/2024_06_30/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/lifa/2024_06_30/ data-title=第七周><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
+<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/learning/paper_review/raft-stereo/ data-hashtag=CS><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/learning/paper_review/raft-stereo/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/learning/paper_review/raft-stereo/ data-title="RAFT-Stereo:Multilevel Recurrent Field Transforms for Stereo Matching" data-image=1.png><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
 </div></div></div><div class=post-info-more>
-<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/note/>note</a></section><section>
+<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/%E7%AB%8B%E4%BD%93%E5%8C%B9%E9%85%8D/>立体匹配</a>,&nbsp;<a href=/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/>深度学习</a>,&nbsp;<a href=/tags/%E7%BB%BC%E8%BF%B0/>综述</a></section><section>
 <span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
-</section></div><div class=post-nav><a href=/posts/learning/cs/attention-mechanisms/attention-scoring-functions/ class=prev rel=prev title=注意力评分函数><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>注意力评分函数</a>
-<a href=/posts/learning/paper_review/research-progress-on-binocular-stereo-vision-applications/ class=next rel=next title=双目立体视觉研究进展与应用>双目立体视觉研究进展与应用<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+</section></div><div class=post-nav><a href=/posts/learning/paper_review/research-progress-on-binocular-stereo-vision-applications/ class=prev rel=prev title=双目立体视觉研究进展与应用><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>双目立体视觉研究进展与应用</a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
 <script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:null,placeholder:"开启魔法上网方可使用评论～",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
 <div class=footer-container><div class=footer-line>
 <span id=run-time></span>
