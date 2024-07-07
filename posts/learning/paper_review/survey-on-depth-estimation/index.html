@@ -1,0 +1,151 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title>A Survey on Deep Learning Techniques for Stereo-based Depth Estimation - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="A Survey on Deep Learning Techniques for Stereo-based Depth Estimation">
+<meta property="og:description" content="范围和分类 SCOPE AND TAXONOMY 本篇论文主要讨论的是基于深度学习的立体深度估计。 深度估计的任务是从一张或者多张图片中获取图像的深度信息，这些图片可能来自同一">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pmzzzt.eu.org/posts/learning/paper_review/survey-on-depth-estimation/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2024-07-03T14:00:00+08:00">
+<meta property="article:modified_time" content="2024-07-04T14:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="A Survey on Deep Learning Techniques for Stereo-based Depth Estimation">
+<meta name=twitter:description content="范围和分类 SCOPE AND TAXONOMY 本篇论文主要讨论的是基于深度学习的立体深度估计。 深度估计的任务是从一张或者多张图片中获取图像的深度信息，这些图片可能来自同一">
+<meta name=application-name content="泡面zz">
+<meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/paper_review/survey-on-depth-estimation/><link rel=prev href=https://pmzzzt.eu.org/posts/learning/paper_review/research-progress-on-binocular-stereo-vision-applications/><link rel=next href=https://pmzzzt.eu.org/posts/lifa/2024_07_07/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"A Survey on Deep Learning Techniques for Stereo-based Depth Estimation","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/paper_review\/survey-on-depth-estimation\/"},"genre":"posts","keywords":"CS, 立体匹配, 深度学习, 综述","wordcount":3057,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/paper_review\/survey-on-depth-estimation\/","datePublished":"2024-07-03T14:00:00+08:00","dateModified":"2024-07-04T14:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu>
+<div class=menu-inner>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/categories/paper-review/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="menu-item language" title=选择语言>
+<i class="fa fa-globe" aria-hidden=true></i>
+<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/posts/learning/paper_review/survey-on-depth-estimation/ selected>简体中文</option></select>
+</a></div></div></div></header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div></div><div class=menu id=menu-mobile>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/categories/paper-review/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>
+<i class="fa fa-globe fa-fw" aria-hidden=true></i>
+<select class=language-select onchange="location=this.value"><option value=/posts/learning/paper_review/survey-on-depth-estimation/ selected>简体中文</option></select>
+</a></div></div></header><main class=main>
+<div class=container>
+<div class=toc id=toc-auto>
+<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">A Survey on Deep Learning Techniques for Stereo-based Depth Estimation</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/paper-review/><i class="far fa-folder fa-fw" aria-hidden=true></i>Paper Review</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-07-03>2024-07-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 3057 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 7 分钟&nbsp;</div></div><div class=featured-image><img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/survey-on-depth-estimation/1.png data-srcset="/posts/learning/paper_review/survey-on-depth-estimation/1.png, /posts/learning/paper_review/survey-on-depth-estimation/1.png 1.5x, /posts/learning/paper_review/survey-on-depth-estimation/1.png 2x" data-sizes=auto alt=/posts/learning/paper_review/survey-on-depth-estimation/1.png title=/posts/learning/paper_review/survey-on-depth-estimation/1.png width=2620 height=528></div><div class="details toc" id=toc-static data-kept>
+<div class="details-summary toc-title">
+<span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#范围和分类-scope-and-taxonomy>范围和分类 SCOPE AND TAXONOMY</a>
+<ul>
+<li><a href=#第一类方法>第一类方法</a></li><li><a href=#第二类方法>第二类方法</a></li></ul></li><li><a href=#数据集-datasets>数据集 DATASETS</a></li><li><a href=#立体匹配深度估计-depth-by-stereo-matching>立体匹配深度估计 DEPTH BY STEREO MATCHING</a>
+<ul>
+<li><a href=#学习特征提取和匹配-learning-feature-extraction-and-matching>学习特征提取和匹配 Learning feature extraction and matching</a></li></ul></li><li><a href=#端到端的立体深度估计>端到端的立体深度估计</a></li></ul></nav></div></div><div class=content id=content><h2 id=范围和分类-scope-and-taxonomy>范围和分类 SCOPE AND TAXONOMY</h2><p>本篇论文主要讨论的是基于深度学习的立体深度估计。</p><p>深度估计的任务是从一张或者多张图片中获取图像的深度信息，这些图片可能来自同一个视角或者不同的视角。</p><p>基于学习的深度重建可以概括为 学习一个预测函数 $f_\theta$ ，从图片集 $I$ 中推断出一个尽量接近未知深度 $D$ 的深度图 $\hat{D}$</p><p>换句话说 我们的任务是找到一个方程 $f_\theta$ 让 $\mathcal{L}(I) = d(f_\theta(I),D)$ 最小其中，$\theta$ 是一系列参数，$d(.,.)$ 是描述两张深度图差距的具体方法 $\mathcal{L}$ 则是损失函数</p><h3 id=第一类方法>第一类方法</h3><p>第一类方法通过显式学习如何 匹配或对应 输入图像中的像素 来模仿传统的立体匹配技术。 【只进行匹配（找出相同的像素点），并不是直接得到视差图】
+然后，可以将这种对应关系转换为光流或视差图，而光流或视差图又可以将其转换为参考图像中每个像素的深度。</p><p>预测器$f$由三个模块组成：特征提取模块、特征匹配和成本聚合模块 以及 视差/深度估计模块.</p><h3 id=第二类方法>第二类方法</h3><p>第二类方法使用<strong>端到端</strong>训练的pipeline解决立体匹配的问题，又有两个主要的类别：</p><p>早期的方法将深度估计表述为回归问题。换句话说，深度图是直接从输入回归的，而不需要在视图之间显式匹配特征。虽然这些方法在运行时简单快速，但它们需要大量的训练数据，这很难获得。</p><p>第二类方法模仿传统的立体匹配流程，将问题分解为由 <strong>可微分块</strong> 组成的几个阶段，从而允许端到端训练。</p><p>大量的工作都集中在双目视觉（pairwise）的深度估计，少量的集中在多视角（multi-view）立体匹配</p><p>在所有方法中，可以使用细化模块 和/或 渐进重建策略（progressive reconstruction strategies）进一步细化估计的深度图，其中每次 新图像 可用时 都会 细化(refine)重建。</p><p>最后，基于深度学习的立体声方法的性能不仅取决于网络架构，还取决于它们接受训练的数据集和用于优化其参数的训练程序。
+后者包括损失函数的选择和监督模式的选择，可以用3D标注进行全监督，也可以是弱监督，也可以是自监督。</p><h2 id=数据集-datasets>数据集 DATASETS</h2><h2 id=立体匹配深度估计-depth-by-stereo-matching>立体匹配深度估计 DEPTH BY STEREO MATCHING</h2><p>基于立体匹配的深度重建方法采用 $n =2 $ 个 RGB 图像，并生成视差图 $D$ 使得以下的能量函数最小化：</p><data id=id-1 data-raw></data>
+<p>其中，$x$ 和$y$ 代表像素，$\mathcal{N}_{x}$ 代表 $x$ 附近的像素</p><p>式子前面部分代表了 <strong>匹配误差</strong> （matching cost） ，在使用修正过的图像对时【水平校正】 $C(x,d_{x})$ 计算 左图 $x=(i,j)$和 右图$y=(i,j-d_x)$ 之间的 匹配误差。</p><p>$d_{x}=D(x)\in [d_{min},d_{max}]$ 代表了 $x$ 像素的视差，然后通过三角测量就能计算出深度</p><p>将视差离散化成 $n_d$ 个视差等级，$C$ 变为 $W × H × n_d $大小的 3D 代价体积（cost volume）</p><blockquote>
+<p>In the more general multiview stereo case, i.e., $n ≥ 2$, the cost $C(x, d_x)$ measures the inverse likelihood of x on the reference image having depth $d_x$.</p></blockquote><p>方程的第二项是正则化项，用于施加诸如 平滑度和左右一致性（smoothness and left-right consistency） 之类的约束。</p><p>传统上，这个问题是通过 四个模块 （building blocks）的流水线（pipeline）来解决的，（1）特征提取，（2）跨图像的特征匹配，（3）视差计算，以及（4）视差细化和后处理。</p><p>前两个模块构建代价体积$C$。第三个块对代价体积进行正则化，然后通过最小化能量方程方程来找到 视差图的初始估计。最后一个块对初始视差图进行细化和后处理。</p><h3 id=学习特征提取和匹配-learning-feature-extraction-and-matching>学习特征提取和匹配 Learning feature extraction and matching</h3><p>早期用于立体匹配的深度学习方法 用学习的特征 替代了 手工设计的特征。</p><p>从左右视图上截取一个patch,分别以 $x=(i,j)$和$y=(i,j-d)$ 为中心，其中$d \in \{0,1,&mldr;,n_d\}$</p><p>用CNN计算他们对应的特征向量，用 L1 正则、L2正则、相关性指标、或者上层网络学习的指标 生成一个相似程度的分数 $C(x,d)$</p><p>两个patch可以同时或者分开训练</p><h4 id=基本网络架构-the-basic-network-architecture>基本网络架构 The basic network architecture</h4><a class=lightgallery href=/posts/learning/paper_review/survey-on-depth-estimation/architecture.png title=/posts/learning/paper_review/survey-on-depth-estimation/architecture.png data-thumbnail=/posts/learning/paper_review/survey-on-depth-estimation/architecture.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/survey-on-depth-estimation/architecture.png data-srcset="/posts/learning/paper_review/survey-on-depth-estimation/architecture.png, /posts/learning/paper_review/survey-on-depth-estimation/architecture.png 1.5x, /posts/learning/paper_review/survey-on-depth-estimation/architecture.png 2x" data-sizes=auto alt=/posts/learning/paper_review/survey-on-depth-estimation/architecture.png width=2024 height=300px>
+</a>
+<ul>
+<li><strong>最基本的结构</strong>
+基本的网络结构如（a）图所示，由两个CNN分支组成，从左图取以$x=(i,j)$为中心的patch，从右图取以$y=(i,j-d)$为中心的patch，进行特征提取，其中$d\in [d_{min},d_{max}]$</li></ul><blockquote>
+<ol>
+<li>J. Zbontar and Y. LeCun, “Computing the stereo matching cost with a convolutional neural network,” in IEEE CVPR, 2015, pp. 1592–1599.</li><li>J. Zbontar and Y. LeCun, “Stereo matching by training a convolutional neural network to compare image patches,” Journal of Machine Learning Research, vol. 17, no. 1-32, p. 2, 2016.</li></ol></blockquote><p>以上工作使用四层CNN作为encoder，每一层除了最后一层，用ReLU作为激活函数</p><ul>
+<li><strong>对（a）进行改进</strong>
+改进的结构如（b）、（c）所示</li></ul><blockquote>
+<ol>
+<li>S. Zagoruyko and N. Komodakis, “Learning to compare image patches via convolutional neural networks,” in IEEE CVPR, 2015, pp. 4353–4361.</li><li>X. Han, T. Leung, Y. Jia, R. Sukthankar, and A. C. Berg, “MatchNet: Unifying feature and metric learning for patch-based matching,” in IEEE CVPR, 2015, pp. 3279–3286.</li></ol></blockquote><p>以上工作使用了这种结构，它与（a）基本一致，由以下不同：</p><ol>
+<li>（b）除了最后一层，在CNN之后都增加了max pooling 和 subsampling，这样可以处理更大的patch以及不同视图（pointview）中更大的变化</li><li>（c）每个特征提取分支末端使用空间金字塔池化（SPP）模块，这样模型可以处理不同大小的patch，生成固定大小的feature，它的作用是通过空间池化，将最后一个卷积层的特征聚合到一个固定大小的特征网格中</li></ol><blockquote>
+<p>The module is designed in such a way that the size of the pooling regions varies with the size of the input to ensure that the output feature grid has a fixed size independently of the size of the input patch or image. Thus, the network is able to process patches/images of arbitrary sizes and compute feature vectors of the same dimension without changing its structure or retraining.</p></blockquote><p>将学习到的特征使用各种方法进行相似度的计算：</p><ul>
+<li>$L_2$ distance</li><li>cosine distance</li><li>the (normalized) correlation distance（inner product）</li></ul><p>相关性 相对于 $L_2$ 的好处在于可以用2D或者1D的卷积层来实现（correlation layer），相关层不需要训练，以下论文使用了这种技术</p><blockquote>
+<ol>
+<li>N. Mayer, E. Ilg, P. Hausser, P. Fischer, D. Cremers, A. Dosovitskiy, and T. Brox, “A large dataset to train convolutional networks for disparity, optical ﬂow, and scene ﬂow estimation,” in IEEE CVPR, 2016, pp. 4040–4048.</li><li>J. Zbontar and Y. LeCun, “Computing the stereo matching cost with a convolutional neural network,” in IEEE CVPR, 2015, pp. 1592–1599.</li><li>E. Simo-Serra, E. Trulls, L. Ferraz, I. Kokkinos, P. Fua, and F. Moreno-Noguer, “Discriminative learning of deep convolutional feature point descriptors,” in IEEE ICCV, 2015, pp. 118126.</li><li>J. Zbontar and Y. LeCun, “Stereo matching by training a convolutional neural network to compare image patches,” Journal of Machine Learning Research, vol. 17, no. 1-32, p. 2, 2016.</li><li>W. Luo, A. G. Schwing, and R. Urtasun, “Efﬁcient deep learning for stereo matching,” in IEEE CVPR, 2016, pp. 5695–5703.</li></ol></blockquote><ul>
+<li><strong>决策层优化</strong></li></ul><p>使用最近的研究没有使用手工制作的相似性度量，而是使用了由全连接（FC）层组成的决策网络，该层可以实现为1×1卷积、全卷积层或卷积层，然后是全连接层。
+在所有情况下，由特征编码模块的两个分支计算的特征首先被连接（concat）起来，然后被馈送到顶部网络。</p><p>以下网络 使用均值池化来聚合来自多个补丁的特征，然后再将它们提供给决策网络。</p><blockquote>
+<p>W. Hartmann, S. Galliani, M. Havlena, L. Van Gool, and K. Schindler, “Learned multi-patch similarity,” in IEEE ICCV, 2017, pp. 1595–1603.</p></blockquote><h4 id=网络架构变体-network-architecture-variants>网络架构变体 Network architecture variants</h4><ul>
+<li>ConvNet vs. ResNet</li></ul><blockquote>
+<p>A. Shaked and L. Wolf, “Improved stereo matching with constant highway networks and reﬂective conﬁdence learning,” in IEEE CVPR, 2017, pp. 4641–4650.</p></blockquote><ul>
+<li>Enlarging the receptive field of the network</li></ul><blockquote>
+<ol>
+<li>H. Fu, M. Gong, C. Wang, K. Batmanghelich, and D. Tao, “Deep Ordinal Regression Network for Monocular Depth Estimation,” in IEEE CVPR, June 2018.</li><li>H. Park and K. M. Lee, “Look wider to match image patches with convolutional neural networks,” IEEE Signal Processing Letters, vol. 24, no. 12, pp. 1788–1792, 2017.</li><li>X. Ye, J. Li, H. Wang, H. Huang, and X. Zhang, “Efﬁcient stereo matching leveraging deep local and context information,” IEEE Access, vol. 5, pp. 18 745–18 755, 2017.</li></ol></blockquote><p>Ye等[49]将SPP模块放置在每个特征计算分支的末尾，参见图2-（c）和（e）。这样，每个补丁只计算一次。,此外，Ye等[49]采用多个具有不同窗口大小的单步池化到不同的层，然后将它们的输出连接起来以生成特征图，见图2-（e）。</p><ul>
+<li>
+<p>Learning multiscale features:</p></li><li>
+<p>Reducing the number of forward passes</p></li><li>
+<p>Learning similarity without feature learning:</p></li></ul><h4 id=训练过程-training-procedures>训练过程 Training procedures</h4><ul>
+<li>
+<p>Supervised training</p></li><li>
+<p>Weakly supervised learning</p></li></ul><h2 id=端到端的立体深度估计>端到端的立体深度估计</h2><a class=lightgallery href=/posts/learning/paper_review/survey-on-depth-estimation/an.png title=/posts/learning/paper_review/survey-on-depth-estimation/an.png data-thumbnail=/posts/learning/paper_review/survey-on-depth-estimation/an.png>
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/paper_review/survey-on-depth-estimation/an.png data-srcset="/posts/learning/paper_review/survey-on-depth-estimation/an.png, /posts/learning/paper_review/survey-on-depth-estimation/an.png 1.5x, /posts/learning/paper_review/survey-on-depth-estimation/an.png 2x" data-sizes=auto alt=/posts/learning/paper_review/survey-on-depth-estimation/an.png width=2744 height=500px>
+</a>
+<div class=post-reward>
+<input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label>
+<div class=qr-code>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/wechat.png>
+<span>微信打赏</span>
+</label>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/alipay.png>
+<span>支付宝打赏</span>
+</label>
+</div></div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>更新于 2024-07-04</span>
+</div></div><div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/posts/learning/paper_review/survey-on-depth-estimation/index.md target=_blank>阅读原始文档</a>
+</span></div><div class=post-info-share>
+<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/learning/paper_review/survey-on-depth-estimation/ data-hashtag=CS><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/learning/paper_review/survey-on-depth-estimation/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/learning/paper_review/survey-on-depth-estimation/ data-title="A Survey on Deep Learning Techniques for Stereo-based Depth Estimation" data-image=1.png><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
+</div></div></div><div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/%E7%AB%8B%E4%BD%93%E5%8C%B9%E9%85%8D/>立体匹配</a>,&nbsp;<a href=/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/>深度学习</a>,&nbsp;<a href=/tags/%E7%BB%BC%E8%BF%B0/>综述</a></section><section>
+<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
+</section></div><div class=post-nav><a href=/posts/learning/paper_review/research-progress-on-binocular-stereo-vision-applications/ class=prev rel=prev title=双目立体视觉研究进展与应用><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>双目立体视觉研究进展与应用</a>
+<a href=/posts/lifa/2024_07_07/ class=next rel=next title=第八周>第八周<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+<script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:null,placeholder:"开启魔法上网方可使用评论～",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+<span id=run-time></span>
+</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023 - 2024</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+<i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论>
+<i class="fas fa-comment fa-fw" aria-hidden=true></i>
+</a>
+</div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{},data:{"id-1":"\n\n$$\nE(D)=\\sum_{x}C(x,d_{x})+\\sum_{x}\\sum_{y\\in{\\mathcal{N}}_{x}}E_{s}(d_{x},d_{y})\n$$\n\n"},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js></script>
+<script type=text/javascript src=/js/custom.js></script>
+<script type=text/javascript src=/js/test.js></script></body></html>
