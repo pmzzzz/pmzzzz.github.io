@@ -1,4 +1,4 @@
-# 使用WSL进行pytohn开发
+# 使用WSL进行python开发
 
 
 众所周知，windows的shell非常不好用，很多linux好用的命令都不能用，
@@ -7,7 +7,9 @@
 WSL可以理解为一个运行在windows下的子系统，我们可以使用windows方便的桌面系统来访问linux的终端。关于WSl的详细介绍可以参考官方文档，
 
 本文主要分享我的WSL+Unbuntu+vscode的环境配置方法，并解决了WSL的代理问题，使其能使用宿主机的代理设置。
-
+thanks to:
+> https://blog.csdn.net/qq_47564006/article/details/135058896
+> https://zinglix.xyz/2020/04/18/wsl2-proxy/
 ## Unbuntu安装
 我的系统是win11，所以自带了WSl，WSL的安装请参考官方文档。
 使用如下命令查看支持的子系统

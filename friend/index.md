@@ -38,7 +38,7 @@ word="终极目标：去码头整点薯条"
 {{< friend
 name="ONE OF MANY"
 url="https://oneofmany.super.site/"
-logo="https://images.spr.so/cdn-cgi/imagedelivery/j42No7y-dcokJuNgXeA0ig/b4a8e754-438e-487b-9089-fcf9f50d6e12/rijksmuseum_jansz_1649/w=3840,quality=80,fit=scale-down"
+logo="https://images.spr.so/cdn-cgi/imagedelivery/j42No7y-dcokJuNgXeA0ig/30af9543-0efa-4469-bca5-87bb46762560/notion-sticker/w=256,quality=90,fit=scale-down"
 primary-color="linear-red"
 word="每一个不曾起舞的日子，都是对生命的辜负"
 border-animation="borderFlash"
