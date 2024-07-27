@@ -46,7 +46,7 @@ code ~/.zshrc
 ```
 
 (base) conda install -c conda-forge jupyterlab
-(base) conda install Jupiter notebook
+(base) conda install Jupyter notebook
  #安装这个之后就可以识别其他环境
 (base) conda install nb_conda_kernels   
 

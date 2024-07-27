@@ -1,6 +1,8 @@
 # WSL配置深度学习环境
 
 
+在正式配置之前，不要忘了在win11上下载  Geforce EXperience，然后更新最新的驱动。
+> https://www.nvidia.com/en-us/geforce/geforce-experience/
 ## 安装cuda
 
 ### toolkit安装
@@ -73,3 +75,53 @@ torch.cuda.get_device_name()
 ```
 thanks to:
 > https://cloud.tencent.com/developer/article/1710564
+
+## 将WSL ssh映射到局域网
+原理是通过windows端口转发将WSl的22端口转发出去
+重装ssh
+```bash
+sudo apt-get remove openssh-server
+sudo apt-get install openssh-server
+```
+修改配置文件
+```bash
+sudo vim /etc/ssh/sshd_config
+```
+修改如下内容
+```
+Port 22
+PermitRootLogin Yes
+PasswordAuthentication Yes
+```
+```bash
+sudo vim /etc/hosts.allow
+```
+添加如下内容
+```
+sshd:ALL
+```
+
+重启ssh
+```bash
+sudo service ssh --full-restart
+```
+
+在windows shell 中运行
+
+```shell
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=22 connectaddress=172.19.247.91 connectport=22
+```
+
+其中`172.19.247.91`替换为wsl的地址（ifconfig）
+
+修改winsows防火墙，允许22入规则。
+
+此时可以使用ssh连接WSL,ip地址为windows的ip地址。
+```bash
+ssh root@192.168.0.2
+```
+
+thanks to：
+
+> https://gitcode.csdn.net/65e8400d1a836825ed78b888.html
+> https://learn.microsoft.com/zh-cn/windows/wsl/wsl-config#configuration-settings-for-wslconfig
