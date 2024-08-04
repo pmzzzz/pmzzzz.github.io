@@ -1,14 +1,11 @@
 # RAFT-Stereo:Multilevel Recurrent Field Transforms for Stereo Matching
 
----
-title: RAFT-Stereo:Multilevel Recurrent Field Transforms for Stereo Matching
-date: 2024-07-01T13:00:00+08:00
-lastmod: 2024-07-01T13:00:00+08:00
-categories: [Paper Review]
-tags: [CS,立体匹配,深度学习,综述]
-draft: false
-math: true
-featuredImage: "1.png" 
-featuredImagePreview: "1.png"
----
+
+| 作者      | **Lahav Lipson 、 ZacharyTeed、Jia Deng**   |
+| --------- | ------------------------------------------- |
+| 单位      | **Princeton University**                    |
+| 期刊/会议 | 2021 (3DV)                                  |
+| 关键词    |                                             |
+| 代码      | https://github.com/princeton-vl/RAFT-Stereo |
+
 

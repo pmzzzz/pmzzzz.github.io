@@ -1,0 +1,152 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title>锚框 - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="锚框">
+<meta property="og:description" content="目标检测算法通常会在输入图像中采样大量的区域，然后判断这些区域中是否包含我们感兴趣的目标，并调整区域边界从而更准确地预测目标的真实边界框（g">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pmzzzt.eu.org/posts/learning/cs/cv/anchor/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2024-07-31T10:00:00+08:00">
+<meta property="article:modified_time" content="2024-07-31T10:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="锚框">
+<meta name=twitter:description content="目标检测算法通常会在输入图像中采样大量的区域，然后判断这些区域中是否包含我们感兴趣的目标，并调整区域边界从而更准确地预测目标的真实边界框（g">
+<meta name=application-name content="泡面zz">
+<meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/cs/cv/anchor/><link rel=prev href=https://pmzzzt.eu.org/posts/learning/cs/cv/bounding-box/><link rel=next href=https://pmzzzt.eu.org/posts/lifa/2024-08-04/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"锚框","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/cv\/anchor\/"},"genre":"posts","keywords":"CS, 计算机视觉, 深度学习","wordcount":723,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/cv\/anchor\/","datePublished":"2024-07-31T10:00:00+08:00","dateModified":"2024-07-31T10:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu>
+<div class=menu-inner>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/categories/paper-review/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="menu-item language" title=选择语言>
+<i class="fa fa-globe" aria-hidden=true></i>
+<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/posts/learning/cs/cv/anchor/ selected>简体中文</option></select>
+</a></div></div></div></header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div></div><div class=menu id=menu-mobile>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/categories/paper-review/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>
+<i class="fa fa-globe fa-fw" aria-hidden=true></i>
+<select class=language-select onchange="location=this.value"><option value=/posts/learning/cs/cv/anchor/ selected>简体中文</option></select>
+</a></div></div></header><main class=main>
+<div class=container>
+<div class=toc id=toc-auto>
+<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">锚框</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-07-31>2024-07-31</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 723 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 2 分钟&nbsp;</div></div><div class="details toc" id=toc-static data-kept>
+<div class="details-summary toc-title">
+<span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#生成多个锚框>生成多个锚框</a></li><li><a href=#交并比iou>[<strong>交并比（IoU）</strong>]</a></li></ul></nav></div></div><div class=content id=content><p>目标检测算法通常会在输入图像中采样大量的区域，然后判断这些区域中是否包含我们感兴趣的目标，并调整区域边界从而更准确地预测目标的<em>真实边界框</em>（ground-truth bounding box）。
+这些边界框被称为<em>锚框</em>（anchor box）</p><h2 id=生成多个锚框>生成多个锚框</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>multibox_prior</span><span class=p>(</span><span class=n>data</span><span class=p>,</span> <span class=n>sizes</span><span class=p>,</span> <span class=n>ratios</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;生成以每个像素为中心具有不同形状的锚框&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>in_height</span><span class=p>,</span> <span class=n>in_width</span> <span class=o>=</span> <span class=n>data</span><span class=o>.</span><span class=n>shape</span><span class=p>[</span><span class=o>-</span><span class=mi>2</span><span class=p>:]</span>
+</span></span><span class=line><span class=cl>    <span class=n>device</span><span class=p>,</span> <span class=n>num_sizes</span><span class=p>,</span> <span class=n>num_ratios</span> <span class=o>=</span> <span class=n>data</span><span class=o>.</span><span class=n>device</span><span class=p>,</span> <span class=nb>len</span><span class=p>(</span><span class=n>sizes</span><span class=p>),</span> <span class=nb>len</span><span class=p>(</span><span class=n>ratios</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>boxes_per_pixel</span> <span class=o>=</span> <span class=p>(</span><span class=n>num_sizes</span> <span class=o>+</span> <span class=n>num_ratios</span> <span class=o>-</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>size_tensor</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>tensor</span><span class=p>(</span><span class=n>sizes</span><span class=p>,</span> <span class=n>device</span><span class=o>=</span><span class=n>device</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>ratio_tensor</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>tensor</span><span class=p>(</span><span class=n>ratios</span><span class=p>,</span> <span class=n>device</span><span class=o>=</span><span class=n>device</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 为了将锚点移动到像素的中心，需要设置偏移量。</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 因为一个像素的高为1且宽为1，我们选择偏移我们的中心0.5</span>
+</span></span><span class=line><span class=cl>    <span class=n>offset_h</span><span class=p>,</span> <span class=n>offset_w</span> <span class=o>=</span> <span class=mf>0.5</span><span class=p>,</span> <span class=mf>0.5</span>
+</span></span><span class=line><span class=cl>    <span class=n>steps_h</span> <span class=o>=</span> <span class=mf>1.0</span> <span class=o>/</span> <span class=n>in_height</span>  <span class=c1># 在y轴上缩放步长</span>
+</span></span><span class=line><span class=cl>    <span class=n>steps_w</span> <span class=o>=</span> <span class=mf>1.0</span> <span class=o>/</span> <span class=n>in_width</span>  <span class=c1># 在x轴上缩放步长</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 生成锚框的所有中心点</span>
+</span></span><span class=line><span class=cl>    <span class=n>center_h</span> <span class=o>=</span> <span class=p>(</span><span class=n>torch</span><span class=o>.</span><span class=n>arange</span><span class=p>(</span><span class=n>in_height</span><span class=p>,</span> <span class=n>device</span><span class=o>=</span><span class=n>device</span><span class=p>)</span> <span class=o>+</span> <span class=n>offset_h</span><span class=p>)</span> <span class=o>*</span> <span class=n>steps_h</span>
+</span></span><span class=line><span class=cl>    <span class=n>center_w</span> <span class=o>=</span> <span class=p>(</span><span class=n>torch</span><span class=o>.</span><span class=n>arange</span><span class=p>(</span><span class=n>in_width</span><span class=p>,</span> <span class=n>device</span><span class=o>=</span><span class=n>device</span><span class=p>)</span> <span class=o>+</span> <span class=n>offset_w</span><span class=p>)</span> <span class=o>*</span> <span class=n>steps_w</span>
+</span></span><span class=line><span class=cl>    <span class=n>shift_y</span><span class=p>,</span> <span class=n>shift_x</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>meshgrid</span><span class=p>(</span><span class=n>center_h</span><span class=p>,</span> <span class=n>center_w</span><span class=p>,</span> <span class=n>indexing</span><span class=o>=</span><span class=s1>&#39;ij&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>shift_y</span><span class=p>,</span> <span class=n>shift_x</span> <span class=o>=</span> <span class=n>shift_y</span><span class=o>.</span><span class=n>reshape</span><span class=p>(</span><span class=o>-</span><span class=mi>1</span><span class=p>),</span> <span class=n>shift_x</span><span class=o>.</span><span class=n>reshape</span><span class=p>(</span><span class=o>-</span><span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 生成“boxes_per_pixel”个高和宽，</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 之后用于创建锚框的四角坐标(xmin,xmax,ymin,ymax)</span>
+</span></span><span class=line><span class=cl>    <span class=n>w</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>cat</span><span class=p>((</span><span class=n>size_tensor</span> <span class=o>*</span> <span class=n>torch</span><span class=o>.</span><span class=n>sqrt</span><span class=p>(</span><span class=n>ratio_tensor</span><span class=p>[</span><span class=mi>0</span><span class=p>]),</span>
+</span></span><span class=line><span class=cl>                   <span class=n>sizes</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>*</span> <span class=n>torch</span><span class=o>.</span><span class=n>sqrt</span><span class=p>(</span><span class=n>ratio_tensor</span><span class=p>[</span><span class=mi>1</span><span class=p>:])))</span>\
+</span></span><span class=line><span class=cl>                   <span class=o>*</span> <span class=n>in_height</span> <span class=o>/</span> <span class=n>in_width</span>  <span class=c1># 处理矩形输入</span>
+</span></span><span class=line><span class=cl>    <span class=n>h</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>cat</span><span class=p>((</span><span class=n>size_tensor</span> <span class=o>/</span> <span class=n>torch</span><span class=o>.</span><span class=n>sqrt</span><span class=p>(</span><span class=n>ratio_tensor</span><span class=p>[</span><span class=mi>0</span><span class=p>]),</span>
+</span></span><span class=line><span class=cl>                   <span class=n>sizes</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>/</span> <span class=n>torch</span><span class=o>.</span><span class=n>sqrt</span><span class=p>(</span><span class=n>ratio_tensor</span><span class=p>[</span><span class=mi>1</span><span class=p>:])))</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 除以2来获得半高和半宽</span>
+</span></span><span class=line><span class=cl>    <span class=n>anchor_manipulations</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>stack</span><span class=p>((</span><span class=o>-</span><span class=n>w</span><span class=p>,</span> <span class=o>-</span><span class=n>h</span><span class=p>,</span> <span class=n>w</span><span class=p>,</span> <span class=n>h</span><span class=p>))</span><span class=o>.</span><span class=n>T</span><span class=o>.</span><span class=n>repeat</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>                                        <span class=n>in_height</span> <span class=o>*</span> <span class=n>in_width</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span> <span class=o>/</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># 每个中心点都将有“boxes_per_pixel”个锚框，</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 所以生成含所有锚框中心的网格，重复了“boxes_per_pixel”次</span>
+</span></span><span class=line><span class=cl>    <span class=n>out_grid</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>stack</span><span class=p>([</span><span class=n>shift_x</span><span class=p>,</span> <span class=n>shift_y</span><span class=p>,</span> <span class=n>shift_x</span><span class=p>,</span> <span class=n>shift_y</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>                <span class=n>dim</span><span class=o>=</span><span class=mi>1</span><span class=p>)</span><span class=o>.</span><span class=n>repeat_interleave</span><span class=p>(</span><span class=n>boxes_per_pixel</span><span class=p>,</span> <span class=n>dim</span><span class=o>=</span><span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>output</span> <span class=o>=</span> <span class=n>out_grid</span> <span class=o>+</span> <span class=n>anchor_manipulations</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>output</span><span class=o>.</span><span class=n>unsqueeze</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span>
+</span></span></code></pre></div><p>可以看到[<strong>返回的锚框变量<code>Y</code>的形状</strong>]是（批量大小，锚框的数量，4）。
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/cv/anchor/1.png data-srcset="/posts/learning/cs/cv/anchor/1.png, /posts/learning/cs/cv/anchor/1.png 1.5x, /posts/learning/cs/cv/anchor/1.png 2x" data-sizes=auto alt=/posts/learning/cs/cv/anchor/1.png title=/posts/learning/cs/cv/anchor/1.png width=654 height=500></p><h2 id=交并比iou>[<strong>交并比（IoU）</strong>]</h2><p>事实上，我们可以将任何边界框的像素区域视为一组像素。通
+过这种方式，我们可以通过其像素集的杰卡德系数来测量两个边界框的相似性。
+对于两个边界框，它们的杰卡德系数通常称为<em>交并比</em>（intersection over union，IoU），即两个边界框相交面积与相并面积之比。
+交并比的取值范围在0和1之间：0表示两个边界框无重合像素，1表示两个边界框完全重合。
+<img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/cv/anchor/2.png data-srcset="/posts/learning/cs/cv/anchor/2.png, /posts/learning/cs/cv/anchor/2.png 1.5x, /posts/learning/cs/cv/anchor/2.png 2x" data-sizes=auto alt=/posts/learning/cs/cv/anchor/2.png title=/posts/learning/cs/cv/anchor/2.png width=498 height=342></p><div class=post-reward>
+<input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label>
+<div class=qr-code>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/wechat.png>
+<span>微信打赏</span>
+</label>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/alipay.png>
+<span>支付宝打赏</span>
+</label>
+</div></div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>更新于 2024-07-31</span>
+</div></div><div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/posts/learning/cs/cv/anchor/index.md target=_blank>阅读原始文档</a>
+</span></div><div class=post-info-share>
+<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/learning/cs/cv/anchor/ data-hashtag=CS><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/learning/cs/cv/anchor/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/learning/cs/cv/anchor/ data-title=锚框><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
+</div></div></div><div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/>计算机视觉</a>,&nbsp;<a href=/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/>深度学习</a></section><section>
+<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
+</section></div><div class=post-nav><a href=/posts/learning/cs/cv/bounding-box/ class=prev rel=prev title=目标检测和边界框><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>目标检测和边界框</a>
+<a href=/posts/lifa/2024-08-04/ class=next rel=next title=第十一周>第十一周<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+<script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:null,placeholder:"开启魔法上网方可使用评论～",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+<span id=run-time></span>
+</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023 - 2024</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+<i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论>
+<i class="fas fa-comment fa-fw" aria-hidden=true></i>
+</a>
+</div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js></script>
+<script type=text/javascript src=/js/custom.js></script>
+<script type=text/javascript src=/js/test.js></script></body></html>
