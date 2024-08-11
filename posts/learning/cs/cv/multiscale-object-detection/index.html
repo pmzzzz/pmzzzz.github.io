@@ -1,0 +1,128 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title>多尺度目标检测 - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="多尺度目标检测">
+<meta property="og:description" content="多尺度锚框 减少图像上的锚框数量并不困难。 比如，我们可以在输入图像中均匀采样一小部分像素，并以它们为中心生成锚框。 此外，在不同尺度下，我们可以">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pmzzzt.eu.org/posts/learning/cs/cv/multiscale-object-detection/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2024-08-05T10:00:00+08:00">
+<meta property="article:modified_time" content="2024-07-05T10:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="多尺度目标检测">
+<meta name=twitter:description content="多尺度锚框 减少图像上的锚框数量并不困难。 比如，我们可以在输入图像中均匀采样一小部分像素，并以它们为中心生成锚框。 此外，在不同尺度下，我们可以">
+<meta name=application-name content="泡面zz">
+<meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/cs/cv/multiscale-object-detection/><link rel=prev href=https://pmzzzt.eu.org/posts/lifa/2024_08_04/><link rel=next href=https://pmzzzt.eu.org/posts/learning/cs/cv/ssd/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"多尺度目标检测","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/cv\/multiscale-object-detection\/"},"genre":"posts","keywords":"CS, 计算机视觉, 深度学习","wordcount":747,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/cv\/multiscale-object-detection\/","datePublished":"2024-08-05T10:00:00+08:00","dateModified":"2024-07-05T10:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu>
+<div class=menu-inner>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/categories/paper-review/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="menu-item language" title=选择语言>
+<i class="fa fa-globe" aria-hidden=true></i>
+<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/posts/learning/cs/cv/multiscale-object-detection/ selected>简体中文</option></select>
+</a></div></div></div></header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div></div><div class=menu id=menu-mobile>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/categories/paper-review/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>
+<i class="fa fa-globe fa-fw" aria-hidden=true></i>
+<select class=language-select onchange="location=this.value"><option value=/posts/learning/cs/cv/multiscale-object-detection/ selected>简体中文</option></select>
+</a></div></div></header><main class=main>
+<div class=container>
+<div class=toc id=toc-auto>
+<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">多尺度目标检测</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-08-05>2024-08-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 747 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 2 分钟&nbsp;</div></div><div class="details toc" id=toc-static data-kept>
+<div class="details-summary toc-title">
+<span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#多尺度锚框>多尺度锚框</a></li><li><a href=#多尺度检测>多尺度检测</a></li><li><a href=#小结>小结</a></li></ul></nav></div></div><div class=content id=content><h2 id=多尺度锚框>多尺度锚框</h2><p>减少图像上的锚框数量并不困难。
+比如，我们可以在输入图像中均匀采样一小部分像素，并以它们为中心生成锚框。
+此外，在不同尺度下，我们可以生成不同数量和不同大小的锚框。
+直观地说，比起较大的目标，较小的目标在图像上出现的可能性更多样。
+例如，$1 \times 1$、$1 \times 2$和$2 \times 2$的目标可以分别以4、2和1种可能的方式出现在$2 \times 2$图像上。
+因此，当使用较小的锚框检测较小的物体时，我们可以采样更多的区域，而对于较大的物体，我们可以采样较少的区域。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>display_anchors</span><span class=p>(</span><span class=n>fmap_w</span><span class=p>,</span> <span class=n>fmap_h</span><span class=p>,</span> <span class=n>s</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>d2l</span><span class=o>.</span><span class=n>set_figsize</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 前两个维度上的值不影响输出</span>
+</span></span><span class=line><span class=cl>    <span class=n>fmap</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>zeros</span><span class=p>((</span><span class=mi>1</span><span class=p>,</span> <span class=mi>10</span><span class=p>,</span> <span class=n>fmap_h</span><span class=p>,</span> <span class=n>fmap_w</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=n>anchors</span> <span class=o>=</span> <span class=n>d2l</span><span class=o>.</span><span class=n>multibox_prior</span><span class=p>(</span><span class=n>fmap</span><span class=p>,</span> <span class=n>sizes</span><span class=o>=</span><span class=n>s</span><span class=p>,</span> <span class=n>ratios</span><span class=o>=</span><span class=p>[</span><span class=mi>1</span><span class=p>,</span> <span class=mi>2</span><span class=p>,</span> <span class=mf>0.5</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>    <span class=n>bbox_scale</span> <span class=o>=</span> <span class=n>torch</span><span class=o>.</span><span class=n>tensor</span><span class=p>((</span><span class=n>w</span><span class=p>,</span> <span class=n>h</span><span class=p>,</span> <span class=n>w</span><span class=p>,</span> <span class=n>h</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=n>d2l</span><span class=o>.</span><span class=n>show_bboxes</span><span class=p>(</span><span class=n>d2l</span><span class=o>.</span><span class=n>plt</span><span class=o>.</span><span class=n>imshow</span><span class=p>(</span><span class=n>img</span><span class=p>)</span><span class=o>.</span><span class=n>axes</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                    <span class=n>anchors</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>*</span> <span class=n>bbox_scale</span><span class=p>)</span>
+</span></span></code></pre></div><p>以下是不同参数的锚框结果：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>display_anchors</span><span class=p>(</span><span class=n>fmap_w</span><span class=o>=</span><span class=mi>4</span><span class=p>,</span> <span class=n>fmap_h</span><span class=o>=</span><span class=mi>4</span><span class=p>,</span> <span class=n>s</span><span class=o>=</span><span class=p>[</span><span class=mf>0.15</span><span class=p>])</span>
+</span></span></code></pre></div><p><img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/cv/multiscale-object-detection/1.png data-srcset="/posts/learning/cs/cv/multiscale-object-detection/1.png, /posts/learning/cs/cv/multiscale-object-detection/1.png 1.5x, /posts/learning/cs/cv/multiscale-object-detection/1.png 2x" data-sizes=auto alt=/posts/learning/cs/cv/multiscale-object-detection/1.png title=/posts/learning/cs/cv/multiscale-object-detection/1.png width=652 height=448></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>display_anchors</span><span class=p>(</span><span class=n>fmap_w</span><span class=o>=</span><span class=mi>2</span><span class=p>,</span> <span class=n>fmap_h</span><span class=o>=</span><span class=mi>2</span><span class=p>,</span> <span class=n>s</span><span class=o>=</span><span class=p>[</span><span class=mf>0.4</span><span class=p>])</span>
+</span></span></code></pre></div><p><img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/cv/multiscale-object-detection/2.png data-srcset="/posts/learning/cs/cv/multiscale-object-detection/2.png, /posts/learning/cs/cv/multiscale-object-detection/2.png 1.5x, /posts/learning/cs/cv/multiscale-object-detection/2.png 2x" data-sizes=auto alt=/posts/learning/cs/cv/multiscale-object-detection/2.png title=/posts/learning/cs/cv/multiscale-object-detection/2.png width=624 height=466></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>display_anchors</span><span class=p>(</span><span class=n>fmap_w</span><span class=o>=</span><span class=mi>1</span><span class=p>,</span> <span class=n>fmap_h</span><span class=o>=</span><span class=mi>1</span><span class=p>,</span> <span class=n>s</span><span class=o>=</span><span class=p>[</span><span class=mf>0.8</span><span class=p>])</span>
+</span></span></code></pre></div><p><img class=lazyload src=/svg/loading.min.svg data-src=/posts/learning/cs/cv/multiscale-object-detection/3.png data-srcset="/posts/learning/cs/cv/multiscale-object-detection/3.png, /posts/learning/cs/cv/multiscale-object-detection/3.png 1.5x, /posts/learning/cs/cv/multiscale-object-detection/3.png 2x" data-sizes=auto alt=/posts/learning/cs/cv/multiscale-object-detection/3.png title=/posts/learning/cs/cv/multiscale-object-detection/3.png width=642 height=456></p><h2 id=多尺度检测>多尺度检测</h2><p>多尺度检测基于一个假设：特征图在相同空间位置的$c$个单元在输入图像上的感受野相同，它们表征了同一感受野内的输入图像信息。</p><p>因此，我们可以将特征图在同一空间位置的$c$个单元变换为使用此空间位置生成的$a$个锚框类别和偏移量。
+本质上，我们用输入图像在某个感受野区域内的信息，来预测输入图像上与该区域位置相近的锚框类别和偏移量。</p><p>当不同层的特征图在输入图像上分别拥有不同大小的感受野时，它们可以用于检测不同大小的目标。
+例如，我们可以设计一个神经网络，其中靠近输出层的特征图单元具有更宽的感受野，这样它们就可以从输入图像中检测到较大的目标。</p><p>简言之，我们可以利用深层神经网络在多个层次上对图像进行分层表示，从而实现多尺度目标检测。</p><h2 id=小结>小结</h2><ul>
+<li>在多个尺度下，我们可以生成不同尺寸的锚框来检测不同尺寸的目标。</li><li>通过定义特征图的形状，我们可以决定任何图像上均匀采样的锚框的中心。</li><li>我们使用输入图像在某个感受野区域内的信息，来预测输入图像上与该区域位置相近的锚框类别和偏移量。</li><li>我们可以通过深入学习，在多个层次上的图像分层表示进行多尺度目标检测。</li></ul><div class=post-reward>
+<input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label>
+<div class=qr-code>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/wechat.png>
+<span>微信打赏</span>
+</label>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/alipay.png>
+<span>支付宝打赏</span>
+</label>
+</div></div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>更新于 2024-07-05</span>
+</div></div><div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/posts/learning/cs/cv/multiscale-object-detection/index.md target=_blank>阅读原始文档</a>
+</span></div><div class=post-info-share>
+<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/learning/cs/cv/multiscale-object-detection/ data-hashtag=CS><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/learning/cs/cv/multiscale-object-detection/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/learning/cs/cv/multiscale-object-detection/ data-title=多尺度目标检测><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
+</div></div></div><div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/>计算机视觉</a>,&nbsp;<a href=/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/>深度学习</a></section><section>
+<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
+</section></div><div class=post-nav><a href=/posts/lifa/2024_08_04/ class=prev rel=prev title=第十一周><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>第十一周</a>
+<a href=/posts/learning/cs/cv/ssd/ class=next rel=next title=单发多框检测（SSD）>单发多框检测（SSD）<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+<script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:null,placeholder:"开启魔法上网方可使用评论～",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+<span id=run-time></span>
+</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023 - 2024</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+<i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论>
+<i class="fas fa-comment fa-fw" aria-hidden=true></i>
+</a>
+</div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js></script>
+<script type=text/javascript src=/js/custom.js></script>
+<script type=text/javascript src=/js/test.js></script></body></html>
