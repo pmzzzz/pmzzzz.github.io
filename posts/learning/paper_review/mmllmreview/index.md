@@ -58,7 +58,7 @@ ULIP-2 with a Point-BERT backbone
 
 ImageBlind--- 综合了 图像、文字、音频、热力图、“inertial measurement units, and depth” 
 
-### 输入投影器“inpute projector”
+### 输入投影器“input projector”
 
 输入投影仪 $θX→T$ 的任务是将其他模态 $F_X$ 的编码特征与文本特征空间 $T$ 对齐。
 {{<image src="inputprojector.png" caption="input projector">}}
@@ -153,6 +153,8 @@ end to end 表示整个模型以端到端的方式联合训练。
 adapter：[https://blog.csdn.net/2301_77818837/article/details/135355919](https://blog.csdn.net/2301_77818837/article/details/135355919)
 
 ![sota](image-1.png)
+
+> https://www.jiqizhixin.com/articles/2024-01-31-3
 
 (1) Flamingo：一系列设计用于处理交织融合的视觉数据和文本的视觉语言（VL）模型，可输出自由形式的文本。
 
