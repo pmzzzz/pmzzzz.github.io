@@ -1,0 +1,168 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<title>变分自编码器 - 泡面zz的小屋</title><meta name=Description content="音乐｜技术｜资源"><meta property="og:title" content="变分自编码器">
+<meta property="og:description" content="变分自编码器简单概念 变分自编码器（Variational Autoencoder，VAE）是一种生成模型，可以学习数据的潜在分布，并生成类似的">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pmzzzt.eu.org/posts/learning/cs/vae/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2024-12-05T08:00:00+08:00">
+<meta property="article:modified_time" content="2024-12-05T08:00:00+08:00"><meta property="og:site_name" content="泡面zz的小屋">
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="变分自编码器">
+<meta name=twitter:description content="变分自编码器简单概念 变分自编码器（Variational Autoencoder，VAE）是一种生成模型，可以学习数据的潜在分布，并生成类似的">
+<meta name=application-name content="泡面zz">
+<meta name=apple-mobile-web-app-title content="泡面zz"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://pmzzzt.eu.org/posts/learning/cs/vae/><link rel=prev href=https://pmzzzt.eu.org/posts/learning/paper_review/promptkd/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'>
+<noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"变分自编码器","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/vae\/"},"genre":"posts","keywords":"CS, 机器学习, 深度学习","wordcount":1901,"url":"https:\/\/pmzzzt.eu.org\/posts\/learning\/cs\/vae\/","datePublished":"2024-12-05T08:00:00+08:00","dateModified":"2024-12-05T08:00:00+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"泡面zz"},"description":""}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script>
+<div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu>
+<div class=menu-inner>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/categories/paper-review/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="menu-item language" title=选择语言>
+<i class="fa fa-globe" aria-hidden=true></i>
+<select class=language-select id=language-select-desktop onchange="location=this.value"><option value=/posts/learning/cs/vae/ selected>简体中文</option></select>
+</a></div></div></div></header><header class=mobile id=header-mobile>
+<div class=header-container>
+<div class=header-wrapper>
+<div class=header-title>
+<a href=/ title=泡面zz的小屋><span class=header-title-pre><i class="fas fa-home" aria-hidden=true></i></span>主页</a>
+</div><div class=menu-toggle id=menu-toggle-mobile>
+<span></span><span></span><span></span>
+</div></div><div class=menu id=menu-mobile>
+<div class=dropdown>
+<a href=/posts/ class="menu-item menu-more dropbtn" title=Posts><i class="fas fa-fw fa-archive"></i> 归档
+</a>
+<div class="menu-more-content dropdown-content"><a href=/tags/ title=Tags><i class="fas fa-tags"></i> 标签 </a><a href=/categories/ title=Categories><i class="fas fa-fw fa-th"></i> 分类 </a><a href=/posts/log/ title=Log><i class="fa-solid fa-clipboard"></i> 建站日志 </a></div></div><div class=dropdown>
+<a href=/academy/ class="menu-item menu-more dropbtn" title=Academy><i class="fa-solid fa-graduation-cap"></i> 学术
+</a>
+<div class="menu-more-content dropdown-content"><a href=/categories/%e5%ad%a6%e6%80%9d%e6%84%9f%e8%a1%8c/ title><i class="fa-solid fa-person-hiking"></i> 学思感行 </a><a href=/readlist/ title><i class="fa-solid fa-book"></i> 书单 </a><a href=/categories/paper-review/ title><i class="fas fa-list"></i> 论文阅读 </a></div></div><a class=menu-item href=/about/ title=About><i class="fa-solid fa-id-card"></i> 关于
+</a><a class=menu-item href=/friend/ title=Friend><i class="fas fa-fw fa-link"></i> 友链
+</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class=menu-item title=选择语言>
+<i class="fa fa-globe fa-fw" aria-hidden=true></i>
+<select class=language-select onchange="location=this.value"><option value=/posts/learning/cs/vae/ selected>简体中文</option></select>
+</a></div></div></header><main class=main>
+<div class=container>
+<div class=toc id=toc-auto>
+<h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">变分自编码器</h1><div class=post-meta>
+<div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>泡面zz</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/%E5%AD%A6%E4%B9%A0/><i class="far fa-folder fa-fw" aria-hidden=true></i>学习</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-12-05>2024-12-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 1901 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 4 分钟&nbsp;</div></div><div class="details toc" id=toc-static data-kept>
+<div class="details-summary toc-title">
+<span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span>
+</div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents>
+<ul>
+<li><a href=#变分自编码器简单概念>变分自编码器简单概念</a></li><li><a href=#变分从何而来>“变分”从何而来</a>
+<ul>
+<li><a href=#什么是变分法>什么是变分法</a></li><li><a href=#什么是变分推理>什么是变分推理</a></li></ul></li><li><a href=#变分自编码器想解决什么问题>变分自编码器想解决什么问题</a>
+<ul>
+<li><a href=#传统自编码器存在的问题>传统自编码器存在的问题</a></li><li><a href=#什么是变分分布>什么是变分分布</a></li><li><a href=#变分自编码器如何解决这些问题的>变分自编码器如何解决这些问题的</a></li><li><a href=#一个简单的变分自编码器的例子>一个简单的变分自编码器的例子</a></li></ul></li></ul></nav></div></div><div class=content id=content><h2 id=变分自编码器简单概念>变分自编码器简单概念</h2><p>变分自编码器（Variational Autoencoder，VAE）是一种生成模型，可以学习数据的潜在分布，并生成类似的样本。与传统自编码器不同，VAE不仅仅学习一个固定的潜在表示（latent representation），而是将输入映射到一个概率分布，从而生成更丰富的输出。</p><p>可以把VAE想象成一个学习画风的艺术家，它不仅学习了如何画某个具体的猫，而是理解了猫的各种特征——例如大小、毛色和形状——并可以根据这些特征创造新猫。</p><hr>
+<h2 id=变分从何而来>“变分”从何而来</h2><h3 id=什么是变分法>什么是变分法</h3><p>“变分法”本质上是优化问题的一种方法。变分法主要关注从一个函数空间中找到最优函数，使得某个目标函数达到极值。</p><p>假设你想设计一个滑梯，滑梯上的每一点都需要满足物理特性（例如平滑），而滑梯的曲线需要保证孩子最快滑到终点。选择最佳滑梯形状的问题就是一个典型的变分问题。</p><p>公式解释：经典变分问题可以用下式表示：
+$$
+J[f] = \int_a^b L(x, f(x), f&rsquo;(x)) dx
+$$
+目标是找到函数 $f(x)$ 使 $J[f]$ 最小化或最大化。</p><hr>
+<h3 id=什么是变分推理>什么是变分推理</h3><p>变分推理是一种使用优化方法近似概率分布的方法。它通过定义一个简单的分布 $q(z)$，并让它逼近真实的后验分布 $p(z|x)$。</p><p>如果后验分布 $p(z|x)$ 是一片模糊的云，而 $q(z)$ 是一个手电筒光束，那么变分推理就是调整手电筒的位置和形状，让光束尽可能覆盖住模糊的云。</p><p>公式解释：
+变分推理通过最小化两个分布之间的差异（通常用 KL 散度表示）来逼近目标分布：
+$$
+D_{\text{KL}}(q(z) | p(z|x)) = \int q(z) \log \frac{q(z)}{p(z|x)} dz
+$$</p><p>由于 $p(z|x)$ 通常难以直接计算，变分推理转而最大化证据下界（ELBO）：
+$$
+\mathcal{L}(q) = \mathbb{E}<em>{q(z)}[\log p(x|z)] - D</em>{\text{KL}}(q(z) | p(z))
+$$
+其中：</p><ul>
+<li>$\mathbb{E}_{q(z)}[\log p(x|z)]$ 表示数据重建的期望对数似然；</li><li>$D_{\text{KL}}(q(z) | p(z))$ 是潜在分布 $q(z)$ 和先验分布 $p(z)$ 的差异。</li></ul><hr>
+<h2 id=变分自编码器想解决什么问题>变分自编码器想解决什么问题</h2><h3 id=传统自编码器存在的问题>传统自编码器存在的问题</h3><p>传统自编码器直接将数据压缩到一个固定的低维表示，可能导致生成结果质量较低或无法生成新的样本。它学习到的是一种“单点”的潜在表示。</p><h4 id=实例>实例：</h4><p>假设有一组手写数字图片（如 MNIST 数据集）：</p><ul>
+<li>输入：数字 “5” 的图片。</li><li>编码后：输出一个固定向量，比如 $[0.8, 0.1, -0.3]$，表示压缩后的表示。</li></ul><p>传统自编码器就像一个只会模仿具体猫照片的画家，只能画出训练过的那几只猫，而无法画出从未见过的猫。</p><hr>
+<h3 id=什么是变分分布>什么是变分分布</h3><p>变分分布是变分推理中的核心概念，用来近似复杂的后验分布 $p(z|x)$。</p><ul>
+<li><strong>定义</strong>：在变分推理中，选择一个简单的分布 $q(z|x)$，称为变分分布，用来近似 $p(z|x)$。</li><li><strong>形式</strong>：变分分布通常是一个参数化的分布，例如：
+$$
+q(z|x) = \mathcal{N}(z; \mu, \sigma^2)
+$$
+其中 $\mu$ 和 $\sigma$ 是通过神经网络学习的参数。</li></ul><p>通过优化变分分布 $q(z|x)$，我们能够更好地近似后验分布。</p><hr>
+<h3 id=变分自编码器如何解决这些问题的>变分自编码器如何解决这些问题的</h3><p>变分自编码器通过将数据映射到一个概率分布（例如高斯分布）来捕获数据的多样性。</p><ol>
+<li>假设数据的潜在分布为 $p(z)$，观测数据分布为 $p(x|z)$。</li><li>使用变分推理，定义 $q(z|x)$ 来近似真实后验 $p(z|x)$。</li><li>最大化 ELBO：
+$$
+\mathcal{L}(q) = \mathbb{E}<em>{q(z|x)}[\log p(x|z)] - D</em>{\text{KL}}(q(z|x) | p(z))
+$$</li></ol><h4 id=实例-1>实例</h4><p>假设有一组手写数字图片（如 MNIST 数据集）：</p><ul>
+<li>输入：数字 “5” 的图片。</li><li>编码后：输出一个分布参数，比如 $\mu = [0.8, 0.1, -0.3]$ 和 $\sigma = [0.05, 0.02, 0.01]$，表示编码为一个正态分布。</li></ul><p>通过引入随机性，VAE 不仅可以生成类似于训练样本的结果，还能生成从未见过的新样本。</p><hr>
+<h4 id=潜空间向量计算过程>潜空间向量计算过程</h4><p>在变分自编码器中，编码器会将输入数据映射为一个潜在分布的参数（如均值 $\mu$ 和标准差 $\sigma$）。为了从潜在分布中采样并生成数据，通常使用 <strong>重参数化技巧</strong>（Reparameterization Trick）。</p><ol>
+<li><strong>编码器生成分布参数</strong></li></ol><p>假设编码器接收到输入数据 $x$（如数字 “5” 的图片），编码器神经网络输出：</p><ul>
+<li>均值向量 $\mu = [0.8, 0.1, -0.3]$</li><li>对数方差向量 $\log \sigma^2 = [-2.0, -3.5, -4.6]$</li></ul><p>将对数方差转化为标准差：
+$$
+\sigma = \sqrt{\exp(\log \sigma^2)}
+$$</p><p>具体计算：</p><ul>
+<li>$\sigma = [\sqrt{\exp(-2.0)}, \sqrt{\exp(-3.5)}, \sqrt{\exp(-4.6)}]$</li><li>$\sigma = [0.135, 0.053, 0.023]$</li></ul><p>因此，潜在分布为：
+$$
+q(z|x) = \mathcal{N}(z; \mu = [0.8, 0.1, -0.3], \sigma = [0.135, 0.053, 0.023])
+$$</p><ol start=2>
+<li><strong>使用重参数化技巧采样潜在向量</strong></li></ol><p>由于采样的过程是非微分的，为了让神经网络能够通过梯度下降学习，我们采用 <strong>重参数化技巧</strong>：
+$$
+z = \mu + \sigma \odot \epsilon
+$$
+其中：</p><ul>
+<li>$\mu$ 是均值向量；</li><li>$\sigma$ 是标准差向量；</li><li>$\epsilon \sim \mathcal{N}(0, I)$，是从标准正态分布采样的随机噪声；</li><li>$\odot$ 表示逐元素乘积。</li></ul><p>最终，潜在空间向量 $z$ 被解码器用于生成新的数据样本。</p><hr>
+<h3 id=一个简单的变分自编码器的例子>一个简单的变分自编码器的例子</h3><h4 id=编码过程>编码过程</h4><p>在编码阶段，输入数据 $x$ 被映射到潜在空间中的一个分布 $q(z|x)$，通常假设为高斯分布：
+$$
+q(z|x) = \mathcal{N}(z; \mu(x), \sigma^2(x))
+$$
+神经网络用于学习均值 $\mu(x)$ 和方差 $\sigma^2(x)$。</p><h4 id=解码过程>解码过程</h4><p>在解码阶段，从分布 $q(z|x)$ 中采样 $z$，并通过解码器生成数据：
+$$
+p(x|z) = f_{\text{decoder}}(z)
+$$
+其中 $f_{\text{decoder}}$ 是一个神经网络，用于还原数据。</p><hr>
+<h4 id=对比传统与变分自编码器的编码后结果>对比传统与变分自编码器的编码后结果</h4><ul>
+<li><strong>传统自编码器</strong>：潜在空间中的每个点对应唯一的样本。</li><li><strong>变分自编码器</strong>：潜在空间中的每个点都是一个分布，可以采样生成多样性更强的样本。</li></ul><div class=post-reward>
+<input type=checkbox name=reward id=reward hidden>
+<label class=reward-button for=reward>赞赏支持</label>
+<div class=qr-code>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/wechat.png>
+<span>微信打赏</span>
+</label>
+<label class=qr-code-image for=reward>
+<img class=image src=/imgs/coffee/alipay.png>
+<span>支付宝打赏</span>
+</label>
+</div></div></div><div class=post-footer id=post-footer>
+<div class=post-info>
+<div class=post-info-line>
+<div class=post-info-mod>
+<span>更新于 2024-12-05</span>
+</div></div><div class=post-info-line>
+<div class=post-info-md><span>
+<a class=link-to-markdown href=/posts/learning/cs/vae/index.md target=_blank>阅读原始文档</a>
+</span></div><div class=post-info-share>
+<span><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://pmzzzt.eu.org/posts/learning/cs/vae/ data-hashtag=CS><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Reddit" data-sharer=reddit data-url=https://pmzzzt.eu.org/posts/learning/cs/vae/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://pmzzzt.eu.org/posts/learning/cs/vae/ data-title=变分自编码器><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span>
+</div></div></div><div class=post-info-more>
+<section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/cs/>CS</a>,&nbsp;<a href=/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/>机器学习</a>,&nbsp;<a href=/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/>深度学习</a></section><section>
+<span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span>
+</section></div><div class=post-nav><a href=/posts/learning/paper_review/promptkd/ class=prev rel=prev title="PromptKD:Unsupervised Prompt Distillation for Vision-Language Models"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>PromptKD:Unsupervised Prompt Distillation for Vision-Language Models</a></div></div><div id=comments><div id=waline></div><script src=https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js></script>
+<script>new Waline({el:"#waline",meta:["nick","mail","link"],requiredMeta:["nick","mail"],login:null,placeholder:"开启魔法上网方可使用评论～",serverURL:"https://waline-pmzzzz.vercel.app/",avatarCDN:"https://sdn.geekzu.org/avatar/",pageSize:20,avatar:"retro",lang:"zh-CN",visitor:!0,highlight:!0,uploadImage:!1})</script></div></article></div></main><footer class=footer>
+<div class=footer-container><div class=footer-line>
+<span id=run-time></span>
+</div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023 - 2024</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>泡面zz</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部>
+<i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论>
+<i class="fas fa-comment fa-fw" aria-hidden=true></i>
+</a>
+</div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1}}</script><script type=text/javascript src=/js/theme.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js></script>
+<script type=text/javascript src=/js/custom.js></script>
+<script type=text/javascript src=/js/test.js></script></body></html>
